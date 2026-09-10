@@ -1,0 +1,7 @@
+{
+  "places": "locations with dated events",
+  "events": "year,title,text,type,confidence,source",
+  "education": "school markers by level",
+  "territories": "GeoJSON only when geometry/source/uncertainty are recorded",
+  "sources": "source registry; copyrighted manuals must be summarized/licensed, not copied wholesale"
+}

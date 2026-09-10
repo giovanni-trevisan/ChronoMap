@@ -1,0 +1,421 @@
+{
+  "places": [
+    {
+      "id": "avignon",
+      "name": "Avignon",
+      "lat": 43.9493,
+      "lon": 4.8055,
+      "aliases": [
+        "Avignon"
+      ],
+      "events": [
+        [
+          -500,
+          "Antiquité",
+          "Occupation ancienne du site d'Avignon dans le contexte de la Gaule méridionale.",
+          "historical",
+          0.78,
+          "Sources historiques générales"
+        ],
+        [
+          1309,
+          "Papauté",
+          "Début de la période où la papauté réside à Avignon.",
+          "political",
+          0.99,
+          "Encyclopaedia / patrimoine"
+        ],
+        [
+          1348,
+          "Papauté",
+          "Avignon passe sous l'autorité pontificale.",
+          "political",
+          0.99,
+          "Patrimoine / histoire d'Avignon"
+        ],
+        [
+          1791,
+          "Révolution",
+          "Avignon est rattachée à la France pendant la Révolution.",
+          "political",
+          0.96,
+          "Repères historiques"
+        ],
+        [
+          2026,
+          "France contemporaine",
+          "Avignon est une commune française du Vaucluse.",
+          "modern",
+          0.99,
+          "Référentiel contemporain"
+        ]
+      ],
+      "context": {
+        "1309": "La papauté commence à résider à Avignon.",
+        "1348": "La ville est achetée par Clément VI au comte de Provence.",
+        "1400": "Avignon reste un centre majeur de la chrétienté occidentale.",
+        "1791": "La ville est intégrée à la France pendant la Révolution."
+      }
+    },
+    {
+      "id": "paris",
+      "name": "Paris",
+      "lat": 48.8566,
+      "lon": 2.3522,
+      "aliases": [
+        "Paris",
+        "Lutèce"
+      ],
+      "events": [
+        [
+          -52,
+          "Gaule romaine",
+          "Lutèce se développe dans le contexte de la Gaule romaine.",
+          "city",
+          0.9,
+          "Repères historiques"
+        ],
+        [
+          508,
+          "Francs",
+          "Paris devient une résidence importante de Clovis.",
+          "political",
+          0.9,
+          "Histoire médiévale"
+        ],
+        [
+          987,
+          "Capétiens",
+          "Hugues Capet devient roi et Paris s'affirme progressivement comme centre politique.",
+          "political",
+          0.9,
+          "Éduscol"
+        ],
+        [
+          1789,
+          "Révolution",
+          "Paris est au cœur de la Révolution française.",
+          "event",
+          0.99,
+          "Éduscol"
+        ],
+        [
+          2026,
+          "France contemporaine",
+          "Paris est la capitale de la France.",
+          "modern",
+          0.99,
+          "Référentiel contemporain"
+        ]
+      ],
+      "context": {
+        "-52": "Le site de Lutèce appartient au monde gaulois puis entre dans le cadre romain.",
+        "508": "Paris devient une résidence royale de Clovis.",
+        "1789": "Paris est au cœur de la Révolution française.",
+        "1944": "Paris est libérée en août 1944."
+      }
+    },
+    {
+      "id": "rome",
+      "name": "Rome",
+      "lat": 41.9028,
+      "lon": 12.4964,
+      "aliases": [
+        "Rome"
+      ],
+      "events": [
+        [
+          -753,
+          "Fondation traditionnelle",
+          "753 av. J.-C. est la date traditionnelle de fondation de Rome.",
+          "city",
+          0.75,
+          "Tradition historique"
+        ],
+        [
+          -27,
+          "Empire romain",
+          "Début conventionnel du Principat d'Auguste.",
+          "political",
+          0.98,
+          "Repères historiques"
+        ],
+        [
+          476,
+          "Fin conventionnelle",
+          "476 est une date conventionnelle de la fin de l'Empire romain d'Occident.",
+          "event",
+          0.95,
+          "Repères historiques"
+        ],
+        [
+          2026,
+          "Italie contemporaine",
+          "Rome est la capitale de l'Italie.",
+          "modern",
+          0.99,
+          "Référentiel contemporain"
+        ]
+      ],
+      "context": {
+        "-27": "Rome est le centre politique de l’Empire romain.",
+        "476": "La déposition de Romulus Augustule marque traditionnellement la fin de l’Empire romain d’Occident.",
+        "1500": "Rome est un grand centre de la Renaissance et de la papauté."
+      }
+    },
+    {
+      "id": "marseille",
+      "name": "Marseille",
+      "lat": 43.2965,
+      "lon": 5.3698,
+      "aliases": [
+        "Marseille",
+        "Massalia"
+      ],
+      "events": [
+        [
+          -600,
+          "Massalia",
+          "Fondation traditionnelle de Massalia par des Grecs de Phocée.",
+          "city",
+          0.9,
+          "Repères historiques"
+        ],
+        [
+          49,
+          "Gaule romaine",
+          "Marseille entre dans le contexte de la conquête romaine après la guerre civile.",
+          "political",
+          0.9,
+          "Histoire antique"
+        ],
+        [
+          2026,
+          "France contemporaine",
+          "Marseille est une grande ville portuaire française.",
+          "modern",
+          0.99,
+          "Référentiel contemporain"
+        ]
+      ],
+      "context": {
+        "-600": "Massalia est une colonie grecque fondée dans l’Antiquité.",
+        "-49": "La cité est prise par les forces de César pendant la guerre civile romaine."
+      }
+    },
+    {
+      "id": "londres",
+      "name": "Londres",
+      "lat": 51.5074,
+      "lon": -0.1278,
+      "aliases": [
+        "Londres",
+        "London"
+      ],
+      "events": [
+        [
+          43,
+          "Britannia",
+          "Londinium se développe sous la domination romaine.",
+          "city",
+          0.88,
+          "Histoire antique"
+        ],
+        [
+          1066,
+          "Normands",
+          "La conquête normande transforme le pouvoir en Angleterre.",
+          "political",
+          0.98,
+          "Repères historiques"
+        ],
+        [
+          1215,
+          "Magna Carta",
+          "La Magna Carta est scellée en Angleterre.",
+          "event",
+          0.98,
+          "Repères historiques"
+        ],
+        [
+          2026,
+          "Royaume-Uni contemporain",
+          "Londres est la capitale du Royaume-Uni.",
+          "modern",
+          0.99,
+          "Référentiel contemporain"
+        ]
+      ],
+      "context": {
+        "43": "Londinium se développe après la conquête romaine de la Bretagne.",
+        "1066": "La conquête normande transforme le pouvoir politique en Angleterre."
+      }
+    }
+  ],
+  "education": [
+    {
+      "year": 622,
+      "title": "Hégire",
+      "text": "622 : Hégire, repère majeur pour l'histoire du monde musulman.",
+      "level": "5e",
+      "source": "Éduscol",
+      "confidence": 0.98
+    },
+    {
+      "year": 800,
+      "title": "Couronnement de Charlemagne",
+      "text": "800 : couronnement impérial de Charlemagne.",
+      "level": "5e",
+      "source": "Éduscol",
+      "confidence": 0.98
+    },
+    {
+      "year": 987,
+      "title": "Hugues Capet",
+      "text": "987 : début de la dynastie capétienne avec Hugues Capet.",
+      "level": "5e",
+      "source": "Éduscol",
+      "confidence": 0.98
+    },
+    {
+      "year": 1337,
+      "title": "Guerre de Cent Ans",
+      "text": "1337–1453 : Guerre de Cent Ans.",
+      "level": "5e",
+      "source": "Éduscol",
+      "confidence": 0.98
+    },
+    {
+      "year": 1492,
+      "title": "1492",
+      "text": "1492 : voyage de Christophe Colomb vers les Amériques, repère associé à l'ouverture atlantique.",
+      "level": "5e",
+      "source": "Programme histoire",
+      "confidence": 0.95
+    },
+    {
+      "year": 1517,
+      "title": "Réforme",
+      "text": "XVIe siècle : Réformes religieuses et transformations de l'Europe.",
+      "level": "5e",
+      "source": "Éduscol",
+      "confidence": 0.95
+    },
+    {
+      "year": 1789,
+      "title": "Révolution française",
+      "text": "1789 : début de la Révolution française.",
+      "level": "4e",
+      "source": "Éduscol",
+      "confidence": 0.99
+    },
+    {
+      "year": 1799,
+      "title": "Bonaparte",
+      "text": "1799 : Bonaparte prend le pouvoir par le coup d'État du 18 Brumaire.",
+      "level": "4e",
+      "source": "Repères historiques",
+      "confidence": 0.99
+    },
+    {
+      "year": 1848,
+      "title": "Révolutions de 1848",
+      "text": "1848 : Printemps des peuples et abolition de l'esclavage dans les colonies françaises.",
+      "level": "4e",
+      "source": "Éduscol",
+      "confidence": 0.98
+    },
+    {
+      "year": 1881,
+      "title": "Lois Ferry",
+      "text": "1881–1882 : école gratuite, laïque et obligatoire en France.",
+      "level": "4e",
+      "source": "Éduscol",
+      "confidence": 0.99
+    },
+    {
+      "year": 1914,
+      "title": "Première Guerre mondiale",
+      "text": "1914–1918 : Première Guerre mondiale.",
+      "level": "3e",
+      "source": "Éduscol",
+      "confidence": 0.99
+    },
+    {
+      "year": 1939,
+      "title": "Seconde Guerre mondiale",
+      "text": "1939–1945 : Seconde Guerre mondiale.",
+      "level": "3e",
+      "source": "Éduscol",
+      "confidence": 0.99
+    },
+    {
+      "year": 1945,
+      "title": "Fin de la Seconde Guerre mondiale",
+      "text": "1945 : fin de la Seconde Guerre mondiale en Europe et création de l'ONU.",
+      "level": "3e",
+      "source": "Éduscol / ONU",
+      "confidence": 0.99
+    },
+    {
+      "year": 1947,
+      "title": "Guerre froide",
+      "text": "1947–1991 : période conventionnelle de la guerre froide.",
+      "level": "3e",
+      "source": "Éduscol",
+      "confidence": 0.98
+    },
+    {
+      "year": 1957,
+      "title": "Traités de Rome",
+      "text": "1957 : traités de Rome, étape fondatrice de la construction européenne.",
+      "level": "3e",
+      "source": "Éduscol",
+      "confidence": 0.99
+    },
+    {
+      "year": 1989,
+      "title": "Chute du mur de Berlin",
+      "text": "1989 : chute du mur de Berlin.",
+      "level": "3e",
+      "source": "Éduscol",
+      "confidence": 0.99
+    },
+    {
+      "year": 1992,
+      "title": "Traité de Maastricht",
+      "text": "1992 : traité de Maastricht et création de l'Union européenne.",
+      "level": "3e",
+      "source": "Repères européens",
+      "confidence": 0.99
+    },
+    {
+      "year": 1214,
+      "title": "Bataille de Bouvines",
+      "text": "Repère médiéval étudié en 5e dans le thème sur société, Église et pouvoir politique.",
+      "source": "Éduscol – Cycle 4, classe de 5e",
+      "confidence": 0.99
+    },
+    {
+      "year": 1848,
+      "title": "1848",
+      "text": "Printemps des peuples et seconde abolition de l’esclavage en France : repère de 4e.",
+      "source": "Éduscol – Cycle 4, classe de 4e",
+      "confidence": 0.99
+    },
+    {
+      "year": 1945,
+      "title": "ONU",
+      "text": "1945 : création de l’Organisation des Nations unies, repère de 3e.",
+      "source": "Éduscol – Cycle 4, classe de 3e",
+      "confidence": 0.99
+    },
+    {
+      "year": 1957,
+      "title": "Traité de Rome",
+      "text": "1957 : traité de Rome, étape fondatrice de la construction européenne.",
+      "source": "Éduscol – Cycle 4, classe de 3e",
+      "confidence": 0.99
+    }
+  ]
+}

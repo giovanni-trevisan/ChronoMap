@@ -1,0 +1,34 @@
+[
+  {
+    "id": "eduscol-cycle4",
+    "title": "Ressources d'accompagnement du programme d'histoire-géographie au cycle 4",
+    "publisher": "Ministère de l'Éducation nationale / Éduscol",
+    "url": "https://eduscol.education.gouv.fr/5730/ressources-d-accompagnement-du-programme-d-histoire-geographie-au-cycle-4",
+    "type": "official",
+    "license": "site institutionnel — consulter les conditions de réutilisation"
+  },
+  {
+    "id": "eduscol-competences",
+    "title": "Se repérer dans le temps : construire des repères historiques",
+    "publisher": "Ministère de l'Éducation nationale / Éduscol",
+    "url": "https://eduscol.education.gouv.fr/sites/default/files/document/ra16c3c4sereperertemps819126pdf-77163.pdf",
+    "type": "official",
+    "license": "site institutionnel — consulter les conditions de réutilisation"
+  },
+  {
+    "id": "edubase",
+    "title": "Édubase — ressources pédagogiques",
+    "publisher": "Ministère de l'Éducation nationale",
+    "url": "https://edubase.eduscol.education.fr/",
+    "type": "educational-index",
+    "license": "varie selon la ressource"
+  },
+  {
+    "id": "ohm",
+    "title": "OpenHistoricalMap",
+    "publisher": "OpenHistoricalMap",
+    "url": "https://www.openhistoricalmap.org/",
+    "type": "historical-map",
+    "license": "vérifier la licence de chaque donnée"
+  }
+]
