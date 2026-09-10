@@ -1,18 +1,18 @@
-# ChronoMap V7 — Phase test mobile
+# ChronoMap V6
 
-Cette version est volontairement centrée sur l'expérience utilisateur avant l'enrichissement massif de la base historique.
+Prototype PWA de carte historique interactive.
 
-## Tests prioritaires
-1. Recherche d'un lieu.
-2. Déplacement de la frise.
-3. Bouton Voyage.
-4. Couches Histoire / École / Territoires.
-5. Lecture des sources et du niveau de confiance.
-6. Installation comme PWA sur téléphone.
-7. Retour utilisateur via le bouton « Test ».
+## Nouveautés V6
+- moteur « Qu’y avait-il ici à cette date ? » ;
+- contexte local pour plusieurs grandes villes ;
+- couche pédagogique enrichie avec des repères du cycle 4 ;
+- niveau de confiance et avertissement sur la précision historique ;
+- structure prête à accueillir davantage de territoires, événements, monuments et sources.
+
+## Données et licences
+Les ressources Éduscol servent de référence pédagogique et de repères scolaires. Ne pas recopier intégralement des manuels commerciaux : pour les contenus protégés, produire des synthèses originales et conserver les références/licences.
+
+OpenHistoricalMap est une piste importante pour les données géospatiales historiques ouvertes ; ses données sont CC0 sauf éléments individuels soumis à une autre licence. Vérifier la licence de chaque donnée importée et conserver les crédits.
 
 ## Installation téléphone
-Le ZIP n'est pas installable directement depuis un gestionnaire de fichiers. Pour tester l'installation PWA, l'application doit être servie par HTTPS (ou localhost pour le développement).
-
-## Objectif V7
-Ne pas ajouter encore une masse de données. D'abord valider : navigation, lisibilité, boutons, frise, carte, recherche et compréhension de l'interface.
+Déployer le dossier sur un hébergement HTTPS, puis ouvrir le site sur le téléphone et choisir « Installer l’application » ou « Ajouter à l’écran d’accueil » selon le navigateur.
