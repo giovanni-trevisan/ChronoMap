@@ -1,3 +1,6 @@
+## ChronoMap V8
+Interface mobile améliorée : panneau d’information compact, carte préservée, fermeture/réouverture et barre de navigation mobile.
+
 # ChronoMap V6
 
 Prototype PWA de carte historique interactive.
