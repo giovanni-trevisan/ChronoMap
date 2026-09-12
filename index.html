@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#07101f">
 <link rel="manifest" href="manifest.webmanifest">
-<title>ChronoMap V9</title>
+<title>ChronoMap V11</title>
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
 <style>
 :root{--bg:#07101f;--p:#0d1c30;--line:#294563;--text:#f4f7fb;--muted:#9db0c8;--gold:#f5b83d;--blue:#4b8cff}
@@ -43,10 +43,12 @@ input,button{font:inherit;border-radius:10px;border:1px solid var(--line);paddin
  .brand{font-size:18px}.bottom{padding-top:5px}.actions button{font-size:10px;padding:7px 4px}
  .navtabs{gap:3px}.navtab{font-size:9px;padding:5px 1px}
 }
+
+.history-sheet{margin:0;background:#081526;border-top:1px solid #294563;padding:16px 12px 24px;scroll-margin-top:10px}.history-kicker{font-size:9px;letter-spacing:1.4px;color:var(--gold);font-weight:900;margin-bottom:4px}.history-title-row{display:flex;justify-content:space-between;gap:10px;align-items:flex-start;border-bottom:1px solid #294563;padding-bottom:10px}.history-sheet h1{margin:0;font-size:24px;line-height:1.15}.history-subtitle{color:var(--muted);font-size:11px;margin-top:4px}.history-confidence{font-size:9px;color:#9db0c8;white-space:nowrap;padding-top:5px}.history-grid{display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:12px;margin-top:12px}.history-main,.history-side{background:#0b1a2d;border:1px solid #294563;border-radius:12px;padding:11px}.history-sheet h2{font-size:14px;margin:0 0 7px}.history-main p{font-size:12px;line-height:1.55;margin:0 0 12px;color:#d8e3ef}.history-side{display:flex;flex-direction:column;gap:9px}.history-side div{border-bottom:1px solid #203852;padding-bottom:8px;font-size:11px}.history-side b{display:block;color:var(--gold);font-size:10px;margin-bottom:2px}.history-side span{color:#d6e1ed}.history-event{border-left:2px solid var(--gold);padding:6px 0 6px 9px;margin:7px 0;background:#0d1f34;border-radius:0 8px 8px 0}.history-event b{color:var(--gold);font-size:11px}.history-event strong{font-size:11px}.history-event p{font-size:10px!important;margin:2px 0 0!important;line-height:1.35!important}.history-sources{margin-top:9px;color:#8095ad;font-size:9px}@media(max-width:600px){.history-sheet{padding:13px 9px 22px}.history-title-row{display:block}.history-sheet h1{font-size:20px}.history-confidence{display:block;margin-top:5px}.history-grid{display:block}.history-side{margin-top:8px}.history-main{padding:9px}.history-sheet h2{font-size:13px}.history-main p{font-size:11px}}
 </style>
 </head>
 <body>
-<header><div><div class="brand">🌍 Chrono<span>Map</span> <small>V10</small></div><small>La machine à remonter le temps géographique</small></div><button id="install" class="install">Installer</button></header>
+<header><div><div class="brand">🌍 Chrono<span>Map</span> <small>V11</small></div><small>La machine à remonter le temps géographique</small></div><button id="install" class="install">Installer</button></header>
 <div class="controls"><input id="search" value="Avignon" placeholder="Ville, lieu ou monument…"><button id="go">Explorer</button></div>
 <div id="map"></div>
 <section id="panel" class="panel">
@@ -55,8 +57,7 @@ input,button{font:inherit;border-radius:10px;border:1px solid var(--line);paddin
  <div class="badges"><span class="badge" id="date">2026</span><span class="badge ok" id="conf">Confiance élevée</span><span class="badge warn">⚠️ Précision variable</span></div>
  <div class="layers"><button class="active" data-layer="events">📜 Histoire</button><button data-layer="education">🎓 École</button><button data-layer="territory">🗺️ Territoires</button><button data-layer="all">✨ Tout</button></div>
  <div id="near" class="near"></div>
- <div id="recap" class="recap"><div class="recap-title" id="recapTitle">📖 Récapitulatif historique</div><div class="recap-text" id="recapText"></div><ul class="recap-facts" id="recapFacts"></ul><div class="recap-source" id="recapSource"></div></div>
- <div id="events"></div><div class="panel-tip">💡 Fais glisser « Déplacer » pour placer le panneau où tu veux.</div>
+<div id="events"></div><div class="panel-tip">💡 Fais glisser « Déplacer » pour placer le panneau où tu veux.</div>
 </section>
 <button id="openPanel" class="panel-toggle" aria-label="Afficher les explications">ℹ️</button>
 <div class="bottom">
@@ -81,22 +82,6 @@ let marker=L.marker([43.9493,4.8055]).addTo(map),territoryLayer=L.geoJSON(null,{
 const fmt=y=>y<0?Math.abs(y)+' av. J.-C.':y;
 const conf=c=>c>=.9?'Confiance élevée':c>=.75?'Confiance moyenne':'À vérifier';
 function place(){if(!data)return null;let q=$('search').value.trim().toLowerCase();return data.places.find(p=>p.name.toLowerCase()===q)||data.places.find(p=>p.aliases?.some(a=>a.toLowerCase()===q))||data.places.find(p=>p.name.toLowerCase().includes(q))||data.places[0]}
-function buildRecap(y,p,list){
- const recap=$('recap'), title=$('recapTitle'), text=$('recapText'), facts=$('recapFacts'), source=$('recapSource');
- let candidates=p.events.filter(e=>e[0]<=y).slice(-5).reverse();
- if(!candidates.length && !data.education.some(e=>e.year<=y)){recap.classList.remove('show');return}
- let exact=candidates.find(e=>e[0]===y), latest=candidates[0];
- let e=exact||latest;
- let label=exact?`📖 ${fmt(y)} — ${p.name}`:`📖 Ce qu'il faut retenir autour de ${fmt(y)}`;
- title.textContent=label;
- let long=e[3]||e[2]||'';
- if(!exact && latest) long=`À cette période, ${p.name} est marqué par ${latest[1].toLowerCase()}. ${latest[2]||''}`;
- text.textContent=long;
- let factsArr=candidates.slice(0,4).map(x=>`${fmt(x[0])} — ${x[1]}`);
- facts.innerHTML=factsArr.map(x=>`<li>${x}</li>`).join('');
- source.textContent='Sources : '+(e[5]||'Base ChronoMap')+(e[6]?` · ${e[6]}`:'');
- recap.classList.add('show');
-}
 function render(){
  if(!data)return;let y=+$('timeline').value,p=place();marker.setLatLng([p.lat,p.lon]);map.setView([p.lat,p.lon],p.id==='londres'||p.id==='rome'?6:7);
  $('title').textContent=p.name;$('desc').textContent='Que trouvait-on ici en '+fmt(y)+' ?';$('year').textContent=fmt(y);$('date').textContent=fmt(y);
@@ -105,9 +90,8 @@ function render(){
  if(layer==='education'||layer==='all')list=list.concat(data.education.filter(e=>e.year<=y).slice(-8).reverse().map(e=>({...e,source:e.source||'Éduscol'})));
  list.sort((a,b)=>b.year-a.year);
  $('events').innerHTML=list.length?list.map(e=>`<div class="event"><b>${fmt(e.year)}</b> · ${e.title||''}<br>${e.text}<div class="source">Source : ${e.source||'Base ChronoMap'} · ${conf(e.confidence||.98)}</div></div>`).join(''):'<div class="event">Aucune donnée structurée pour cette date.</div>';
- let c=list[0]?.confidence||.98;$('conf').textContent=conf(c);
+ let c=list[0]?.confidence||.98;$('conf').textContent=conf(c);renderHistorySheet(y,p);
  $('near').innerHTML=p.context?.[String(y)]?`<strong>📍 Sur place :</strong> ${p.context[String(y)]}`:'<strong>📍 Contexte :</strong> les données détaillées de cette période seront enrichies progressivement.';
- buildRecap(y,p,list);
  territoryLayer.eachLayer(l=>{let pr=l.feature.properties,active=(layer==='territory'||layer==='all')&&y>=pr.from&&y<=pr.to;l.setStyle({opacity:active?1:0,fillOpacity:active?.12:0})});
 }
 
@@ -122,6 +106,19 @@ document.querySelectorAll('[data-layer]').forEach(b=>b.onclick=()=>{layer=b.data
 document.querySelectorAll('[data-nav]').forEach(b=>b.onclick=()=>{document.querySelectorAll('[data-nav]').forEach(x=>x.classList.remove('active'));b.classList.add('active');let n=b.dataset.nav;if(n==='events'||n==='territory'||n==='education'){layer=n==='territory'?'territory':n;document.querySelectorAll('[data-layer]').forEach(x=>x.classList.toggle('active',x.dataset.layer===layer));render()}else $('openPanel').click()});
 let deferred;addEventListener('beforeinstallprompt',e=>{e.preventDefault();deferred=e;$('install').style.display='block'});$('install').onclick=async()=>{if(deferred){deferred.prompt();await deferred.userChoice;deferred=null}};
 
+function renderHistorySheet(y,p){
+ const events=p.events.filter(e=>e[0]<=y).slice(-10).reverse(), exact=events.find(e=>e[0]===y), latest=events[0];
+ $('historyTitle').textContent=`${p.name} — ${fmt(y)}`;
+ $('historySubtitle').textContent=exact?`Une date clé de l'histoire de ${p.name}.`:`Contexte historique de ${p.name} autour de ${fmt(y)}.`;
+ $('historyPlace').textContent=p.name;$('historyPeriod').textContent=fmt(y);
+ $('historyPower').textContent=p.context?.[String(y)]||'À documenter dans la prochaine couche de données.';
+ $('historyWorld').textContent=latest?`${fmt(latest[0])} — ${latest[1]}`:'Données mondiales à enrichir.';
+ $('historyRemember').textContent=exact?(exact[2]||'Voir la chronologie ci-dessous.'):(latest?(latest[2]||'Voir la chronologie ci-dessous.'):'Aucune donnée structurée pour cette période.');
+ $('historyConfidence').textContent=exact?'● Donnée historique sélectionnée':'● Données en cours d’enrichissement';
+ $('historyNarrative').textContent=exact?(exact[3]||exact[2]||'Cette date sera enrichie avec un récit historique plus détaillé.'):(latest?`Autour de ${fmt(y)}, ${p.name} s'inscrit dans une période marquée par ${latest[1].toLowerCase()}. ${latest[2]||''}`:'ChronoMap n’a pas encore suffisamment de données structurées pour raconter cette période. Cette fiche accueillera progressivement le récit, les personnages, les territoires, les conflits, les monuments et les sources.');
+ $('historyTimeline').innerHTML=events.length?events.map(e=>`<div class="history-event"><b>${fmt(e[0])}</b> · <strong>${e[1]}</strong><p>${e[2]||''}</p></div>`).join(''):'<div class="history-event"><p>Aucun événement structuré pour cette date.</p></div>';
+ $('historySources').textContent='Sources et références : '+(exact?.[5]||latest?.[5]||'Base ChronoMap')+'. Les futures versions intégreront davantage de sources historiques et pédagogiques.';
+}
 // Panneau d'explication déplaçable : fonctionne au doigt et à la souris.
 (function(){
  const panel=$('panel'), handle=$('dragHandle');
