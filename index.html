@@ -74,17 +74,29 @@ input,button{font:inherit;border-radius:10px;border:1px solid var(--line);paddin
 .explanation-panel .scope-tabs{display:none!important}
 .explanation-panel .explanation-content{padding-top:4px}
 .date-choice,.history-date{cursor:pointer}
+
+/* V13.2 — correction définitive de la duplication */
+.scope-bar{display:grid;grid-template-columns:repeat(4,1fr);gap:5px;padding:6px 7px;background:#081526;border-bottom:1px solid #294563}
+.scope{min-width:0;padding:7px 2px;font-size:10px;background:#10243c;color:#cbd8e6;border:1px solid #294563;border-radius:9px;white-space:nowrap}
+.scope.active{background:#315c91;color:#fff}
+.plans{display:grid!important;grid-template-columns:repeat(3,1fr)!important;gap:5px!important;padding:7px!important}
+.plan{min-width:0!important;padding:6px!important}.plan b{font-size:11px}.plan p{font-size:8px;line-height:1.25}.plan span{font-size:8px}
+.controls{padding:7px;display:grid;grid-template-columns:1fr 92px;gap:6px;background:#091528}
+.navtabs{display:none!important}
+.history-sheet{display:none;margin:0;background:#081526;border-top:1px solid #294563;padding:16px 12px 24px;scroll-margin-top:10px}
+.date-link{display:flex;gap:7px;align-items:center;width:100%;text-align:left;background:#0d1f34;border:1px solid #213a56;margin:4px 0;padding:7px 9px;border-radius:9px;cursor:pointer}
+@media(max-width:600px){.plans{grid-template-columns:repeat(3,1fr)!important}.plan p{display:none}.plan b{font-size:10px}.scope{font-size:9px;padding:6px 2px}.controls{grid-template-columns:1fr 88px}.history-sheet{padding:13px 9px 22px}}
 </style>
 </head>
 <body>
-<header><div><div class="brand">🌍 Chrono<span>Map</span> <small>V13</small></div><small>La machine à remonter le temps géographique</small></div><button id="install" class="install">Installer</button></header>
-<section class="plans"><article class="plan active" data-plan="public"><div><b>🌍 Public</b><span> Gratuit</span></div><p>Voyage dans le temps avec les fonctions essentielles.</p></article><article class="plan" data-plan="famille"><div><b>👨‍👩‍👧‍👦 Famille</b><span> 4,99 €/mois</span></div><p>Plus de détails, chronologies et exploration familiale.</p></article><article class="plan" data-plan="ecole"><div><b>🎓 École</b><span> 9,99 €/mois</span></div><p>Fiches pédagogiques, sources et contenus approfondis.</p></article></section><div id="paymentBox" class="payment-box hidden"><b>Passer à <span id="selectedPlan">Famille</span></b><div id="paymentGains"></div><div class="payments"><button data-pay="card">💳 Carte</button><button data-pay="paypal">🅿️ PayPal</button><button data-pay="wallet">📱 Apple / Google Pay</button></div><small>Paiement réel à connecter avant mise en production.</small></div><div class="controls"><section id="scopeBar" class="scope-bar">
+<header><div><div class="brand">🌍 Chrono<span>Map</span> <small>V13.2</small></div><small>La machine à remonter le temps géographique</small></div><button id="install" class="install">Installer</button></header>
+<section class="plans"><article class="plan active" data-plan="public"><div><b>🌍 Public</b><span> Gratuit</span></div><p>Voyage dans le temps avec les fonctions essentielles.</p></article><article class="plan" data-plan="famille"><div><b>👨‍👩‍👧‍👦 Famille</b><span> 4,99 €/mois</span></div><p>Plus de détails, chronologies et exploration familiale.</p></article><article class="plan" data-plan="ecole"><div><b>🎓 École</b><span> 9,99 €/mois</span></div><p>Fiches pédagogiques, sources et contenus approfondis.</p></article></section><div id="paymentBox" class="payment-box hidden"><b>Passer à <span id="selectedPlan">Famille</span></b><div id="paymentGains"></div><div class="payments"><button data-pay="card">💳 Carte</button><button data-pay="paypal">🅿️ PayPal</button><button data-pay="wallet">📱 Apple / Google Pay</button></div><small>Paiement réel à connecter avant mise en production.</small></div><section id="scopeBar" class="scope-bar">
   <button class="scope active" data-scope="city">📍 Ville</button>
   <button class="scope" data-scope="region">🧭 Région</button>
   <button class="scope" data-scope="europe">🇪🇺 Europe</button>
   <button class="scope" data-scope="world">🌍 Monde</button>
 </section>
-<input id="search" value="Avignon" placeholder="Rechercher une ville…"><button id="go">Explorer</button></div>
+<div class="controls"><input id="search" value="Avignon" placeholder="Rechercher une ville…"><button id="go">Explorer</button></div>
 <div id="map"></div>
 <section id="panel" class="panel"><div class="panel-head" id="dragHandle"><h2 id="title">Avignon</h2><span class="drag-hint">↕ Déplacer</span><button id="closePanel" class="panel-close">×</button></div><div id="desc" class="meta">Dates disponibles pour ce lieu</div><div class="badges"><span class="badge" id="date">2026</span><span class="badge ok" id="conf">Confiance élevée</span></div><div id="events"></div><div class="panel-tip">💡 Clique sur une date pour aller au résumé en bas.</div></section>
 <button id="openPanel" class="panel-toggle" aria-label="Afficher les explications">ℹ️</button>
@@ -93,151 +105,6 @@ input,button{font:inherit;border-radius:10px;border:1px solid var(--line);paddin
  <input id="timeline" class="timeline" type="range" min="-3000" max="2026" value="2026" step="1">
  <div class="actions"><button id="back">◀ 10 ans</button><button id="play" class="play">▶ Voyage</button><button id="next">10 ans ▶</button></div>
  <div class="hint">Tape une ville puis déplace la frise. Les données connues avant ou à l’année choisie sont affichées.</div>
- <nav class="navtabs" aria-label="Niveaux historiques"><button class="navtab active" data-scope="city">📍<span>Ville</span></button><button class="navtab" data-scope="region">🧭<span>Région</span></button><button class="navtab" data-scope="europe">🇪🇺<span>Europe</span></button><button class="navtab" data-scope="world">🌍<span>Monde</span></button></nav>
-</div>
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-<script>
-const $=id=>document.getElementById(id);
-const map=L.map('map').setView([43.9493,4.8055],5);
-L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{attribution:'© OpenStreetMap contributors'}).addTo(map);
-let marker=L.marker([43.9493,4.8055]).addTo(map),territoryLayer=L.geoJSON(null,{style:f=>({color:f.properties.color||'#f5b83d',weight:2,fillOpacity:.12})}).addTo(map),data,timer=null,infoScope='city',selectedEvent=null;
-const fmt=y=>y<0?Math.abs(y)+' av. J.-C.':y;
-const conf=c=>c>=.9?'Confiance élevée':c>=.75?'Confiance moyenne':'À vérifier';
-function place(){if(!data)return null;let q=$('search').value.trim().toLowerCase();return data.places.find(p=>p.name.toLowerCase()===q)||data.places.find(p=>p.aliases?.some(a=>a.toLowerCase()===q))||data.places.find(p=>p.name.toLowerCase().includes(q))||data.places[0]}
-function render(){if(!data)return;let y=+$('timeline').value,p=place();marker.setLatLng([p.lat,p.lon]);map.setView([p.lat,p.lon],p.id==='londres'||p.id==='rome'?6:7);$('title').textContent=p.name;$('desc').textContent=`Dates disponibles — ${p.name}`;$('year').textContent=fmt(y);$('date').textContent=fmt(y);const events=p.events.filter(e=>e[0]<=y).slice(-12).reverse();$('events').innerHTML=events.length?events.map((e,i)=>`<button class="date-link" data-event-index="${i}"><b>${fmt(e[0])}</b><span>${e[1]||'Événement historique'}</span></button>`).join(''):'<div class="event">Aucune date structurée pour cette période.</div>';document.querySelectorAll('[data-event-index]').forEach(b=>b.onclick=()=>{selectedEvent=events[+b.dataset.eventIndex];showSummary(p,selectedEvent,true)});$('conf').textContent=conf(events[0]?.[4]||.98);territoryLayer.eachLayer(l=>{let pr=l.feature.properties,active=y>=pr.from&&y<=pr.to;l.setStyle({opacity:active?1:0,fillOpacity:active?.12:0})});showSummary(p,selectedEvent,false)}
-function showSummary(p,e,scroll){let y=e?e[0]:+$('timeline').value,label=infoScope==='city'?'📍 Ville':infoScope==='region'?'🧭 Région':infoScope==='europe'?'🇪🇺 Europe':'🌍 Monde';$('summaryScope').textContent=label;$('historyTitle').textContent=`${p.name} — ${fmt(y)}`;$('historySubtitle').textContent=`Résumé ${label.toLowerCase()} · ${fmt(y)}`;$('historyPlace').textContent=infoScope==='city'?p.name:(p.region||'À renseigner');$('historyPeriod').textContent=fmt(y);$('historyConfidence').textContent=e?'● Date documentée':'● Données à enrichir';if(infoScope==='city'){$('storyHeading').textContent='📖 Histoire de la ville';$('historyNarrative').textContent=e?(e[3]||e[2]||'Aucun résumé détaillé disponible.'):'Clique sur une date pour ouvrir le résumé.';$('historyTerritory').textContent=p.context?.[String(y)]||'Évolution géographique locale à documenter.'}else if(infoScope==='region'){$('storyHeading').textContent='🧭 Histoire et géographie de la région';$('historyNarrative').textContent=`Contexte historique et géographique régional autour de ${fmt(y)}.`;$('historyTerritory').textContent='Frontières et évolution territoriale régionales.'}else if(infoScope==='europe'){$('storyHeading').textContent='🇪🇺 Europe à cette époque';$('historyNarrative').textContent=`Repères historiques et géographiques européens autour de ${fmt(y)}.`;$('historyTerritory').textContent='États, frontières et transformations territoriales européennes.'}else{$('storyHeading').textContent='🌍 Monde à cette époque';$('historyNarrative').textContent=`Repères historiques et géographiques mondiaux autour de ${fmt(y)}.`;$('historyTerritory').textContent='États, empires, frontières et grandes transformations mondiales.'}const ev=p.events.filter(x=>x[0]<=y).slice(-8).reverse();$('historyTimeline').innerHTML=ev.map(x=>`<div class="history-event"><b>${fmt(x[0])}</b> · <strong>${x[1]||''}</strong><p>${x[2]||''}</p></div>`).join('')||'<div class="history-event">Aucun repère disponible.</div>';$('historySources').textContent='Sources : ChronoMap — base à enrichir par croisement de manuels d’histoire/géographie et de sources vérifiables.';if(scroll)setTimeout(()=>$('historySheet').scrollIntoView({behavior:'smooth',block:'start'}),50)}
-$('closePanel').onclick=()=>{$('panel').classList.add('closed')};
-$('openPanel').onclick=()=>{$('panel').classList.remove('closed')};
-$('go').onclick=render;$('search').addEventListener('keydown',e=>{if(e.key==='Enter')render()});
-$('timeline').oninput=render;
-$('back').onclick=()=>{$('timeline').value=Math.max(-3000,+$('timeline').value-10);render()};
-$('next').onclick=()=>{$('timeline').value=Math.min(2026,+$('timeline').value+10);render()};
-$('play').onclick=()=>{if(timer){clearInterval(timer);timer=null;$('play').textContent='▶ Voyage';return}$('play').textContent='⏸ Pause';timer=setInterval(()=>{let y=+$('timeline').value+10;if(y>2026){clearInterval(timer);timer=null;$('play').textContent='▶ Voyage';return}$('timeline').value=y;render()},90)};
-
-
-
-document.querySelectorAll('[data-scope]').forEach(b=>b.onclick=()=>{infoScope=b.dataset.scope;document.querySelectorAll('[data-scope]').forEach(x=>x.classList.toggle('active',x.dataset.scope===infoScope));showSummary(place(),selectedEvent,true)});const planInfo={famille:'Chronologies enrichies, fiches locales plus détaillées et mode familial.',ecole:'Fiches pédagogiques, sources et contenus historiques/géographiques approfondis.'};document.querySelectorAll('[data-plan]').forEach(b=>b.onclick=()=>{document.querySelectorAll('[data-plan]').forEach(x=>x.classList.remove('active'));b.classList.add('active');let p=b.dataset.plan;if(p==='public'){$('paymentBox').classList.add('hidden')}else{$('paymentBox').classList.remove('hidden');$('selectedPlan').textContent=p==='famille'?'Famille':'École';$('paymentGains').textContent=planInfo[p]}});document.querySelectorAll('[data-pay]').forEach(b=>b.onclick=()=>alert('Mode choisi : '+b.textContent.trim()+'. Le paiement réel sera connecté avant mise en production.'));
-// Panneau d'explication déplaçable : fonctionne au doigt et à la souris.
-(function(){
- const panel=$('panel'), handle=$('dragHandle');
- let dragging=false,sx=0,sy=0,sl=0,st=0;
- function begin(e){
-   if(e.target.closest('button')) return;
-   dragging=true; panel.classList.add('dragged');
-   const pt=e.touches?e.touches[0]:e;
-   const r=panel.getBoundingClientRect(); sx=pt.clientX; sy=pt.clientY; sl=r.left; st=r.top;
-   if(panel.setPointerCapture && e.pointerId!=null) panel.setPointerCapture(e.pointerId);
-   e.preventDefault();
- }
- function move(e){
-   if(!dragging)return;
-   const pt=e.touches?e.touches[0]:e;
-   const maxX=innerWidth-panel.offsetWidth-8,maxY=innerHeight-panel.offsetHeight-8;
-   panel.style.left=Math.max(8,Math.min(maxX,sl+pt.clientX-sx))+'px';
-   panel.style.top=Math.max(65,Math.min(maxY,st+pt.clientY-sy))+'px';
-   panel.style.right='auto';panel.style.bottom='auto';
- }
- function end(){dragging=false}
- handle.addEventListener('pointerdown',begin);
- addEventListener('pointermove',move,{passive:false});
- addEventListener('pointerup',end);
- handle.addEventListener('touchstart',begin,{passive:false});
- addEventListener('touchmove',move,{passive:false});
- addEventListener('touchend',end);
-})();
-
-if('serviceWorker'in navigator)navigator.serviceWorker.register('./sw.js');
-Promise.all([fetch('./data.json').then(r=>r.json()),fetch('./sources.json').then(r=>r.json()),fetch('./territories.geojson').then(r=>r.json())]).then(([d,s,g])=>{data=d;territoryLayer.addData(g);render()});
-</script>
-
-// V13.1: the immersive history fiche is hidden until the user clicks a date.
-(function(){
-  const fiche = document.getElementById('historySheet');
-  if(fiche){
-    fiche.style.display='none';
-    window.showChronoDateFiche=function(){
-      fiche.style.display='';
-      fiche.scrollIntoView({behavior:'smooth',block:'start'});
-    };
-  }
-  document.addEventListener('click',function(ev){
-    const target=ev.target.closest('[data-year],[data-date],.date-choice,.history-date');
-    if(target && window.showChronoDateFiche) window.showChronoDateFiche();
-  },true);
-})();
-
-</body></html<section id="historySheet" class="history-sheet"><div class="history-kicker">CHRONOMAP · RÉSUMÉ HISTORIQUE</div><div class="history-title-row"><div><h1 id="historyTitle">Avignon — 2026</h1><div id="historySubtitle" class="history-subtitle">Sélectionne une date.</div></div><span id="historyConfidence" class="history-confidence">●</span></div><div class="summary-tag" id="summaryScope">📍 Ville</div><article class="summary-card"><h2 id="storyHeading">📖 Histoire de la ville</h2><p id="historyNarrative">Clique sur une date pour afficher le résumé détaillé.</p></article><div class="summary-grid"><article><h3>📍 Lieu</h3><p id="historyPlace">—</p></article><article><h3>📅 Date</h3><p id="historyPeriod">—</p></article><article><h3>🗺️ Géographie</h3><p id="historyTerritory">—</p></article></div><h2>⏳ Repères</h2><div id="historyTimeline"></div><div class="history-sources" id="historySources">Sources : ChronoMap.</div></section> html>
-<html lang="fr">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="theme-color" content="#07101f">
-<link rel="manifest" href="manifest.webmanifest">
-<title>ChronoMap V13</title>
-<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
-<style>
-:root{--bg:#07101f;--p:#0d1c30;--line:#294563;--text:#f4f7fb;--muted:#9db0c8;--gold:#f5b83d;--blue:#4b8cff}
-*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,Segoe UI,sans-serif}
-header{height:58px;padding:7px 10px;display:flex;justify-content:space-between;align-items:center;background:#0c1b30;border-bottom:1px solid var(--line)}
-.brand{font-size:20px;font-weight:900}.brand span{color:var(--gold)}small,.meta{color:var(--muted)}
-.controls{padding:7px;display:grid;grid-template-columns:1fr 100px;gap:6px;background:#091528}
-input,button{font:inherit;border-radius:10px;border:1px solid var(--line);padding:9px;background:#0d1b2d;color:white}button{background:var(--blue);border:0;font-weight:800}
-#map{height:calc(100vh - 315px);min-height:400px}
-.panel{position:absolute;z-index:1000;right:12px;top:78px;width:min(390px,38vw);background:#07101ff5;border:1px solid #38506e;border-radius:14px;padding:11px;max-height:58vh;overflow:auto;box-shadow:0 12px 35px #0008;backdrop-filter:blur(10px);transition:.22s}
-.panel.closed{transform:translateX(calc(100% + 20px));opacity:0;pointer-events:none}
-.panel-head{display:flex;align-items:center;justify-content:space-between;gap:8px}.panel h2{margin:0;font-size:17px}
-.panel-close{width:32px;height:32px;padding:0;border-radius:50%;background:#172b47;font-size:18px}
-.panel-toggle{position:absolute;z-index:1001;right:10px;top:78px;width:42px;height:42px;padding:0;border-radius:50%;background:#0d1c30;border:1px solid #38506e;display:none}
-.panel.closed + .panel-toggle{display:block}
-.badges,.layers,.actions{display:flex;gap:5px;flex-wrap:wrap;margin-top:6px}.badge{font-size:10px;background:#17304e;padding:4px 7px;border-radius:20px}
-.badge.ok{background:#123b29;color:#8ef0b5}.badge.warn{background:#493516;color:#ffd58b}
-.layers{overflow:auto;flex-wrap:nowrap}.layers button{white-space:nowrap;background:#172b47;font-size:11px;padding:7px}.layers button.active{background:#315c91}
-.event{padding:8px 0;border-top:1px solid #263b55;font-size:12px}.event b{color:var(--gold)}.source{font-size:10px;color:var(--muted);margin-top:3px}
-.near{margin-top:7px;padding:8px;background:#0d1b2d;border-radius:10px;font-size:12px}.near strong{color:var(--gold)}
-.panel-tip{text-align:center;color:var(--muted);font-size:10px;padding-top:7px}
-.bottom{background:#0a1526;padding:7px 9px 9px}.year{font-size:24px;font-weight:900;color:var(--gold)}
-.timeline{width:100%;accent-color:var(--gold);padding:0;border:0}.actions button{flex:1;background:#17304e;font-size:11px}.actions .play{background:var(--gold);color:#111}
-.hint{font-size:10px;color:var(--muted);padding-top:4px}
-.navtabs{display:grid;grid-template-columns:repeat(5,1fr);gap:4px;margin-top:7px;position:sticky;bottom:0;z-index:1200}
-.navtab{background:#0d1b2d;border:1px solid #213a56;color:#9db0c8;padding:5px 2px;font-size:10px;display:flex;flex-direction:column;align-items:center;gap:2px}.navtab.active{background:#12365c;color:#fff}.navtab span{font-size:9px}
-.install{display:none}
-@media(min-width:800px){#map{height:calc(100vh - 270px)}.panel{top:76px;width:410px;max-height:64vh}.panel-toggle{top:76px}.controls{grid-template-columns:1fr 150px}}
-@media(max-width:420px){
- #map{height:calc(100vh - 315px);min-height:360px}
- .panel{top:auto;bottom:174px;left:8px;right:8px;width:auto;max-height:30vh;padding:8px;border-radius:13px} .panel.dragged{left:auto;right:auto;top:auto;bottom:auto;width:min(390px,calc(100vw - 16px))}
- .panel h2{font-size:15px}.panel .event{font-size:11px}
- .panel-toggle{top:auto;bottom:174px;right:9px}
- .controls{grid-template-columns:1fr 92px}.controls input,.controls button{font-size:13px;padding:8px}
- .brand{font-size:18px}.bottom{padding-top:5px}.actions button{font-size:10px;padding:7px 4px}
- .navtabs{gap:3px}.navtab{font-size:9px;padding:5px 1px}
-}
-
-.history-sheet{margin:0;background:#081526;border-top:1px solid #294563;padding:16px 12px 24px;scroll-margin-top:10px}.history-kicker{font-size:9px;letter-spacing:1.4px;color:var(--gold);font-weight:900;margin-bottom:4px}.history-title-row{display:flex;justify-content:space-between;gap:10px;align-items:flex-start;border-bottom:1px solid #294563;padding-bottom:10px}.history-sheet h1{margin:0;font-size:24px;line-height:1.15}.history-subtitle{color:var(--muted);font-size:11px;margin-top:4px}.history-confidence{font-size:9px;color:#9db0c8;white-space:nowrap;padding-top:5px}.history-grid{display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:12px;margin-top:12px}.history-main,.history-side{background:#0b1a2d;border:1px solid #294563;border-radius:12px;padding:11px}.history-sheet h2{font-size:14px;margin:0 0 7px}.history-main p{font-size:12px;line-height:1.55;margin:0 0 12px;color:#d8e3ef}.history-side{display:flex;flex-direction:column;gap:9px}.history-side div{border-bottom:1px solid #203852;padding-bottom:8px;font-size:11px}.history-side b{display:block;color:var(--gold);font-size:10px;margin-bottom:2px}.history-side span{color:#d6e1ed}.history-event{border-left:2px solid var(--gold);padding:6px 0 6px 9px;margin:7px 0;background:#0d1f34;border-radius:0 8px 8px 0}.history-event b{color:var(--gold);font-size:11px}.history-event strong{font-size:11px}.history-event p{font-size:10px!important;margin:2px 0 0!important;line-height:1.35!important}.history-sources{margin-top:9px;color:#8095ad;font-size:9px}@media(max-width:600px){.history-sheet{padding:13px 9px 22px}.history-title-row{display:block}.history-sheet h1{font-size:20px}.history-confidence{display:block;margin-top:5px}.history-grid{display:block}.history-side{margin-top:8px}.history-main{padding:9px}.history-sheet h2{font-size:13px}.history-main p{font-size:11px}}
-
-.scope-bar{display:flex;gap:5px;padding:7px 9px;background:#081526;border-bottom:1px solid #294563;overflow:auto}
-.scope,.focus{white-space:nowrap;background:#10243c;border:1px solid #294563;color:#9db0c8;padding:7px 10px;border-radius:9px;font-size:10px}
-.scope.active,.focus.active{background:#315c91;color:#fff}
-.history-focus{display:flex;gap:5px;overflow:auto;margin-top:9px;padding-bottom:2px}
-.history-grid{margin-top:10px}
-.context-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:9px}
-.context-grid>div{background:#0b1a2d;border:1px solid #294563;border-radius:11px;padding:9px}
-.context-grid h3{font-size:11px;color:var(--gold);margin:0 0 4px}
-.context-grid p{font-size:10px;line-height:1.4;margin:0;color:#cbd8e6}
-@media(max-width:600px){.context-grid{grid-template-columns:1fr}.scope-bar{padding:6px}.scope{font-size:9px;padding:6px 8px}}
-.plans{display:grid;grid-template-columns:repeat(3,1fr);gap:5px;padding:7px;background:#081526}.plan{background:#0d1b2d;border:1px solid #294563;border-radius:10px;padding:7px;cursor:pointer}.plan.active{border-color:#4b8cff}.plan b{font-size:11px}.plan span{float:right;color:#f5b83d;font-size:9px}.plan p{font-size:9px;margin:4px 0 0;color:#cbd8e6}.payment-box{margin:0 7px 5px;padding:8px;background:#10243c;border:1px solid #315c91;border-radius:10px}.payment-box.hidden{display:none}.payment-box>b{font-size:11px}.payment-box>div:not(.payments){font-size:9px;color:#d8e3ef;margin:4px 0}.payments{display:grid;grid-template-columns:repeat(3,1fr);gap:4px}.payments button{font-size:9px;padding:7px 2px;background:#17304e}.payment-box small{font-size:8px;color:#8da2b9}.date-link{display:flex;gap:7px;align-items:center;width:100%;text-align:left;background:#0d1f34;border:1px solid #213a56;margin:4px 0;padding:7px 9px;border-radius:9px}.date-link b{color:#f5b83d;font-size:11px;min-width:62px}.date-link span{font-size:10px;color:#d8e3ef}.summary-tag{display:inline-block;margin-top:8px;background:#17304e;border-radius:20px;padding:5px 8px;font-size:10px}.summary-card{margin-top:8px;background:#0b1a2d;border:1px solid #294563;border-radius:12px;padding:11px}.summary-card h2{margin:0 0 6px}.summary-card p{font-size:12px;line-height:1.55;margin:0;color:#d8e3ef}.summary-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin:8px 0}.summary-grid article{background:#0b1a2d;border:1px solid #294563;border-radius:10px;padding:8px}.summary-grid h3{font-size:10px;color:#f5b83d;margin:0 0 3px}.summary-grid p{font-size:10px;margin:0;color:#cbd8e6}.history-event{border-left:2px solid #f5b83d;padding:6px 0 6px 9px;margin:7px 0;background:#0d1f34;border-radius:0 8px 8px 0}.history-event b{color:#f5b83d;font-size:11px}.history-event strong{font-size:11px}.history-event p{font-size:10px!important;margin:2px 0 0!important;line-height:1.35!important}@media(max-width:600px){.plans{grid-template-columns:1fr}.summary-grid{grid-template-columns:1fr}.payments{grid-template-columns:1fr 1fr 1fr}}</style>
-</head>
-<body>
-<header><div><div class="brand">🌍 Chrono<span>Map</span> <small>V13</small></div><small>La machine à remonter le temps géographique</small></div><button id="install" class="install">Installer</button></header>
-<section class="plans"><article class="plan active" data-plan="public"><div><b>🌍 Public</b><span> Gratuit</span></div><p>Voyage dans le temps avec les fonctions essentielles.</p></article><article class="plan" data-plan="famille"><div><b>👨‍👩‍👧‍👦 Famille</b><span> 4,99 €/mois</span></div><p>Plus de détails, chronologies et exploration familiale.</p></article><article class="plan" data-plan="ecole"><div><b>🎓 École</b><span> 9,99 €/mois</span></div><p>Fiches pédagogiques, sources et contenus approfondis.</p></article></section><div id="paymentBox" class="payment-box hidden"><b>Passer à <span id="selectedPlan">Famille</span></b><div id="paymentGains"></div><div class="payments"><button data-pay="card">💳 Carte</button><button data-pay="paypal">🅿️ PayPal</button><button data-pay="wallet">📱 Apple / Google Pay</button></div><small>Paiement réel à connecter avant mise en production.</small></div><div class="controls"><input id="search" value="Avignon" placeholder="Rechercher une ville…"><button id="go">Explorer</button></div>
-<div id="map"></div>
-<section id="panel" class="panel"><div class="panel-head" id="dragHandle"><h2 id="title">Avignon</h2><span class="drag-hint">↕ Déplacer</span><button id="closePanel" class="panel-close">×</button></div><div id="desc" class="meta">Dates disponibles pour ce lieu</div><div class="badges"><span class="badge" id="date">2026</span><span class="badge ok" id="conf">Confiance élevée</span></div><div id="events"></div><div class="panel-tip">💡 Clique sur une date pour aller au résumé en bas.</div></section>
-<button id="openPanel" class="panel-toggle" aria-label="Afficher les explications">ℹ️</button>
-<div class="bottom">
- <div style="display:flex;justify-content:space-between"><span class="year" id="year">2026</span><span class="meta">année</span></div>
- <input id="timeline" class="timeline" type="range" min="-3000" max="2026" value="2026" step="1">
- <div class="actions"><button id="back">◀ 10 ans</button><button id="play" class="play">▶ Voyage</button><button id="next">10 ans ▶</button></div>
- <div class="hint">Tape une ville puis déplace la frise. Les données connues avant ou à l’année choisie sont affichées.</div>
- <nav class="navtabs" aria-label="Niveaux historiques"><button class="navtab active" data-scope="city">📍<span>Ville</span></button><button class="navtab" data-scope="region">🧭<span>Région</span></button><button class="navtab" data-scope="europe">🇪🇺<span>Europe</span></button><button class="navtab" data-scope="world">🌍<span>Monde</span></button></nav>
 </div>
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script>
@@ -249,16 +116,39 @@ const fmt=y=>y<0?Math.abs(y)+' av. J.-C.':y;
 const conf=c=>c>=.9?'Confiance élevée':c>=.75?'Confiance moyenne':'À vérifier';
 function place(){if(!data)return null;let q=$('search').value.trim().toLowerCase();return data.places.find(p=>p.name.toLowerCase()===q)||data.places.find(p=>p.aliases?.some(a=>a.toLowerCase()===q))||data.places.find(p=>p.name.toLowerCase().includes(q))||data.places[0]}
 function render(){
- if(!data)return;let y=+$('timeline').value,p=place();marker.setLatLng([p.lat,p.lon]);map.setView([p.lat,p.lon],p.id==='londres'||p.id==='rome'?6:7);
- $('title').textContent=p.name;$('desc').textContent='Que trouvait-on ici en '+fmt(y)+' ?';$('year').textContent=fmt(y);$('date').textContent=fmt(y);
- let list=[];
- if(layer==='events'||layer==='all')list=list.concat(p.events.filter(e=>e[0]<=y).slice(-8).reverse().map(e=>({year:e[0],title:e[1],text:e[2],recap:e[3],source:e[5],confidence:e[4]})));
- if(layer==='education'||layer==='all')list=list.concat(data.education.filter(e=>e.year<=y).slice(-8).reverse().map(e=>({...e,source:e.source||'Éduscol'})));
- list.sort((a,b)=>b.year-a.year);
- $('events').innerHTML=list.length?list.map(e=>`<div class="event"><b>${fmt(e.year)}</b> · ${e.title||''}<br>${e.text}<div class="source">Source : ${e.source||'Base ChronoMap'} · ${conf(e.confidence||.98)}</div></div>`).join(''):'<div class="event">Aucune donnée structurée pour cette date.</div>';
- let c=list[0]?.confidence||.98;$('conf').textContent=conf(c);renderHistorySheet(y,p);
- $('near').innerHTML=p.context?.[String(y)]?`<strong>📍 Sur place :</strong> ${p.context[String(y)]}`:'<strong>📍 Contexte :</strong> les données détaillées de cette période seront enrichies progressivement.';
- territoryLayer.eachLayer(l=>{let pr=l.feature.properties,active=(layer==='territory'||layer==='all')&&y>=pr.from&&y<=pr.to;l.setStyle({opacity:active?1:0,fillOpacity:active?.12:0})});
+ if(!data)return;
+ const y=+$('timeline').value,p=place();
+ marker.setLatLng([p.lat,p.lon]);
+ map.setView([p.lat,p.lon],p.id==='londres'||p.id==='rome'?6:7);
+ $('title').textContent=p.name; $('desc').textContent='Dates disponibles — '+p.name;
+ $('year').textContent=fmt(y); $('date').textContent=fmt(y);
+ let events=[];
+ if(infoScope==='city') events=(p.events||[]).filter(e=>e[0]<=y).slice(-12).reverse().map(e=>({year:e[0],title:e[1],text:e[2],recap:e[3],source:e[5],confidence:e[4]}));
+ else if(infoScope==='region') events=(data.regionEvents||[]).filter(e=>(e.region||p.region)===p.region&&e.year<=y).slice(-12).reverse();
+ else if(infoScope==='europe') events=(data.europeEvents||[]).filter(e=>e.year<=y).slice(-12).reverse();
+ else events=(data.worldEvents||[]).filter(e=>e.year<=y).slice(-12).reverse();
+ selectedEvent=null;
+ $('events').innerHTML=events.length?events.map((e,i)=>`<button class="date-link" data-event-index="${i}"><b>${fmt(e.year)}</b><span>${e.title||'Événement historique'}</span></button>`).join(''):'<div class="event">Aucune date disponible pour cette catégorie.</div>';
+ document.querySelectorAll('[data-event-index]').forEach(b=>b.onclick=()=>{selectedEvent=events[+b.dataset.eventIndex];showSummary(p,selectedEvent,true)});
+ $('conf').textContent=conf(events[0]?.confidence||.98);
+ territoryLayer.eachLayer(l=>{let pr=l.feature.properties,active=y>=pr.from&&y<=pr.to;l.setStyle({opacity:active?1:0,fillOpacity:active?.12:0})});
+ $('historySheet').style.display='none';
+}
+function showSummary(p,e,scroll){
+ if(!e)return;
+ const y=e.year??e[0],label=infoScope==='city'?'📍 Ville':infoScope==='region'?'🧭 Région':infoScope==='europe'?'🇪🇺 Europe':'🌍 Monde';
+ $('summaryScope').textContent=label; $('historyTitle').textContent=`${p.name} — ${fmt(y)}`;
+ $('historySubtitle').textContent=`Résumé ${label.toLowerCase()} · ${fmt(y)}`;
+ $('historyPlace').textContent=infoScope==='city'?p.name:(p.region||'À renseigner'); $('historyPeriod').textContent=fmt(y);
+ $('historyConfidence').textContent='● Date sélectionnée';
+ $('storyHeading').textContent=infoScope==='city'?'📖 Histoire de la ville':infoScope==='region'?'🧭 Histoire et géographie de la région':infoScope==='europe'?'🇪🇺 Europe à cette époque':'🌍 Monde à cette époque';
+ $('historyNarrative').textContent=e.recap||e.text||e.description||e.summary||'Résumé détaillé à enrichir.';
+ $('historyTerritory').textContent=e.territory||e.geography||p.context?.[String(y)]||'Informations géographiques à enrichir.';
+ const list=infoScope==='city'?(p.events||[]).filter(x=>x[0]<=y).slice(-8).reverse().map(x=>({year:x[0],title:x[1],text:x[2]})):[];
+ $('historyTimeline').innerHTML=list.map(x=>`<div class="history-event"><b>${fmt(x.year)}</b> · <strong>${x.title||''}</strong><p>${x.text||''}</p></div>`).join('')||'<div class="history-event">Repères supplémentaires à enrichir.</div>';
+ $('historySources').textContent='Sources : base ChronoMap et sources associées aux données.';
+ $('historySheet').style.display='block';
+ if(scroll)setTimeout(()=>$('historySheet').scrollIntoView({behavior:'smooth',block:'start'}),60);
 }
 
 $('closePanel').onclick=()=>{$('panel').classList.add('closed')};
@@ -271,7 +161,7 @@ $('play').onclick=()=>{if(timer){clearInterval(timer);timer=null;$('play').textC
 
 
 
-document.querySelectorAll('[data-scope]').forEach(b=>b.onclick=()=>{infoScope=b.dataset.scope;document.querySelectorAll('[data-scope]').forEach(x=>x.classList.toggle('active',x.dataset.scope===infoScope));showSummary(place(),selectedEvent,true)});const planInfo={famille:'Chronologies enrichies, fiches locales plus détaillées et mode familial.',ecole:'Fiches pédagogiques, sources et contenus historiques/géographiques approfondis.'};document.querySelectorAll('[data-plan]').forEach(b=>b.onclick=()=>{document.querySelectorAll('[data-plan]').forEach(x=>x.classList.remove('active'));b.classList.add('active');let p=b.dataset.plan;if(p==='public'){$('paymentBox').classList.add('hidden')}else{$('paymentBox').classList.remove('hidden');$('selectedPlan').textContent=p==='famille'?'Famille':'École';$('paymentGains').textContent=planInfo[p]}});document.querySelectorAll('[data-pay]').forEach(b=>b.onclick=()=>alert('Mode choisi : '+b.textContent.trim()+'. Le paiement réel sera connecté avant mise en production.'));
+document.querySelectorAll('[data-scope]').forEach(b=>b.onclick=()=>{infoScope=b.dataset.scope;document.querySelectorAll('[data-scope]').forEach(x=>x.classList.toggle('active',x.dataset.scope===infoScope));render()});const planInfo={famille:'Chronologies enrichies, fiches locales plus détaillées et mode familial.',ecole:'Fiches pédagogiques, sources et contenus historiques/géographiques approfondis.'};document.querySelectorAll('[data-plan]').forEach(b=>b.onclick=()=>{document.querySelectorAll('[data-plan]').forEach(x=>x.classList.remove('active'));b.classList.add('active');let p=b.dataset.plan;if(p==='public'){$('paymentBox').classList.add('hidden')}else{$('paymentBox').classList.remove('hidden');$('selectedPlan').textContent=p==='famille'?'Famille':'École';$('paymentGains').textContent=planInfo[p]}});document.querySelectorAll('[data-pay]').forEach(b=>b.onclick=()=>alert('Mode choisi : '+b.textContent.trim()+'. Le paiement réel sera connecté avant mise en production.'));
 // Panneau d'explication déplaçable : fonctionne au doigt et à la souris.
 (function(){
  const panel=$('panel'), handle=$('dragHandle');
@@ -305,20 +195,5 @@ if('serviceWorker'in navigator)navigator.serviceWorker.register('./sw.js');
 Promise.all([fetch('./data.json').then(r=>r.json()),fetch('./sources.json').then(r=>r.json()),fetch('./territories.geojson').then(r=>r.json())]).then(([d,s,g])=>{data=d;territoryLayer.addData(g);render()});
 </script>
 
-// V13.1: the immersive history fiche is hidden until the user clicks a date.
-(function(){
-  const fiche = document.getElementById('historySheet');
-  if(fiche){
-    fiche.style.display='none';
-    window.showChronoDateFiche=function(){
-      fiche.style.display='';
-      fiche.scrollIntoView({behavior:'smooth',block:'start'});
-    };
-  }
-  document.addEventListener('click',function(ev){
-    const target=ev.target.closest('[data-year],[data-date],.date-choice,.history-date');
-    if(target && window.showChronoDateFiche) window.showChronoDateFiche();
-  },true);
-})();
-
+<section id="historySheet" style="display:none" class="history-sheet"><div class="history-kicker">CHRONOMAP · RÉSUMÉ HISTORIQUE</div><div class="history-title-row"><div><h1 id="historyTitle">Avignon — 2026</h1><div id="historySubtitle" class="history-subtitle">Sélectionne une date.</div></div><span id="historyConfidence" class="history-confidence">●</span></div><div class="summary-tag" id="summaryScope">📍 Ville</div><article class="summary-card"><h2 id="storyHeading">📖 Histoire de la ville</h2><p id="historyNarrative">Clique sur une date pour afficher le résumé détaillé.</p></article><div class="summary-grid"><article><h3>📍 Lieu</h3><p id="historyPlace">—</p></article><article><h3>📅 Date</h3><p id="historyPeriod">—</p></article><article><h3>🗺️ Géographie</h3><p id="historyTerritory">—</p></article></div><h2>⏳ Repères</h2><div id="historyTimeline"></div><div class="history-sources" id="historySources">Sources : ChronoMap.</div></section>
 </body></html>
