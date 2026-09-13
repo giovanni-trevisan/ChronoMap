@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#07101f">
 <link rel="manifest" href="manifest.webmanifest">
-<title>ChronoMap V13</title>
+<title>ChronoMap V13.1</title>
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
 <style>
 :root{--bg:#07101f;--p:#0d1c30;--line:#294563;--text:#f4f7fb;--muted:#9db0c8;--gold:#f5b83d;--blue:#4b8cff}
@@ -56,11 +56,35 @@ input,button{font:inherit;border-radius:10px;border:1px solid var(--line);paddin
 .context-grid h3{font-size:11px;color:var(--gold);margin:0 0 4px}
 .context-grid p{font-size:10px;line-height:1.4;margin:0;color:#cbd8e6}
 @media(max-width:600px){.context-grid{grid-template-columns:1fr}.scope-bar{padding:6px}.scope{font-size:9px;padding:6px 8px}}
-.plans{display:grid;grid-template-columns:repeat(3,1fr);gap:5px;padding:7px;background:#081526}.plan{background:#0d1b2d;border:1px solid #294563;border-radius:10px;padding:7px;cursor:pointer}.plan.active{border-color:#4b8cff}.plan b{font-size:11px}.plan span{float:right;color:#f5b83d;font-size:9px}.plan p{font-size:9px;margin:4px 0 0;color:#cbd8e6}.payment-box{margin:0 7px 5px;padding:8px;background:#10243c;border:1px solid #315c91;border-radius:10px}.payment-box.hidden{display:none}.payment-box>b{font-size:11px}.payment-box>div:not(.payments){font-size:9px;color:#d8e3ef;margin:4px 0}.payments{display:grid;grid-template-columns:repeat(3,1fr);gap:4px}.payments button{font-size:9px;padding:7px 2px;background:#17304e}.payment-box small{font-size:8px;color:#8da2b9}.date-link{display:flex;gap:7px;align-items:center;width:100%;text-align:left;background:#0d1f34;border:1px solid #213a56;margin:4px 0;padding:7px 9px;border-radius:9px}.date-link b{color:#f5b83d;font-size:11px;min-width:62px}.date-link span{font-size:10px;color:#d8e3ef}.summary-tag{display:inline-block;margin-top:8px;background:#17304e;border-radius:20px;padding:5px 8px;font-size:10px}.summary-card{margin-top:8px;background:#0b1a2d;border:1px solid #294563;border-radius:12px;padding:11px}.summary-card h2{margin:0 0 6px}.summary-card p{font-size:12px;line-height:1.55;margin:0;color:#d8e3ef}.summary-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin:8px 0}.summary-grid article{background:#0b1a2d;border:1px solid #294563;border-radius:10px;padding:8px}.summary-grid h3{font-size:10px;color:#f5b83d;margin:0 0 3px}.summary-grid p{font-size:10px;margin:0;color:#cbd8e6}.history-event{border-left:2px solid #f5b83d;padding:6px 0 6px 9px;margin:7px 0;background:#0d1f34;border-radius:0 8px 8px 0}.history-event b{color:#f5b83d;font-size:11px}.history-event strong{font-size:11px}.history-event p{font-size:10px!important;margin:2px 0 0!important;line-height:1.35!important}@media(max-width:600px){.plans{grid-template-columns:1fr}.summary-grid{grid-template-columns:1fr}.payments{grid-template-columns:1fr 1fr 1fr}}</style>
+.plans{display:grid;grid-template-columns:repeat(3,1fr);gap:5px;padding:7px;background:#081526}.plan{background:#0d1b2d;border:1px solid #294563;border-radius:10px;padding:7px;cursor:pointer}.plan.active{border-color:#4b8cff}.plan b{font-size:11px}.plan span{float:right;color:#f5b83d;font-size:9px}.plan p{font-size:9px;margin:4px 0 0;color:#cbd8e6}.payment-box{margin:0 7px 5px;padding:8px;background:#10243c;border:1px solid #315c91;border-radius:10px}.payment-box.hidden{display:none}.payment-box>b{font-size:11px}.payment-box>div:not(.payments){font-size:9px;color:#d8e3ef;margin:4px 0}.payments{display:grid;grid-template-columns:repeat(3,1fr);gap:4px}.payments button{font-size:9px;padding:7px 2px;background:#17304e}.payment-box small{font-size:8px;color:#8da2b9}.date-link{display:flex;gap:7px;align-items:center;width:100%;text-align:left;background:#0d1f34;border:1px solid #213a56;margin:4px 0;padding:7px 9px;border-radius:9px}.date-link b{color:#f5b83d;font-size:11px;min-width:62px}.date-link span{font-size:10px;color:#d8e3ef}.summary-tag{display:inline-block;margin-top:8px;background:#17304e;border-radius:20px;padding:5px 8px;font-size:10px}.summary-card{margin-top:8px;background:#0b1a2d;border:1px solid #294563;border-radius:12px;padding:11px}.summary-card h2{margin:0 0 6px}.summary-card p{font-size:12px;line-height:1.55;margin:0;color:#d8e3ef}.summary-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin:8px 0}.summary-grid article{background:#0b1a2d;border:1px solid #294563;border-radius:10px;padding:8px}.summary-grid h3{font-size:10px;color:#f5b83d;margin:0 0 3px}.summary-grid p{font-size:10px;margin:0;color:#cbd8e6}.history-event{border-left:2px solid #f5b83d;padding:6px 0 6px 9px;margin:7px 0;background:#0d1f34;border-radius:0 8px 8px 0}.history-event b{color:#f5b83d;font-size:11px}.history-event strong{font-size:11px}.history-event p{font-size:10px!important;margin:2px 0 0!important;line-height:1.35!important}@media(max-width:600px){.plans{grid-template-columns:1fr}.summary-grid{grid-template-columns:1fr}.payments{grid-template-columns:1fr 1fr 1fr}}
+/* ChronoMap V13.1 — simplified mobile hierarchy */
+.scope-bar{display:flex;gap:6px;padding:6px 9px;background:#081526;border-bottom:1px solid #294563;overflow-x:auto}
+.scope{flex:1;min-width:0;white-space:nowrap;border:1px solid #294563;background:#10243c;color:#cbd8e6;border-radius:9px;padding:6px 7px;font-size:10px}
+.scope.active{background:#315c91;color:#fff}
+.plan-grid,.plans,.subscription-plans,.mode-grid{display:flex!important;flex-direction:row!important;gap:6px!important;align-items:stretch!important}
+.plan-grid>*,.plans>*,.subscription-plans>*,.mode-grid>*{flex:1 1 0!important;min-width:0!important}
+.plan-grid .icon,.plans .icon,.subscription-plans .icon,.mode-grid .icon,
+.plan-grid img,.plans img,.subscription-plans img,.mode-grid img{width:22px!important;height:22px!important;font-size:18px!important}
+.plan-grid h3,.plans h3,.subscription-plans h3,.mode-grid h3{font-size:11px!important}
+.plan-grid p,.plans p,.subscription-plans p,.mode-grid p{font-size:9px!important}
+
+/* Explanatory popup: dates only; the detailed fiche opens only after a date click. */
+.explanation-panel .navtab,.explanation-panel .history-focus,
+.explanation-panel .focus,.explanation-panel .category-tabs,
+.explanation-panel .scope-tabs{display:none!important}
+.explanation-panel .explanation-content{padding-top:4px}
+.date-choice,.history-date{cursor:pointer}
+</style>
 </head>
 <body>
 <header><div><div class="brand">🌍 Chrono<span>Map</span> <small>V13</small></div><small>La machine à remonter le temps géographique</small></div><button id="install" class="install">Installer</button></header>
-<section class="plans"><article class="plan active" data-plan="public"><div><b>🌍 Public</b><span> Gratuit</span></div><p>Voyage dans le temps avec les fonctions essentielles.</p></article><article class="plan" data-plan="famille"><div><b>👨‍👩‍👧‍👦 Famille</b><span> 4,99 €/mois</span></div><p>Plus de détails, chronologies et exploration familiale.</p></article><article class="plan" data-plan="ecole"><div><b>🎓 École</b><span> 9,99 €/mois</span></div><p>Fiches pédagogiques, sources et contenus approfondis.</p></article></section><div id="paymentBox" class="payment-box hidden"><b>Passer à <span id="selectedPlan">Famille</span></b><div id="paymentGains"></div><div class="payments"><button data-pay="card">💳 Carte</button><button data-pay="paypal">🅿️ PayPal</button><button data-pay="wallet">📱 Apple / Google Pay</button></div><small>Paiement réel à connecter avant mise en production.</small></div><div class="controls"><input id="search" value="Avignon" placeholder="Rechercher une ville…"><button id="go">Explorer</button></div>
+<section class="plans"><article class="plan active" data-plan="public"><div><b>🌍 Public</b><span> Gratuit</span></div><p>Voyage dans le temps avec les fonctions essentielles.</p></article><article class="plan" data-plan="famille"><div><b>👨‍👩‍👧‍👦 Famille</b><span> 4,99 €/mois</span></div><p>Plus de détails, chronologies et exploration familiale.</p></article><article class="plan" data-plan="ecole"><div><b>🎓 École</b><span> 9,99 €/mois</span></div><p>Fiches pédagogiques, sources et contenus approfondis.</p></article></section><div id="paymentBox" class="payment-box hidden"><b>Passer à <span id="selectedPlan">Famille</span></b><div id="paymentGains"></div><div class="payments"><button data-pay="card">💳 Carte</button><button data-pay="paypal">🅿️ PayPal</button><button data-pay="wallet">📱 Apple / Google Pay</button></div><small>Paiement réel à connecter avant mise en production.</small></div><div class="controls"><section id="scopeBar" class="scope-bar">
+  <button class="scope active" data-scope="city">📍 Ville</button>
+  <button class="scope" data-scope="region">🧭 Région</button>
+  <button class="scope" data-scope="europe">🇪🇺 Europe</button>
+  <button class="scope" data-scope="world">🌍 Monde</button>
+</section>
+<input id="search" value="Avignon" placeholder="Rechercher une ville…"><button id="go">Explorer</button></div>
 <div id="map"></div>
 <section id="panel" class="panel"><div class="panel-head" id="dragHandle"><h2 id="title">Avignon</h2><span class="drag-hint">↕ Déplacer</span><button id="closePanel" class="panel-close">×</button></div><div id="desc" class="meta">Dates disponibles pour ce lieu</div><div class="badges"><span class="badge" id="date">2026</span><span class="badge ok" id="conf">Confiance élevée</span></div><div id="events"></div><div class="panel-tip">💡 Clique sur une date pour aller au résumé en bas.</div></section>
 <button id="openPanel" class="panel-toggle" aria-label="Afficher les explications">ℹ️</button>
@@ -125,6 +149,23 @@ document.querySelectorAll('[data-scope]').forEach(b=>b.onclick=()=>{infoScope=b.
 if('serviceWorker'in navigator)navigator.serviceWorker.register('./sw.js');
 Promise.all([fetch('./data.json').then(r=>r.json()),fetch('./sources.json').then(r=>r.json()),fetch('./territories.geojson').then(r=>r.json())]).then(([d,s,g])=>{data=d;territoryLayer.addData(g);render()});
 </script>
+
+// V13.1: the immersive history fiche is hidden until the user clicks a date.
+(function(){
+  const fiche = document.getElementById('historySheet');
+  if(fiche){
+    fiche.style.display='none';
+    window.showChronoDateFiche=function(){
+      fiche.style.display='';
+      fiche.scrollIntoView({behavior:'smooth',block:'start'});
+    };
+  }
+  document.addEventListener('click',function(ev){
+    const target=ev.target.closest('[data-year],[data-date],.date-choice,.history-date');
+    if(target && window.showChronoDateFiche) window.showChronoDateFiche();
+  },true);
+})();
+
 </body></html<section id="historySheet" class="history-sheet"><div class="history-kicker">CHRONOMAP · RÉSUMÉ HISTORIQUE</div><div class="history-title-row"><div><h1 id="historyTitle">Avignon — 2026</h1><div id="historySubtitle" class="history-subtitle">Sélectionne une date.</div></div><span id="historyConfidence" class="history-confidence">●</span></div><div class="summary-tag" id="summaryScope">📍 Ville</div><article class="summary-card"><h2 id="storyHeading">📖 Histoire de la ville</h2><p id="historyNarrative">Clique sur une date pour afficher le résumé détaillé.</p></article><div class="summary-grid"><article><h3>📍 Lieu</h3><p id="historyPlace">—</p></article><article><h3>📅 Date</h3><p id="historyPeriod">—</p></article><article><h3>🗺️ Géographie</h3><p id="historyTerritory">—</p></article></div><h2>⏳ Repères</h2><div id="historyTimeline"></div><div class="history-sources" id="historySources">Sources : ChronoMap.</div></section> html>
 <html lang="fr">
 <head>
@@ -263,4 +304,21 @@ document.querySelectorAll('[data-scope]').forEach(b=>b.onclick=()=>{infoScope=b.
 if('serviceWorker'in navigator)navigator.serviceWorker.register('./sw.js');
 Promise.all([fetch('./data.json').then(r=>r.json()),fetch('./sources.json').then(r=>r.json()),fetch('./territories.geojson').then(r=>r.json())]).then(([d,s,g])=>{data=d;territoryLayer.addData(g);render()});
 </script>
+
+// V13.1: the immersive history fiche is hidden until the user clicks a date.
+(function(){
+  const fiche = document.getElementById('historySheet');
+  if(fiche){
+    fiche.style.display='none';
+    window.showChronoDateFiche=function(){
+      fiche.style.display='';
+      fiche.scrollIntoView({behavior:'smooth',block:'start'});
+    };
+  }
+  document.addEventListener('click',function(ev){
+    const target=ev.target.closest('[data-year],[data-date],.date-choice,.history-date');
+    if(target && window.showChronoDateFiche) window.showChronoDateFiche();
+  },true);
+})();
+
 </body></html>
