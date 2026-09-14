@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#07101f">
 <link rel="manifest" href="manifest.webmanifest">
-<title>ChronoMap V13.3</title>
+<title>ChronoMap V13.4</title>
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
 <style>
 :root{--bg:#07101f;--p:#0d1c30;--line:#294563;--text:#f4f7fb;--muted:#9db0c8;--gold:#f5b83d;--blue:#4b8cff}
@@ -91,10 +91,14 @@ input,button{font:inherit;border-radius:10px;border:1px solid var(--line);paddin
 .panel{touch-action:none;user-select:none}.panel-head{cursor:grab}.panel.dragging .panel-head{cursor:grabbing}.panel .panel-tip,.panel .badges,.panel #desc{display:none!important}.date-link{justify-content:center;min-height:42px;margin:5px 0}.date-link b{min-width:0!important;font-size:15px!important}.date-link span{display:none!important}
 .history-sheet{background:linear-gradient(180deg,#081526,#0b1c31);padding:18px 12px 28px}.date-hero{font-size:42px;line-height:1;font-weight:950;color:#f5b83d;text-shadow:0 4px 18px #f5b83d33}.history-title-row h1{margin:4px 0 0}.playful-strip{display:flex;gap:6px;overflow:auto;margin:10px 0}.story-pill{background:#17304e;border:1px solid #315c91;border-radius:999px;padding:7px 10px;font-size:10px;white-space:nowrap}.summary-card{position:relative;overflow:hidden}.story-icon{font-size:24px;margin-bottom:3px}.summary-card h2{font-size:18px}.summary-card p{font-size:13px;line-height:1.65}.story-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:8px}.story-grid article,.next-story{background:#0b1a2d;border:1px solid #294563;border-radius:12px;padding:10px}.story-grid h3{font-size:11px;margin:3px 0}.story-grid p,.next-story p{font-size:10px;line-height:1.45;margin:0;color:#cbd8e6}.next-story{margin-top:8px}.next-story b{color:#f5b83d;font-size:11px}.map-time-layer{pointer-events:none}.history-map-badge{position:absolute;z-index:900;left:10px;bottom:10px;background:#07101fe8;border:1px solid #38506e;border-radius:10px;padding:7px 9px;color:#fff;font-size:10px;backdrop-filter:blur(6px)}
 @media(max-width:600px){.story-grid{grid-template-columns:1fr}.date-hero{font-size:36px}.history-sheet{padding:14px 9px 24px}}
+
+.timeline-eras{display:flex;justify-content:space-between;gap:2px;margin:0 8px 5px;color:#8fa4bb;font-size:8px;font-weight:800;letter-spacing:.2px}
+.timeline-eras span{flex:1;text-align:center;white-space:nowrap}
+.date-panel-title{font-size:14px;font-weight:900;color:#f5f7fb;margin-bottom:6px;letter-spacing:.2px}
 </style>
 </head>
 <body>
-<header><div><div class="brand">🌍 Chrono<span>Map</span> <small>V13.3</small></div><small>La machine à remonter le temps géographique</small></div><button id="install" class="install">Installer</button></header>
+<header><div><div class="brand">🌍 Chrono<span>Map</span> <small>V13.4</small></div><small>La machine à remonter le temps géographique</small></div><button id="install" class="install">Installer</button></header>
 <section class="plans"><article class="plan active" data-plan="public"><div><b>🌍 Public</b><span> Gratuit</span></div><p>Voyage dans le temps avec les fonctions essentielles.</p></article><article class="plan" data-plan="famille"><div><b>👨‍👩‍👧‍👦 Famille</b><span> 4,99 €/mois</span></div><p>Plus de détails, chronologies et exploration familiale.</p></article><article class="plan" data-plan="ecole"><div><b>🎓 École</b><span> 9,99 €/mois</span></div><p>Fiches pédagogiques, sources et contenus approfondis.</p></article></section><div id="paymentBox" class="payment-box hidden"><b>Passer à <span id="selectedPlan">Famille</span></b><div id="paymentGains"></div><div class="payments"><button data-pay="card">💳 Carte</button><button data-pay="paypal">🅿️ PayPal</button><button data-pay="wallet">📱 Apple / Google Pay</button></div><small>Paiement réel à connecter avant mise en production.</small></div><section id="scopeBar" class="scope-bar">
   <button class="scope active" data-scope="city">📍 Ville</button>
   <button class="scope" data-scope="region">🧭 Région</button>
@@ -107,11 +111,37 @@ input,button{font:inherit;border-radius:10px;border:1px solid var(--line);paddin
 <button id="openPanel" class="panel-toggle" aria-label="Afficher les explications">ℹ️</button>
 <div class="bottom">
  <div style="display:flex;justify-content:space-between"><span class="year" id="year">2026</span><span class="meta">année</span></div>
- <input id="timeline" class="timeline" type="range" min="-3000" max="2026" value="2026" step="1">
+ <div id="timelineEras" class="timeline-eras">
+<span>Préhistoire</span><span>Antiquité</span><span>Moyen Âge</span><span>Époque moderne</span><span>Époque contemporaine</span>
+</div>
+<input id="timeline" class="timeline" type="range" min="-3000" max="2026" value="2026" step="1">
  <div class="actions"><button id="back">◀ 10 ans</button><button id="play" class="play">▶ Voyage</button><button id="next">10 ans ▶</button></div>
  <div class="hint">Tape une ville puis déplace la frise. Les données connues avant ou à l’année choisie sont affichées.</div>
 </div>
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js">
+// V13.4 — timeline, map and title stay synchronized.
+function chronomapCenterForScope(p){
+  try{
+    if(typeof map==='undefined' || !map) return;
+    const scope = window.infoScope || 'city';
+    const coords = p.coords || p.center || p.location;
+    if(scope==='city' && coords && Array.isArray(coords)){
+      map.flyTo(coords, Math.max(map.getZoom(), 12), {duration:.7});
+    }else if(scope==='region' && p.regionCenter){
+      map.flyTo(p.regionCenter, 9, {duration:.7});
+    }else if(scope==='europe'){
+      map.flyTo([50,10], 4, {duration:.7});
+    }else if(scope==='world'){
+      map.flyTo([20,0], 2, {duration:.7});
+    }
+  }catch(e){}
+}
+function chronomapUpdateTitle(y){
+  const t=document.getElementById('datePanelTitle');
+  if(t) t.textContent='⏳ Voyage dans le temps · '+(typeof fmt==='function'?fmt(y):y);
+}
+
+</script>
 <script>
 const $=id=>document.getElementById(id);
 const map=L.map('map').setView([43.9493,4.8055],5);
@@ -197,4 +227,12 @@ Promise.all([fetch('./data.json').then(r=>r.json()),fetch('./sources.json').then
 </script>
 
 <section id="historySheet" style="display:none" class="history-sheet"><div class="history-kicker">CHRONOMAP · VOYAGE DANS LE TEMPS</div><div class="history-title-row"><div><div class="date-hero" id="historyDate">1350</div><h1 id="historyTitle">Avignon</h1><div id="historySubtitle" class="history-subtitle">Une date. Un lieu. Une histoire.</div></div><span id="historyConfidence" class="history-confidence">●</span></div><div class="playful-strip"><div class="story-pill">📍 <span id="summaryScope">Ville</span></div><div class="story-pill">🕰️ <span id="historyPeriod">—</span></div><div class="story-pill">🗺️ <span id="historyPlace">—</span></div></div><article class="summary-card"><div class="story-icon">✨</div><h2 id="storyHeading">Que s’est-il passé ici ?</h2><p id="historyNarrative">Clique sur une date pour découvrir le récit.</p></article><div class="story-grid"><article><div class="story-icon">🏗️</div><h3>Le lieu change</h3><p id="historyBuild">Constructions et transformations à cette époque.</p></article><article><div class="story-icon">🛣️</div><h3>Le territoire évolue</h3><p id="historyRoads">Routes, accès et organisation du territoire.</p></article><article><div class="story-icon">🧭</div><h3>Sur la carte</h3><p id="historyMap">Frontières et géographie historique.</p></article></div><div class="next-story"><b>🎯 À retenir</b><p id="historyRemember">—</p></div><div class="history-sources" id="historySources">Sources : ChronoMap.</div></section>
+
+<script id="chronomap-region-model">
+window.CHRONOMAP_REGION_MODEL={
+  departments:["Vaucluse","Gard"],
+  hierarchy:["Ville","Département","Région","Europe","Monde"]
+};
+</script>
+
 </body></html>
