@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#07101f">
 <link rel="manifest" href="manifest.webmanifest">
-<title>ChronoMap V13.5 PROPRE</title>
+<title>ChronoMap V13.6</title>
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
 <style>
 :root{--bg:#07101f;--p:#0d1c30;--line:#294563;--text:#f4f7fb;--muted:#9db0c8;--gold:#f5b83d;--blue:#4b8cff}
@@ -101,10 +101,16 @@ input,button{font:inherit;border-radius:10px;border:1px solid var(--line);paddin
 .date-link span{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .panel{touch-action:none}
 @media(max-width:420px){.panel.dragged{width:min(390px,calc(100vw - 16px));max-width:calc(100vw - 16px)}}
+
+.date-link{display:flex!important;align-items:center!important;gap:9px!important;width:100%!important;text-align:left!important}
+.date-link b{flex:0 0 58px!important;font-size:12px!important}
+.date-link span{font-size:11px!important;font-weight:800!important;white-space:nowrap!important;overflow:hidden!important;text-overflow:ellipsis!important}
+#historySheet .kid-badge{display:inline-block;padding:5px 9px;border-radius:999px;background:#163b5c;font-size:10px;font-weight:900;margin-bottom:7px}
+#historySheet .kid-card{border-radius:16px;padding:10px;margin-top:8px}
 </style>
 </head>
 <body>
-<header><div><div class="brand">🌍 Chrono<span>Map</span> <small>V13.5</small></div><small>La machine à remonter le temps géographique</small></div><button id="install" class="install">Installer</button></header>
+<header><div><div class="brand">🌍 Chrono<span>Map</span> <small>V13.6</small></div><small>La machine à remonter le temps géographique</small></div><button id="install" class="install">Installer</button></header>
 <section class="plans"><article class="plan active" data-plan="public"><div><b>🌍 Public</b><span> Gratuit</span></div><p>Voyage dans le temps avec les fonctions essentielles.</p></article><article class="plan" data-plan="famille"><div><b>👨‍👩‍👧‍👦 Famille</b><span> 4,99 €/mois</span></div><p>Plus de détails, chronologies et exploration familiale.</p></article><article class="plan" data-plan="ecole"><div><b>🎓 École</b><span> 9,99 €/mois</span></div><p>Fiches pédagogiques, sources et contenus approfondis.</p></article></section><div id="paymentBox" class="payment-box hidden"><b>Passer à <span id="selectedPlan">Famille</span></b><div id="paymentGains"></div><div class="payments"><button data-pay="card">💳 Carte</button><button data-pay="paypal">🅿️ PayPal</button><button data-pay="wallet">📱 Apple / Google Pay</button></div><small>Paiement réel à connecter avant mise en production.</small></div><section id="scopeBar" class="scope-bar">
   <button class="scope active" data-scope="city">📍 Ville</button>
   <button class="scope" data-scope="region">🧭 Région</button>
@@ -268,6 +274,13 @@ document.querySelectorAll('[data-scope]').forEach(b=>b.onclick=()=>{infoScope=b.
  panel.addEventListener('touchend',e=>{if(e.touches.length<2)pinch=false},{passive:true});
 })();
 
+
+(function(){
+  if(typeof map!=="undefined" && map){
+    try{map.scrollWheelZoom.enable();map.touchZoom.enable();map.doubleClickZoom.enable();map.dragging.enable();}catch(e){}
+  }
+})();
+
 if('serviceWorker'in navigator)navigator.serviceWorker.register('./sw.js');
 Promise.all([fetch('./data.json').then(r=>r.json()),fetch('./sources.json').then(r=>r.json()),fetch('./territories.geojson').then(r=>r.json())]).then(([d,s,g])=>{data=d;territoryLayer.addData(g);render()});
 </script>
@@ -280,5 +293,22 @@ window.CHRONOMAP_REGION_MODEL={
   hierarchy:["Ville","Département","Région","Europe","Monde"]
 };
 </script>
+
+
+(function(){
+  const obs=new MutationObserver(()=>{
+    const sheet=document.getElementById('historySheet');
+    if(!sheet || sheet.dataset.kidReady) return;
+    const title=sheet.querySelector('h2,.history-title');
+    if(title){
+      const badge=document.createElement('div');
+      badge.className='kid-badge';
+      badge.textContent='🎒 Mission du temps';
+      title.parentNode.insertBefore(badge,title);
+    }
+    sheet.dataset.kidReady='1';
+  });
+  obs.observe(document.body,{childList:true,subtree:true});
+})();
 
 </body></html>
