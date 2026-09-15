@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#07101f">
 <link rel="manifest" href="manifest.webmanifest">
-<title>ChronoMap V13.5</title>
+<title>ChronoMap V13.5 PROPRE</title>
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
 <style>
 :root{--bg:#07101f;--p:#0d1c30;--line:#294563;--text:#f4f7fb;--muted:#9db0c8;--gold:#f5b83d;--blue:#4b8cff}
@@ -96,11 +96,11 @@ input,button{font:inherit;border-radius:10px;border:1px solid var(--line);paddin
 .timeline-eras span{flex:1;text-align:center;white-space:nowrap}
 .date-panel-title{font-size:14px;font-weight:900;color:#f5f7fb;margin-bottom:6px;letter-spacing:.2px}
 
-.date-item{display:flex;align-items:center;gap:7px;width:100%;text-align:left;cursor:pointer}
-.date-item .date-main{font-weight:900;min-width:54px}
-.date-item .date-title{font-size:10px;color:#cbd8e6;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.date-item:hover .date-title{color:#fff}
-.explanation-panel{resize:both;overflow:auto;min-width:180px;min-height:90px}
+.date-link{display:flex;align-items:center;gap:8px;text-align:left}
+.date-link b{flex:0 0 auto}
+.date-link span{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.panel{touch-action:none}
+@media(max-width:420px){.panel.dragged{width:min(390px,calc(100vw - 16px));max-width:calc(100vw - 16px)}}
 </style>
 </head>
 <body>
@@ -168,7 +168,7 @@ function render(){
  else if(infoScope==='region') events=(data.regionEvents||[]).filter(e=>(e.region||p.region)===p.region&&e.year<=y).slice(-12).reverse();
  else if(infoScope==='europe') events=(data.europeEvents||[]).filter(e=>e.year<=y).slice(-12).reverse();
  else events=(data.worldEvents||[]).filter(e=>e.year<=y).slice(-12).reverse();
- $('events').innerHTML=events.length?events.map((e,i)=>`<button class="date-link" data-event-index="${i}" aria-label="Ouvrir ${fmt(e.year)}"><b>${fmt(e.year)}</b></button>`).join(''):'<div class="event">Aucune date disponible.</div>';
+ $('events').innerHTML=events.length?events.map((e,i)=>`<button class="date-link" data-event-index="${i}" aria-label="Ouvrir ${fmt(e.year)}"><b>${fmt(e.year)}</b><span>${e.title||''}</span></button>`).join(''):'<div class="event">Aucune date disponible.</div>';
  document.querySelectorAll('[data-event-index]').forEach(b=>b.onclick=()=>{selectedEvent=events[+b.dataset.eventIndex];showSummary(p,selectedEvent,true)});
  territoryLayer.eachLayer(l=>{let pr=l.feature.properties||{},active=y>=(pr.from??-99999)&&y<=(pr.to??99999);l.setStyle({opacity:active?1:0,fillOpacity:active?.16:0})});
  $('historySheet').style.display='none';
@@ -213,19 +213,59 @@ $('play').onclick=()=>{if(timer){clearInterval(timer);timer=null;$('play').textC
 
 
 document.querySelectorAll('[data-scope]').forEach(b=>b.onclick=()=>{infoScope=b.dataset.scope;document.querySelectorAll('[data-scope]').forEach(x=>x.classList.toggle('active',x.dataset.scope===infoScope));render()});const planInfo={famille:'Chronologies enrichies, fiches locales plus détaillées et mode familial.',ecole:'Fiches pédagogiques, sources et contenus historiques/géographiques approfondis.'};document.querySelectorAll('[data-plan]').forEach(b=>b.onclick=()=>{document.querySelectorAll('[data-plan]').forEach(x=>x.classList.remove('active'));b.classList.add('active');let p=b.dataset.plan;if(p==='public'){$('paymentBox').classList.add('hidden')}else{$('paymentBox').classList.remove('hidden');$('selectedPlan').textContent=p==='famille'?'Famille':'École';$('paymentGains').textContent=planInfo[p]}});document.querySelectorAll('[data-pay]').forEach(b=>b.onclick=()=>alert('Mode choisi : '+b.textContent.trim()+'. Le paiement réel sera connecté avant mise en production.'));
-// Panneau déplaçable partout : appui long puis déplacement au doigt/souris.
+// Panneau explicatif : appui long puis déplacement + pincement à 2 doigts pour redimensionner.
 (function(){
- const panel=$('panel'); let pressTimer=null,dragging=false,sx=0,sy=0,sl=0,st=0,pointerId=null;
- function point(e){return e.touches?e.touches[0]:e}
- function cancel(){if(pressTimer){clearTimeout(pressTimer);pressTimer=null} if(!dragging)return;dragging=false;panel.classList.remove('dragging')}
- function begin(e){
-   if(e.target.closest('button'))return;
-   const pt=point(e),r=panel.getBoundingClientRect(); sx=pt.clientX;sy=pt.clientY;sl=r.left;st=r.top;pointerId=e.pointerId;
-   pressTimer=setTimeout(()=>{dragging=true;panel.classList.add('dragging');panel.style.left=sl+'px';panel.style.top=st+'px';panel.style.right='auto';panel.style.bottom='auto'},180);
- }
- function move(e){if(!pressTimer&&!dragging)return;const pt=point(e);if(!dragging&&Math.hypot(pt.clientX-sx,pt.clientY-sy)>8){clearTimeout(pressTimer);pressTimer=null;return}if(!dragging)return;e.preventDefault();const maxX=innerWidth-panel.offsetWidth-8,maxY=innerHeight-panel.offsetHeight-8;panel.style.left=Math.max(8,Math.min(maxX,sl+pt.clientX-sx))+'px';panel.style.top=Math.max(65,Math.min(maxY,st+pt.clientY-sy))+'px'}
- panel.addEventListener('pointerdown',begin);addEventListener('pointermove',move,{passive:false});addEventListener('pointerup',cancel);addEventListener('pointercancel',cancel);
- panel.addEventListener('touchstart',begin,{passive:true});addEventListener('touchmove',move,{passive:false});addEventListener('touchend',cancel);
+ const panel=$('panel');
+ let hold=null, dragging=false, sx=0, sy=0, sl=0, st=0;
+ let pinch=false, pinchStart=0, pinchW=0, pinchH=0;
+ function dist(a,b){return Math.hypot(a.clientX-b.clientX,a.clientY-b.clientY)}
+ function clamp(v,min,max){return Math.max(min,Math.min(max,v))}
+ panel.addEventListener('pointerdown',e=>{
+   if(e.target.closest('button')) return;
+   panel.setPointerCapture?.(e.pointerId);
+   const r=panel.getBoundingClientRect();
+   sx=e.clientX; sy=e.clientY; sl=r.left; st=r.top;
+   hold=setTimeout(()=>{
+     dragging=true;
+     panel.classList.add('dragging','dragged');
+     panel.style.left=sl+'px'; panel.style.top=st+'px';
+     panel.style.right='auto'; panel.style.bottom='auto';
+   },220);
+ });
+ panel.addEventListener('pointermove',e=>{
+   if(!dragging)return;
+   e.preventDefault();
+   const maxX=innerWidth-panel.offsetWidth-8, maxY=innerHeight-panel.offsetHeight-8;
+   panel.style.left=clamp(sl+e.clientX-sx,8,Math.max(8,maxX))+'px';
+   panel.style.top=clamp(st+e.clientY-sy,65,Math.max(65,maxY))+'px';
+ });
+ panel.addEventListener('pointerup',e=>{
+   if(hold){clearTimeout(hold);hold=null}
+   if(dragging){dragging=false;panel.classList.remove('dragging')}
+   try{panel.releasePointerCapture?.(e.pointerId)}catch(_){}
+ });
+ panel.addEventListener('pointercancel',e=>{
+   if(hold){clearTimeout(hold);hold=null}
+   dragging=false;panel.classList.remove('dragging');
+ });
+ // Native touch events are used only for the two-finger pinch.
+ panel.addEventListener('touchstart',e=>{
+   if(e.touches.length===2){
+     if(hold){clearTimeout(hold);hold=null}
+     dragging=false;panel.classList.remove('dragging');
+     pinch=true;pinchStart=dist(e.touches[0],e.touches[1]);
+     const r=panel.getBoundingClientRect();pinchW=r.width;pinchH=r.height;
+   }
+ },{passive:true});
+ panel.addEventListener('touchmove',e=>{
+   if(!pinch||e.touches.length!==2)return;
+   const d=dist(e.touches[0],e.touches[1]);
+   const scale=d/pinchStart;
+   panel.style.width=clamp(pinchW*scale,180,innerWidth-16)+'px';
+   panel.style.maxHeight=clamp(pinchH*scale,100,innerHeight-80)+'px';
+   e.preventDefault();
+ },{passive:false});
+ panel.addEventListener('touchend',e=>{if(e.touches.length<2)pinch=false},{passive:true});
 })();
 
 if('serviceWorker'in navigator)navigator.serviceWorker.register('./sw.js');
@@ -240,29 +280,5 @@ window.CHRONOMAP_REGION_MODEL={
   hierarchy:["Ville","Département","Région","Europe","Monde"]
 };
 </script>
-
-
-/* V13.5 — pinch gesture on the explanatory panel to resize it. */
-(function(){
- const panel=document.querySelector('.explanation-panel') || document.getElementById('explanationPanel') || document.getElementById('infoPanel');
- if(!panel) return;
- let pinchStart=0, startW=0, startH=0;
- panel.addEventListener('touchstart',e=>{
-   if(e.touches.length===2){
-     pinchStart=Math.hypot(e.touches[0].clientX-e.touches[1].clientX,e.touches[0].clientY-e.touches[1].clientY);
-     startW=panel.getBoundingClientRect().width; startH=panel.getBoundingClientRect().height;
-   }
- },{passive:true});
- panel.addEventListener('touchmove',e=>{
-   if(e.touches.length===2 && pinchStart){
-     const d=Math.hypot(e.touches[0].clientX-e.touches[1].clientX,e.touches[0].clientY-e.touches[1].clientY);
-     const scale=d/pinchStart;
-     panel.style.width=Math.max(180,Math.min(window.innerWidth-20,startW*scale))+'px';
-     panel.style.height=Math.max(90,Math.min(window.innerHeight-30,startH*scale))+'px';
-     e.preventDefault();
-   }
- },{passive:false});
- panel.addEventListener('touchend',e=>{if(e.touches.length<2) pinchStart=0},{passive:true});
-})();
 
 </body></html>
