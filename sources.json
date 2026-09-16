@@ -1,34 +1,75 @@
-[
-  {
-    "id": "eduscol-cycle4",
-    "title": "Ressources d'accompagnement du programme d'histoire-géographie au cycle 4",
-    "publisher": "Ministère de l'Éducation nationale / Éduscol",
-    "url": "https://eduscol.education.gouv.fr/5730/ressources-d-accompagnement-du-programme-d-histoire-geographie-au-cycle-4",
-    "type": "official",
-    "license": "site institutionnel — consulter les conditions de réutilisation"
-  },
-  {
-    "id": "eduscol-competences",
-    "title": "Se repérer dans le temps : construire des repères historiques",
-    "publisher": "Ministère de l'Éducation nationale / Éduscol",
-    "url": "https://eduscol.education.gouv.fr/sites/default/files/document/ra16c3c4sereperertemps819126pdf-77163.pdf",
-    "type": "official",
-    "license": "site institutionnel — consulter les conditions de réutilisation"
-  },
-  {
-    "id": "edubase",
-    "title": "Édubase — ressources pédagogiques",
-    "publisher": "Ministère de l'Éducation nationale",
-    "url": "https://edubase.eduscol.education.fr/",
-    "type": "educational-index",
-    "license": "varie selon la ressource"
-  },
-  {
-    "id": "ohm",
-    "title": "OpenHistoricalMap",
-    "publisher": "OpenHistoricalMap",
-    "url": "https://www.openhistoricalmap.org/",
-    "type": "historical-map",
-    "license": "vérifier la licence de chaque donnée"
-  }
-]
+{
+  "version": "avignon-test-1",
+  "sources": [
+    {
+      "id": "avignon-remparts",
+      "title": "Ville d’Avignon — Les remparts dans l’histoire urbaine d’Avignon",
+      "url": "https://www.avignon.fr/les-remparts-dans-lhistoire-urbaine-davignon"
+    },
+    {
+      "id": "avignon-canaux",
+      "title": "Ville d’Avignon — Les remparts et le système des canaux",
+      "url": "https://www.avignon.fr/les-remparts-et-le-systeme-des-canaux"
+    },
+    {
+      "id": "avignon-defense",
+      "title": "Ville d’Avignon — Les remparts, système de défense face aux attaques",
+      "url": "https://www.avignon.fr/les-remparts-systeme-de-defense-face-aux-attaques"
+    },
+    {
+      "id": "avignon-psmv",
+      "title": "Ville d’Avignon — Rapport de présentation du PSMV, analyse historique générale",
+      "url": "https://www.avignon.fr/fileadmin/actualites/Documents/2024/07_Juillet/PSMV/PSMV_Numerise/1_Rapport_de_Presentation_12-juin-2007.pdf"
+    },
+    {
+      "id": "palais-gothique",
+      "title": "Palais des Papes / Avignon Tourisme — Le plus grand palais gothique",
+      "url": "https://palais-des-papes.com/le-plus-grand-palais-gothique/"
+    },
+    {
+      "id": "avignon-papes",
+      "title": "Palais des Papes / Avignon Tourisme — 9 papes à Avignon",
+      "url": "https://palais-des-papes.com/9-papes-a-avignon/"
+    },
+    {
+      "id": "pont",
+      "title": "Ville d’Avignon — Pont Saint-Bénézet",
+      "url": "https://www.avignon.fr/fileadmin/Documents/images/Externe/jep17.pdf"
+    },
+    {
+      "id": "gare",
+      "title": "Ville d’Avignon — Requalification du PEM d’Avignon Centre",
+      "url": "https://www.avignon.fr/fileadmin/actualites/Documents/interne_mai_2021/PLU/PAR_PEM_AVIGNON_Dossier_MEC_Pre__sentation_et_intere__t_ge__ne__ral_du_projet__2021_05_25_CS.pdf"
+    },
+    {
+      "id": "republique",
+      "title": "Ville d’Avignon — La Porte de la République",
+      "url": "https://www.avignon.fr/la-porte-de-la-republique-un-heritage-haussmannien"
+    },
+    {
+      "id": "thiers",
+      "title": "Ville d’Avignon — Le renouveau de la rue Thiers",
+      "url": "https://www.avignon.fr/avignon-se-reinvente/deja-realises/le-renouveau-de-la-rue-thiers"
+    },
+    {
+      "id": "unesco",
+      "title": "UNESCO — Centre historique d’Avignon : Palais des papes, ensemble épiscopal et Pont d’Avignon",
+      "url": "https://whc.unesco.org/fr/list/228"
+    },
+    {
+      "id": "unesco-maps",
+      "title": "UNESCO — Cartes du centre historique d’Avignon",
+      "url": "https://whc.unesco.org/fr/list/228/cartes/"
+    },
+    {
+      "id": "archives-mont",
+      "title": "Archives d’Avignon — Du Mont-de-piété au Crédit municipal",
+      "url": "https://www.expositions-archives.avignon.fr/du-mont-de-pi%C3%A9t%C3%A9-au-cr%C3%A9dit-municipal"
+    },
+    {
+      "id": "palais-2026",
+      "title": "Palais des Papes — transformation 2026-2027",
+      "url": "https://palais-des-papes.com/"
+    }
+  ]
+}

@@ -104,6 +104,10 @@ input,button{font:inherit;border-radius:10px;border:1px solid var(--line);paddin
 .history-sheet .story-pill{font-weight:800}
 .history-sheet .summary-card{border-radius:16px}
 .history-sheet .story-grid article,.history-sheet .next-story{border-radius:14px}
+
+.history-map-badge{position:absolute;left:10px;bottom:10px;z-index:900;background:rgba(7,16,31,.88);border:1px solid #294563;border-radius:12px;padding:7px 10px;font-size:11px;font-weight:900;color:#f4f7fb;pointer-events:none;box-shadow:0 4px 16px rgba(0,0,0,.25)}
+.map-history-legend{position:absolute;right:10px;bottom:10px;z-index:900;background:rgba(7,16,31,.88);border:1px solid #294563;border-radius:12px;padding:7px 10px;font-size:10px;color:#d9e4f0;pointer-events:none}
+.map-history-legend b{color:#f5b83d}
 </style>
 </head>
 <body>
@@ -181,10 +185,13 @@ function renderHistoricalMap(p,y){
   const features=(data?.mapHistory||[]).filter(f=>y>=(f.from??-99999)&&y<=(f.to??99999));
   features.forEach(f=>{
     let layer=null;
-    if(f.type==='line'&&f.coords)layer=L.polyline(f.coords,{weight:f.weight||4,opacity:.9});
-    else if(f.type==='polygon'&&f.coords)layer=L.polygon(f.coords,{weight:f.weight||2,fillOpacity:.12});
-    else if(f.type==='point'&&f.coords)layer=L.circleMarker(f.coords,{radius:f.radius||6,weight:2,fillOpacity:.8});
-    if(layer){layer.bindTooltip(f.label||'Transformation historique');historicalVectorLayer.addLayer(layer);}
+    if(f.type==='line'&&f.coords)layer=L.polyline(f.coords,{weight:f.weight||4,opacity:.92});
+    else if(f.type==='polygon'&&f.coords)layer=L.polygon(f.coords,{weight:f.weight||2,fillOpacity:.16});
+    else if(f.type==='point'&&f.coords)layer=L.circleMarker(f.coords,{radius:f.radius||7,weight:2,fillOpacity:.85});
+    if(layer){
+      layer.bindTooltip(f.label||'Transformation historique');
+      historicalVectorLayer.addLayer(layer);
+    }
   });
   let badge=$('mapTimeBadge');
   if(!badge){
@@ -193,7 +200,16 @@ function renderHistoricalMap(p,y){
     badge.className='history-map-badge';
     $('map').appendChild(badge);
   }
-  badge.textContent=`🕰️ Carte historique · ${fmt(y)}`;
+  badge.innerHTML=`🕰️ <b>Avignon</b> · ${fmt(y)} · ${features.length} transformation(s)`;
+
+  let legend=$('mapHistoryLegend');
+  if(!legend){
+    legend=document.createElement('div');
+    legend.id='mapHistoryLegend';
+    legend.className='map-history-legend';
+    legend.innerHTML='<b>Carte historique</b><br>Les formes sont schématiques dans ce premier test.';
+    $('map').appendChild(legend);
+  }
 }
 
 function showSummary(p,e,scroll){
@@ -213,7 +229,7 @@ function showSummary(p,e,scroll){
   $('historyRoads').textContent=e.roads||e.transport||'Les routes, voies et accès seront enrichis avec les données historiques.';
   $('historyMap').textContent=e.territory||e.geography||p.context?.[String(y)]||'La transformation du territoire et des frontières sera enrichie.';
   $('historyRemember').textContent=e.remember||e[2]||'Un repère historique directement lié au niveau sélectionné.';
-  $('historySources').textContent='Sources : '+(e.source||e[5]||'base ChronoMap')+'.';
+   $('historySources').textContent='Sources : '+(e.source||e[5]||'base ChronoMap')+'. Prototype Avignon : données historiques sourcées, géométries cartographiques encore schématiques.';
   $('historySheet').style.display='block';
   renderHistoricalMap(p,y);
   if(scroll)setTimeout(()=>$('historySheet').scrollIntoView({behavior:'smooth',block:'start'}),80);
@@ -275,7 +291,7 @@ $('play').onclick=()=>{
     if(y>2026){clearInterval(timer);timer=null;$('play').textContent='▶ Voyage';return}
     $('timeline').value=y;
     render();
-  },90);
+  },140);
 };
 
 document.querySelectorAll('[data-scope]').forEach(b=>b.onclick=()=>{
@@ -396,14 +412,15 @@ try{
 if('serviceWorker' in navigator)navigator.serviceWorker.register('./sw.js');
 
 Promise.all([
-  fetch('./data.json').then(r=>r.json()),
-  fetch('./sources.json').then(r=>r.json()),
-  fetch('./territories.geojson').then(r=>r.json())
+  fetch('./data.json').then(r=>{if(!r.ok)throw new Error('data.json');return r.json()}),
+  fetch('./sources.json').then(r=>{if(!r.ok)throw new Error('sources.json');return r.json()}),
+  fetch('./territories.geojson').then(r=>{if(!r.ok)throw new Error('territories.geojson');return r.json()})
 ]).then(([d,s,g])=>{
   data=d;
   territoryLayer.addData(g);
   lastPlaceKey='';
   render();
+  document.title='ChronoMap — Avignon · données historiques chargées';
 }).catch(err=>{
   console.error(err);
   const hint=document.querySelector('.hint');
