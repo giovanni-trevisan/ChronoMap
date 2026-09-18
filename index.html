@@ -39,7 +39,7 @@ input,button{font:inherit;border-radius:10px;border:1px solid var(--line);paddin
  .panel{top:auto;bottom:174px;left:8px;right:8px;width:auto;max-height:30vh;padding:8px;border-radius:13px} .panel.dragged{left:auto;right:auto;top:auto;bottom:auto;width:min(390px,calc(100vw - 16px))}
  .panel h2{font-size:15px}.panel .event{font-size:11px}
  .panel-toggle{top:auto;bottom:174px;right:9px}
- .controls{grid-template-columns:1fr 92px}.controls input,.controls button{font-size:13px;padding:8px}
+ .top-menus{display:grid;grid-template-columns:1fr 1fr;gap:7px;padding:7px;background:#081526}.top-menu{display:flex;flex-direction:column;gap:3px}.top-menu label{font-size:9px;font-weight:900;color:#8fa4bb;text-transform:uppercase}.top-menu select,.timeline-step{width:100%;font-size:11px;font-weight:800;background:#10243c;color:#fff;border:1px solid #315c91;border-radius:10px;padding:9px}.controls{grid-template-columns:1fr 92px}.controls input,.controls button{font-size:13px;padding:8px}
  .brand{font-size:18px}.bottom{padding-top:5px}.actions button{font-size:10px;padding:7px 4px}
  .navtabs{gap:3px}.navtab{font-size:9px;padding:5px 1px}
 }
@@ -56,7 +56,7 @@ input,button{font:inherit;border-radius:10px;border:1px solid var(--line);paddin
 .context-grid h3{font-size:11px;color:var(--gold);margin:0 0 4px}
 .context-grid p{font-size:10px;line-height:1.4;margin:0;color:#cbd8e6}
 @media(max-width:600px){.context-grid{grid-template-columns:1fr}.scope-bar{padding:6px}.scope{font-size:9px;padding:6px 8px}}
-.plans{display:grid;grid-template-columns:repeat(3,1fr);gap:5px;padding:7px;background:#081526}.plan{background:#0d1b2d;border:1px solid #294563;border-radius:10px;padding:7px;cursor:pointer}.plan.active{border-color:#4b8cff}.plan b{font-size:11px}.plan span{float:right;color:#f5b83d;font-size:9px}.plan p{font-size:9px;margin:4px 0 0;color:#cbd8e6}.payment-box{margin:0 7px 5px;padding:8px;background:#10243c;border:1px solid #315c91;border-radius:10px}.payment-box.hidden{display:none}.payment-box>b{font-size:11px}.payment-box>div:not(.payments){font-size:9px;color:#d8e3ef;margin:4px 0}.payments{display:grid;grid-template-columns:repeat(3,1fr);gap:4px}.payments button{font-size:9px;padding:7px 2px;background:#17304e}.payment-box small{font-size:8px;color:#8da2b9}.date-link{display:flex;gap:7px;align-items:center;width:100%;text-align:left;background:#0d1f34;border:1px solid #213a56;margin:4px 0;padding:7px 9px;border-radius:9px}.date-link b{color:#f5b83d;font-size:11px;min-width:62px}.date-link span{font-size:10px;color:#d8e3ef}.summary-tag{display:inline-block;margin-top:8px;background:#17304e;border-radius:20px;padding:5px 8px;font-size:10px}.summary-card{margin-top:8px;background:#0b1a2d;border:1px solid #294563;border-radius:12px;padding:11px}.summary-card h2{margin:0 0 6px}.summary-card p{font-size:12px;line-height:1.55;margin:0;color:#d8e3ef}.summary-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin:8px 0}.summary-grid article{background:#0b1a2d;border:1px solid #294563;border-radius:10px;padding:8px}.summary-grid h3{font-size:10px;color:#f5b83d;margin:0 0 3px}.summary-grid p{font-size:10px;margin:0;color:#cbd8e6}.history-event{border-left:2px solid #f5b83d;padding:6px 0 6px 9px;margin:7px 0;background:#0d1f34;border-radius:0 8px 8px 0}.history-event b{color:#f5b83d;font-size:11px}.history-event strong{font-size:11px}.history-event p{font-size:10px!important;margin:2px 0 0!important;line-height:1.35!important}@media(max-width:600px){.plans{grid-template-columns:1fr}.summary-grid{grid-template-columns:1fr}.payments{grid-template-columns:1fr 1fr 1fr}}
+.plans{display:grid;grid-template-columns:repeat(3,1fr);gap:5px;padding:7px;background:#081526}.plan{background:#0d1b2d;border:1px solid #294563;border-radius:10px;padding:7px;cursor:pointer}.plan.active{border-color:#4b8cff}.plan b{font-size:11px}.plan span{float:right;color:#f5b83d;font-size:9px}.plan p{font-size:9px;margin:4px 0 0;color:#cbd8e6}.payment-box{margin:0 7px 5px;padding:8px;background:#10243c;border:1px solid #315c91;border-radius:10px}.payment-box.hidden{display:none}.payment-box>b{font-size:11px}.payment-box>div:not(.payments){font-size:9px;color:#d8e3ef;margin:4px 0}.payments{display:grid;grid-template-columns:repeat(3,1fr);gap:4px}.payments button{font-size:9px;padding:7px 2px;background:#17304e}.payment-box small{font-size:8px;color:#8da2b9}.date-link{display:flex;gap:7px;align-items:center;width:100%;text-align:left;background:#0d1f34;border:1px solid #213a56;margin:4px 0;padding:7px 9px;border-radius:9px}.date-link b{color:#f5b83d;font-size:11px;min-width:62px}.date-link span{font-size:10px;color:#d8e3ef}.summary-tag{display:inline-block;margin-top:8px;background:#17304e;border-radius:20px;padding:5px 8px;font-size:10px}.summary-card{margin-top:8px;background:#0b1a2d;border:1px solid #294563;border-radius:12px;padding:11px}.summary-card h2{margin:0 0 6px}.summary-card p{font-size:12px;line-height:1.55;margin:0;color:#d8e3ef}.summary-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin:8px 0}.summary-grid article{background:#0b1a2d;border:1px solid #294563;border-radius:10px;padding:8px}.summary-grid h3{font-size:10px;color:#f5b83d;margin:0 0 3px}.summary-grid p{font-size:10px;margin:0;color:#cbd8e6}.history-event{border-left:2px solid #f5b83d;padding:6px 0 6px 9px;margin:7px 0;background:#0d1f34;border-radius:0 8px 8px 0}.history-event b{color:#f5b83d;font-size:11px}.history-event strong{font-size:11px}.history-event p{font-size:10px!important;margin:2px 0 0!important;line-height:1.35!important}@media(max-width:600px){.summary-grid{grid-template-columns:1fr}.payments{grid-template-columns:1fr 1fr 1fr}}
 /* ChronoMap V13.3 — simplified mobile hierarchy */
 .scope-bar{display:flex;gap:6px;padding:6px 9px;background:#081526;border-bottom:1px solid #294563;overflow-x:auto}
 .scope{flex:1;min-width:0;white-space:nowrap;border:1px solid #294563;background:#10243c;color:#cbd8e6;border-radius:9px;padding:6px 7px;font-size:10px}
@@ -90,7 +90,7 @@ input,button{font:inherit;border-radius:10px;border:1px solid var(--line);paddin
 /* V13.3 — interface tactile + fiche immersive */
 .panel{touch-action:none;user-select:none}.panel-head{cursor:grab}.panel.dragging .panel-head{cursor:grabbing}.panel .panel-tip,.panel .badges,.panel #desc{display:none!important}.date-link{justify-content:center;min-height:42px;margin:5px 0}.date-link b{min-width:0!important;font-size:15px!important}.date-link span{display:none!important}
 .history-sheet{background:linear-gradient(180deg,#081526,#0b1c31);padding:18px 12px 28px}.date-hero{font-size:42px;line-height:1;font-weight:950;color:#f5b83d;text-shadow:0 4px 18px #f5b83d33}.history-title-row h1{margin:4px 0 0}.playful-strip{display:flex;gap:6px;overflow:auto;margin:10px 0}.story-pill{background:#17304e;border:1px solid #315c91;border-radius:999px;padding:7px 10px;font-size:10px;white-space:nowrap}.summary-card{position:relative;overflow:hidden}.story-icon{font-size:24px;margin-bottom:3px}.summary-card h2{font-size:18px}.summary-card p{font-size:13px;line-height:1.65}.story-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:8px}.story-grid article,.next-story{background:#0b1a2d;border:1px solid #294563;border-radius:12px;padding:10px}.story-grid h3{font-size:11px;margin:3px 0}.story-grid p,.next-story p{font-size:10px;line-height:1.45;margin:0;color:#cbd8e6}.next-story{margin-top:8px}.next-story b{color:#f5b83d;font-size:11px}.map-time-layer{pointer-events:none}.history-map-badge{position:absolute;z-index:900;left:10px;bottom:10px;background:#07101fe8;border:1px solid #38506e;border-radius:10px;padding:7px 9px;color:#fff;font-size:10px;backdrop-filter:blur(6px)}
-.map-modes{position:absolute;top:10px;right:10px;z-index:1000;display:flex;gap:4px;padding:5px;background:rgba(7,16,31,.94);border:1px solid #38506e;border-radius:13px;box-shadow:0 8px 25px #0008}.map-modes button{width:auto;padding:7px 9px;border:0;border-radius:9px;background:#172b47;color:#eaf2fb;font-size:10px;font-weight:800}.map-modes button.active{background:#f5b83d;color:#07101f}
+.map-modes{position:absolute;top:10px;right:10px;z-index:1000;display:flex;gap:4px;padding:5px;background:rgba(7,16,31,.94);border:1px solid #38506e;border-radius:13px;box-shadow:0 8px 25px #0008}.map-modes select{width:auto;padding:7px 9px;border:0;border-radius:9px;background:#172b47;color:#eaf2fb;font-size:10px;font-weight:800}
 .lesson{margin-top:10px;border-radius:18px;overflow:hidden;background:#0b1a2d;border:1px solid #294563}.lesson-img{width:100%;height:190px;object-fit:cover;display:block;background:#142942}.lesson-placeholder{height:190px;display:flex;align-items:center;justify-content:center;font-size:58px;background:#142942}.lesson-body{padding:13px}.lesson-kicker{font-size:10px;color:#f5b83d;font-weight:900;text-transform:uppercase}.lesson h2{margin:4px 0 7px;font-size:20px}.lesson p{font-size:12px;line-height:1.55;color:#dbe6f1;margin:7px 0}.lesson-card{margin-top:9px;padding:10px;border-radius:13px;background:#10243a}.lesson-card b{display:block;color:#f5b83d;font-size:10px;margin-bottom:3px}.lesson-challenge{margin-top:10px;padding:10px;border-radius:13px;background:#17304e;font-size:11px}.lesson-credit{font-size:8px!important;color:#8498ae!important;margin-top:5px!important}
 
 @media(max-width:600px){.story-grid{grid-template-columns:1fr}.date-hero{font-size:36px}.history-sheet{padding:14px 9px 24px}}
@@ -110,16 +110,15 @@ input,button{font:inherit;border-radius:10px;border:1px solid var(--line);paddin
 </style>
 </head>
 <body>
-<header><div><div class="brand">🌍 Chrono<span>Map</span> <small>V13.4</small></div><small>La machine à remonter le temps géographique</small></div><button id="install" class="install">Installer</button></header>
-<section class="plans"><article class="plan active" data-plan="public"><div><b>🌍 Public</b><span> Gratuit</span></div><p>Voyage dans le temps avec les fonctions essentielles.</p></article><article class="plan" data-plan="famille"><div><b>👨‍👩‍👧‍👦 Famille</b><span> 4,99 €/mois</span></div><p>Plus de détails, chronologies et exploration familiale.</p></article><article class="plan" data-plan="ecole"><div><b>🎓 École</b><span> 9,99 €/mois</span></div><p>Fiches pédagogiques, sources et contenus approfondis.</p></article></section><div id="paymentBox" class="payment-box hidden"><b>Passer à <span id="selectedPlan">Famille</span></b><div id="paymentGains"></div><div class="payments"><button data-pay="card">💳 Carte</button><button data-pay="paypal">🅿️ PayPal</button><button data-pay="wallet">📱 Apple / Google Pay</button></div><small>Paiement réel à connecter avant mise en production.</small></div><section id="scopeBar" class="scope-bar">
-  <button class="scope active" data-scope="city">📍 Ville</button>
-  <button class="scope" data-scope="region">🧭 Région</button>
-  <button class="scope" data-scope="europe">🇪🇺 Europe</button>
-  <button class="scope" data-scope="world">🌍 Monde</button>
+<header><div><div class="brand">🌍 Chrono<span>Map</span> <small>V14.1</small></div><small>La machine à remonter le temps géographique</small></div><button id="install" class="install">Installer</button></header>
+<section class="top-menus" aria-label="Navigation principale">
+  <div class="top-menu"><label for="versionSelect">Version</label><select id="versionSelect"><option value="public">🌍 Public</option><option value="famille">👨‍👩‍👧‍👦 Famille</option><option value="ecole">🎓 École</option></select></div>
+  <div class="top-menu"><label for="scopeSelect">Carte</label><select id="scopeSelect"><option value="city">📍 Ville</option><option value="region">🧭 Région</option><option value="country">🇫🇷 Pays</option><option value="europe">🇪🇺 Europe</option><option value="world">🌍 Monde</option></select></div>
 </section>
+<div id="paymentBox" class="payment-box hidden"><b>Passer à <span id="selectedPlan">Famille</span></b><div id="paymentGains"></div><div class="payments"><button data-pay="card">💳 Carte</button><button data-pay="paypal">🅿️ PayPal</button><button data-pay="wallet">📱 Apple / Google Pay</button></div><small>Paiement réel à connecter avant mise en production.</small></div>
 <div class="controls"><input id="search" value="Avignon" placeholder="Rechercher une ville…"><button id="go">Explorer</button></div>
 <div id="map"></div>
-<div class="map-modes" aria-label="Type de carte"><button data-mapmode="street" class="active">🗺️ Carte</button><button data-mapmode="relief">⛰️ Relief</button><button data-mapmode="satellite">🛰️ Satellite</button></div>
+<div class="map-modes" aria-label="Type de carte"><select id="mapModeSelect" aria-label="Mode de carte"><option value="street">🗺️ Carte</option><option value="relief">⛰️ Relief</option><option value="satellite">🛰️ Satellite</option></select></div>
 <section id="panel" class="panel" aria-label="Dates historiques"><div class="panel-head" id="dragHandle"><h2 id="title">Avignon</h2><span class="drag-hint">↕ Maintenir pour déplacer</span><button id="closePanel" class="panel-close">×</button></div><div id="events"></div></section>
 <button id="openPanel" class="panel-toggle" aria-label="Afficher les explications">ℹ️</button>
 <div class="bottom">
@@ -128,7 +127,7 @@ input,button{font:inherit;border-radius:10px;border:1px solid var(--line);paddin
 <span>Préhistoire</span><span>Antiquité</span><span>Moyen Âge</span><span>Époque moderne</span><span>Époque contemporaine</span>
 </div>
 <input id="timeline" class="timeline" type="range" min="-3000" max="2026" value="2026" step="1">
- <div class="actions"><button id="back">◀ 10 ans</button><button id="play" class="play">▶ Voyage</button><button id="next">10 ans ▶</button></div>
+ <div class="actions"><button id="back">◀ <span id="backStepLabel">10 ans</span></button><button id="play" class="play">▶ Lecture</button><button id="next"><span id="nextStepLabel">10 ans</span> ▶</button></div><div style="display:flex;align-items:center;gap:7px;margin-top:6px"><span class="meta" style="white-space:nowrap">Pas</span><select id="timelineStep" class="timeline-step"><option value="5">5 ans</option><option value="10" selected>10 ans</option><option value="25">25 ans</option><option value="50">50 ans</option><option value="100">100 ans</option></select></div>
  <div class="hint">Tape une ville puis déplace la frise. Les données connues avant ou à l’année choisie sont affichées.</div>
 </div>
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
@@ -139,7 +138,7 @@ const streetLayer=L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.pn
 const reliefLayer=L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png',{maxZoom:17,attribution:'© OpenTopoMap contributors'});
 const satelliteLayer=L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',{maxZoom:19,attribution:'Tiles © Esri'});
 streetLayer.addTo(map);
-document.querySelectorAll('[data-mapmode]').forEach(btn=>btn.onclick=()=>{const mode=btn.dataset.mapmode;[streetLayer,reliefLayer,satelliteLayer].forEach(l=>map.removeLayer(l));(mode==='satellite'?satelliteLayer:mode==='relief'?reliefLayer:streetLayer).addTo(map);document.querySelectorAll('[data-mapmode]').forEach(b=>b.classList.toggle('active',b===btn));setTimeout(()=>map.invalidateSize(),50);});
+$('mapModeSelect').onchange=()=>{const mode=$('mapModeSelect').value;[streetLayer,reliefLayer,satelliteLayer].forEach(l=>map.removeLayer(l));(mode==='satellite'?satelliteLayer:mode==='relief'?reliefLayer:streetLayer).addTo(map);setTimeout(()=>map.invalidateSize(),50);};
 
 let marker=L.marker([43.9493,4.8055]).addTo(map);
 let territoryLayer=L.geoJSON(null,{style:f=>({color:f.properties?.color||'#f5b83d',weight:2,fillOpacity:.12})}).addTo(map);
@@ -179,7 +178,7 @@ function centerMapForScope(p,force=false){
     map.fitBounds(L.featureGroup(polys).getBounds().pad(.08),{animate:true});
     return;
   }
-  const centers={region:[43.95,4.8,8],europe:[50.5,10,4],world:[25,10,2]};
+  const centers={region:[43.95,4.8,8],country:[46.5,2.5,6],europe:[50.5,10,4],world:[25,10,2]};
   const c=centers[infoScope]||centers.world;
   map.flyTo([c[0],c[1]],c[2],{animate:true,duration:.65});
 }
@@ -222,7 +221,7 @@ async function showLessonImage(title){
 function showSummary(p,e,scroll){
   if(!e)return;
   const y=e.year??e[0];
-  const label=infoScope==='city'?'📍 Ville':infoScope==='region'?'🧭 Région':infoScope==='europe'?'🇪🇺 Europe':'🌍 Monde';
+  const label=infoScope==='city'?'📍 Ville':infoScope==='region'?'🧭 Région':infoScope==='country'?'🇫🇷 Pays':infoScope==='europe'?'🇪🇺 Europe':'🌍 Monde';
   $('summaryScope').textContent=label;
   $('historyDate').textContent=fmt(y);
   $('historyTitle').textContent=e.title||p.name;
@@ -259,6 +258,8 @@ function render(){
     events=(p.events||[]).filter(e=>e[0]<=y).slice(-12).reverse().map(e=>({year:e[0],title:e[1],text:e[2],recap:e[3],source:e[5],confidence:e[4],buildings:e[6],roads:e[7],territory:e[8]}));
   else if(infoScope==='region')
     events=(data.regionEvents||[]).filter(e=>(e.region||p.region)===p.region&&e.year<=y).slice(-12).reverse();
+  else if(infoScope==='country')
+    events=(data.countryEvents||data.franceEvents||data.worldEvents||[]).filter(e=>e.year<=y).slice(-12).reverse();
   else if(infoScope==='europe')
     events=(data.europeEvents||[]).filter(e=>e.year<=y).slice(-12).reverse();
   else
@@ -270,7 +271,10 @@ function render(){
 
   document.querySelectorAll('[data-event-index]').forEach(b=>{
     b.onclick=()=>{
+      if(timer){clearInterval(timer);timer=null;$('play').textContent='▶ Lecture';}
       selectedEvent=events[+b.dataset.eventIndex];
+      $('timeline').value=selectedEvent.year;
+      render();
       showSummary(p,selectedEvent,true);
     };
   });
@@ -289,25 +293,24 @@ $('openPanel').onclick=()=>{$('panel').classList.remove('closed')};
 $('go').onclick=()=>{lastPlaceKey='';render()};
 $('search').addEventListener('keydown',e=>{if(e.key==='Enter'){lastPlaceKey='';render()}});
 $('timeline').oninput=render;
-$('back').onclick=()=>{$('timeline').value=Math.max(-3000,+$('timeline').value-10);render()};
-$('next').onclick=()=>{$('timeline').value=Math.min(2026,+$('timeline').value+10);render()};
+function timelineStep(){return +$('timelineStep').value||5}
+function updateStepLabels(){const n=timelineStep();$('backStepLabel').textContent=n+' ans';$('nextStepLabel').textContent=n+' ans';}
+$('timelineStep').onchange=updateStepLabels;
+$('back').onclick=()=>{$('timeline').value=Math.max(-3000,+$('timeline').value-timelineStep());render()};
+$('next').onclick=()=>{$('timeline').value=Math.min(2026,+$('timeline').value+timelineStep());render()};
 $('play').onclick=()=>{
-  if(timer){clearInterval(timer);timer=null;$('play').textContent='▶ Voyage';return}
+  if(timer){clearInterval(timer);timer=null;$('play').textContent='▶ Lecture';return}
+  $('historySheet').style.display='none';
   $('play').textContent='⏸ Pause';
   timer=setInterval(()=>{
-    const y=+$('timeline').value+10;
-    if(y>2026){clearInterval(timer);timer=null;$('play').textContent='▶ Voyage';return}
+    const y=+$('timeline').value+timelineStep();
+    if(y>2026){clearInterval(timer);timer=null;$('play').textContent='▶ Lecture';return}
     $('timeline').value=y;
     render();
   },90);
 };
 
-document.querySelectorAll('[data-scope]').forEach(b=>b.onclick=()=>{
-  infoScope=b.dataset.scope;
-  lastPlaceKey='';
-  document.querySelectorAll('[data-scope]').forEach(x=>x.classList.toggle('active',x.dataset.scope===infoScope));
-  render();
-});
+$('scopeSelect').onchange=()=>{infoScope=$('scopeSelect').value;lastPlaceKey='';render();};
 
 const planInfo={
   famille:'Chronologies enrichies, fiches locales plus détaillées et exploration familiale.',
