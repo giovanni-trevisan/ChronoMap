@@ -90,6 +90,9 @@ input,button{font:inherit;border-radius:10px;border:1px solid var(--line);paddin
 /* V13.3 — interface tactile + fiche immersive */
 .panel{touch-action:none;user-select:none}.panel-head{cursor:grab}.panel.dragging .panel-head{cursor:grabbing}.panel .panel-tip,.panel .badges,.panel #desc{display:none!important}.date-link{justify-content:center;min-height:42px;margin:5px 0}.date-link b{min-width:0!important;font-size:15px!important}.date-link span{display:none!important}
 .history-sheet{background:linear-gradient(180deg,#081526,#0b1c31);padding:18px 12px 28px}.date-hero{font-size:42px;line-height:1;font-weight:950;color:#f5b83d;text-shadow:0 4px 18px #f5b83d33}.history-title-row h1{margin:4px 0 0}.playful-strip{display:flex;gap:6px;overflow:auto;margin:10px 0}.story-pill{background:#17304e;border:1px solid #315c91;border-radius:999px;padding:7px 10px;font-size:10px;white-space:nowrap}.summary-card{position:relative;overflow:hidden}.story-icon{font-size:24px;margin-bottom:3px}.summary-card h2{font-size:18px}.summary-card p{font-size:13px;line-height:1.65}.story-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:8px}.story-grid article,.next-story{background:#0b1a2d;border:1px solid #294563;border-radius:12px;padding:10px}.story-grid h3{font-size:11px;margin:3px 0}.story-grid p,.next-story p{font-size:10px;line-height:1.45;margin:0;color:#cbd8e6}.next-story{margin-top:8px}.next-story b{color:#f5b83d;font-size:11px}.map-time-layer{pointer-events:none}.history-map-badge{position:absolute;z-index:900;left:10px;bottom:10px;background:#07101fe8;border:1px solid #38506e;border-radius:10px;padding:7px 9px;color:#fff;font-size:10px;backdrop-filter:blur(6px)}
+.map-modes{position:absolute;top:10px;right:10px;z-index:1000;display:flex;gap:4px;padding:5px;background:rgba(7,16,31,.94);border:1px solid #38506e;border-radius:13px;box-shadow:0 8px 25px #0008}.map-modes button{width:auto;padding:7px 9px;border:0;border-radius:9px;background:#172b47;color:#eaf2fb;font-size:10px;font-weight:800}.map-modes button.active{background:#f5b83d;color:#07101f}
+.lesson{margin-top:10px;border-radius:18px;overflow:hidden;background:#0b1a2d;border:1px solid #294563}.lesson-img{width:100%;height:190px;object-fit:cover;display:block;background:#142942}.lesson-placeholder{height:190px;display:flex;align-items:center;justify-content:center;font-size:58px;background:#142942}.lesson-body{padding:13px}.lesson-kicker{font-size:10px;color:#f5b83d;font-weight:900;text-transform:uppercase}.lesson h2{margin:4px 0 7px;font-size:20px}.lesson p{font-size:12px;line-height:1.55;color:#dbe6f1;margin:7px 0}.lesson-card{margin-top:9px;padding:10px;border-radius:13px;background:#10243a}.lesson-card b{display:block;color:#f5b83d;font-size:10px;margin-bottom:3px}.lesson-challenge{margin-top:10px;padding:10px;border-radius:13px;background:#17304e;font-size:11px}.lesson-credit{font-size:8px!important;color:#8498ae!important;margin-top:5px!important}
+
 @media(max-width:600px){.story-grid{grid-template-columns:1fr}.date-hero{font-size:36px}.history-sheet{padding:14px 9px 24px}}
 
 .timeline-eras{display:flex;justify-content:space-between;gap:2px;margin:0 8px 5px;color:#8fa4bb;font-size:8px;font-weight:800;letter-spacing:.2px}
@@ -104,10 +107,6 @@ input,button{font:inherit;border-radius:10px;border:1px solid var(--line);paddin
 .history-sheet .story-pill{font-weight:800}
 .history-sheet .summary-card{border-radius:16px}
 .history-sheet .story-grid article,.history-sheet .next-story{border-radius:14px}
-
-.history-map-badge{position:absolute;left:10px;bottom:10px;z-index:900;background:rgba(7,16,31,.88);border:1px solid #294563;border-radius:12px;padding:7px 10px;font-size:11px;font-weight:900;color:#f4f7fb;pointer-events:none;box-shadow:0 4px 16px rgba(0,0,0,.25)}
-.map-history-legend{position:absolute;right:10px;bottom:10px;z-index:900;background:rgba(7,16,31,.88);border:1px solid #294563;border-radius:12px;padding:7px 10px;font-size:10px;color:#d9e4f0;pointer-events:none}
-.map-history-legend b{color:#f5b83d}
 </style>
 </head>
 <body>
@@ -120,6 +119,7 @@ input,button{font:inherit;border-radius:10px;border:1px solid var(--line);paddin
 </section>
 <div class="controls"><input id="search" value="Avignon" placeholder="Rechercher une ville…"><button id="go">Explorer</button></div>
 <div id="map"></div>
+<div class="map-modes" aria-label="Type de carte"><button data-mapmode="street" class="active">🗺️ Carte</button><button data-mapmode="relief">⛰️ Relief</button><button data-mapmode="satellite">🛰️ Satellite</button></div>
 <section id="panel" class="panel" aria-label="Dates historiques"><div class="panel-head" id="dragHandle"><h2 id="title">Avignon</h2><span class="drag-hint">↕ Maintenir pour déplacer</span><button id="closePanel" class="panel-close">×</button></div><div id="events"></div></section>
 <button id="openPanel" class="panel-toggle" aria-label="Afficher les explications">ℹ️</button>
 <div class="bottom">
@@ -135,7 +135,11 @@ input,button{font:inherit;border-radius:10px;border:1px solid var(--line);paddin
 <script>
 const $=id=>document.getElementById(id);
 const map=L.map('map',{zoomControl:true,scrollWheelZoom:true,touchZoom:true,doubleClickZoom:true,dragging:true}).setView([43.9493,4.8055],5);
-L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{attribution:'© OpenStreetMap contributors'}).addTo(map);
+const streetLayer=L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{attribution:'© OpenStreetMap contributors'});
+const reliefLayer=L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png',{maxZoom:17,attribution:'© OpenTopoMap contributors'});
+const satelliteLayer=L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',{maxZoom:19,attribution:'Tiles © Esri'});
+streetLayer.addTo(map);
+document.querySelectorAll('[data-mapmode]').forEach(btn=>btn.onclick=()=>{const mode=btn.dataset.mapmode;[streetLayer,reliefLayer,satelliteLayer].forEach(l=>map.removeLayer(l));(mode==='satellite'?satelliteLayer:mode==='relief'?reliefLayer:streetLayer).addTo(map);document.querySelectorAll('[data-mapmode]').forEach(b=>b.classList.toggle('active',b===btn));setTimeout(()=>map.invalidateSize(),50);});
 
 let marker=L.marker([43.9493,4.8055]).addTo(map);
 let territoryLayer=L.geoJSON(null,{style:f=>({color:f.properties?.color||'#f5b83d',weight:2,fillOpacity:.12})}).addTo(map);
@@ -185,13 +189,10 @@ function renderHistoricalMap(p,y){
   const features=(data?.mapHistory||[]).filter(f=>y>=(f.from??-99999)&&y<=(f.to??99999));
   features.forEach(f=>{
     let layer=null;
-    if(f.type==='line'&&f.coords)layer=L.polyline(f.coords,{weight:f.weight||4,opacity:.92});
-    else if(f.type==='polygon'&&f.coords)layer=L.polygon(f.coords,{weight:f.weight||2,fillOpacity:.16});
-    else if(f.type==='point'&&f.coords)layer=L.circleMarker(f.coords,{radius:f.radius||7,weight:2,fillOpacity:.85});
-    if(layer){
-      layer.bindTooltip(f.label||'Transformation historique');
-      historicalVectorLayer.addLayer(layer);
-    }
+    if(f.type==='line'&&f.coords)layer=L.polyline(f.coords,{weight:f.weight||4,opacity:.9});
+    else if(f.type==='polygon'&&f.coords)layer=L.polygon(f.coords,{weight:f.weight||2,fillOpacity:.12});
+    else if(f.type==='point'&&f.coords)layer=L.circleMarker(f.coords,{radius:f.radius||6,weight:2,fillOpacity:.8});
+    if(layer){layer.bindTooltip(f.label||'Transformation historique');historicalVectorLayer.addLayer(layer);}
   });
   let badge=$('mapTimeBadge');
   if(!badge){
@@ -200,16 +201,22 @@ function renderHistoricalMap(p,y){
     badge.className='history-map-badge';
     $('map').appendChild(badge);
   }
-  badge.innerHTML=`🕰️ <b>Avignon</b> · ${fmt(y)} · ${features.length} transformation(s)`;
+  badge.textContent=`🕰️ Carte historique · ${fmt(y)}`;
+}
 
-  let legend=$('mapHistoryLegend');
-  if(!legend){
-    legend=document.createElement('div');
-    legend.id='mapHistoryLegend';
-    legend.className='map-history-legend';
-    legend.innerHTML='<b>Carte historique</b><br>Les formes sont schématiques dans ce premier test.';
-    $('map').appendChild(legend);
-  }
+async function showLessonImage(title){
+  const box=$('lessonMedia');
+  if(!box)return;
+  box.innerHTML='<div class="lesson-placeholder">🏛️</div>';
+  try{
+    const q=encodeURIComponent((title||'Avignon')+' Avignon histoire');
+    const url='https://commons.wikimedia.org/w/api.php?action=query&generator=search&gsrsearch='+q+'&gsrnamespace=6&gsrlimit=5&prop=imageinfo&iiprop=url&iiurlwidth=900&format=json&origin=*';
+    const r=await fetch(url); const j=await r.json();
+    const pages=Object.values(j.query?.pages||{});
+    const page=pages.find(x=>x.imageinfo?.[0]?.thumburl)||pages.find(x=>x.imageinfo?.[0]?.url);
+    const src=page?.imageinfo?.[0]?.thumburl||page?.imageinfo?.[0]?.url;
+    if(src){box.innerHTML='<img class="lesson-img" src="'+src.replace(/"/g,'&quot;')+'" alt="Illustration historique : '+(title||'événement')+'" loading="lazy">';}
+  }catch(err){console.warn('Illustration indisponible',err)}
 }
 
 function showSummary(p,e,scroll){
@@ -223,15 +230,16 @@ function showSummary(p,e,scroll){
   $('historyPlace').textContent=p.name;
   $('historyPeriod').textContent=fmt(y);
   $('historyConfidence').textContent='● Date sélectionnée';
-  $('storyHeading').textContent=infoScope==='city'?'🚀 Que s’est-il passé ici ?':infoScope==='region'?'🧭 Que se passe-t-il dans cette région ?':infoScope==='europe'?'🇪🇺 Que se passe-t-il en Europe ?':'🌍 Que se passe-t-il dans le monde ?';
-  $('historyNarrative').textContent=e.recap||e.text||e.description||e.summary||'Le récit détaillé de cette date sera enrichi avec les données historiques et géographiques croisées.';
-  $('historyBuild').textContent=e.buildings||e.construction||'Les constructions et transformations de cette époque seront enrichies.';
-  $('historyRoads').textContent=e.roads||e.transport||'Les routes, voies et accès seront enrichis avec les données historiques.';
-  $('historyMap').textContent=e.territory||e.geography||p.context?.[String(y)]||'La transformation du territoire et des frontières sera enrichie.';
-  $('historyRemember').textContent=e.remember||e[2]||'Un repère historique directement lié au niveau sélectionné.';
-   $('historySources').textContent='Sources : '+(e.source||e[5]||'base ChronoMap')+'. Prototype Avignon : données historiques sourcées, géométries cartographiques encore schématiques.';
+  $('storyHeading').textContent='🎒 Mini-leçon : '+(e.title||'événement historique');
+  $('historyNarrative').textContent=e.recap||e.text||e.description||e.summary||'Cette date marque une étape de l’histoire du lieu. Observe la carte et les transformations qui apparaissent à cette période.';
+  $('historyBuild').textContent=e.buildings||e.construction||'Observe les bâtiments, fortifications et aménagements qui apparaissent ou se transforment.';
+  $('historyRoads').textContent=e.roads||e.transport||'Observe les voies, accès et déplacements : ils expliquent souvent l’évolution de la ville.';
+  $('historyMap').textContent=e.territory||e.geography||p.context?.[String(y)]||'Compare la carte avant et après cette date pour repérer les changements du territoire.';
+  $('historyRemember').textContent=e.remember||e[2]||'Retrouve cette transformation directement sur la carte : c’est le défi ChronoMap.';
+  $('historySources').textContent='Sources : '+(e.source||e[5]||'base ChronoMap')+'. Illustration : Wikimedia Commons (recherche automatique).';
   $('historySheet').style.display='block';
   renderHistoricalMap(p,y);
+  showLessonImage(e.title||p.name);
   if(scroll)setTimeout(()=>$('historySheet').scrollIntoView({behavior:'smooth',block:'start'}),80);
 }
 
@@ -291,7 +299,7 @@ $('play').onclick=()=>{
     if(y>2026){clearInterval(timer);timer=null;$('play').textContent='▶ Voyage';return}
     $('timeline').value=y;
     render();
-  },140);
+  },90);
 };
 
 document.querySelectorAll('[data-scope]').forEach(b=>b.onclick=()=>{
@@ -412,22 +420,21 @@ try{
 if('serviceWorker' in navigator)navigator.serviceWorker.register('./sw.js');
 
 Promise.all([
-  fetch('./data.json').then(r=>{if(!r.ok)throw new Error('data.json');return r.json()}),
-  fetch('./sources.json').then(r=>{if(!r.ok)throw new Error('sources.json');return r.json()}),
-  fetch('./territories.geojson').then(r=>{if(!r.ok)throw new Error('territories.geojson');return r.json()})
+  fetch('./data.json').then(r=>r.json()),
+  fetch('./sources.json').then(r=>r.json()),
+  fetch('./territories.geojson').then(r=>r.json())
 ]).then(([d,s,g])=>{
   data=d;
   territoryLayer.addData(g);
   lastPlaceKey='';
   render();
-  document.title='ChronoMap — Avignon · données historiques chargées';
 }).catch(err=>{
   console.error(err);
   const hint=document.querySelector('.hint');
   if(hint)hint.textContent='Impossible de charger les données. Vérifie les fichiers data.json, sources.json et territories.geojson.';
 });
 </script>
-<section id="historySheet" style="display:none" class="history-sheet"><div class="history-kicker">CHRONOMAP · MISSION DU TEMPS</div><div class="history-title-row"><div><div class="date-hero" id="historyDate">1350</div><h1 id="historyTitle">Avignon</h1><div id="historySubtitle" class="history-subtitle">Une date. Un lieu. Une histoire.</div></div><span id="historyConfidence" class="history-confidence">●</span></div><div class="playful-strip"><div class="story-pill">📍 <span id="summaryScope">Ville</span></div><div class="story-pill">🕰️ <span id="historyPeriod">—</span></div><div class="story-pill">🗺️ <span id="historyPlace">—</span></div></div><article class="summary-card"><div class="story-icon">✨</div><h2 id="storyHeading">Que s’est-il passé ici ?</h2><p id="historyNarrative">Clique sur une date pour découvrir le récit.</p></article><div class="story-grid"><article><div class="story-icon">🏗️</div><h3>Le lieu change</h3><p id="historyBuild">Constructions et transformations à cette époque.</p></article><article><div class="story-icon">🛣️</div><h3>Le territoire évolue</h3><p id="historyRoads">Routes, accès et organisation du territoire.</p></article><article><div class="story-icon">🧭</div><h3>Sur la carte</h3><p id="historyMap">Frontières et géographie historique.</p></article></div><div class="next-story"><b>🎯 À retenir</b><p id="historyRemember">—</p></div><div class="history-sources" id="historySources">Sources : ChronoMap.</div></section>
+<section id="historySheet" style="display:none" class="history-sheet"><div class="history-kicker">CHRONOMAP · MISSION DU TEMPS</div><div class="history-title-row"><div><div class="date-hero" id="historyDate">1350</div><h1 id="historyTitle">Avignon</h1><div id="historySubtitle" class="history-subtitle">Une date. Un lieu. Une histoire.</div></div><span id="historyConfidence" class="history-confidence">●</span></div><div class="playful-strip"><div class="story-pill">📍 <span id="summaryScope">Ville</span></div><div class="story-pill">🕰️ <span id="historyPeriod">—</span></div><div class="story-pill">🗺️ <span id="historyPlace">—</span></div></div><div id="lessonMedia"></div><article class="summary-card"><div class="story-icon">✨</div><h2 id="storyHeading">Que s’est-il passé ici ?</h2><p id="historyNarrative">Clique sur une date pour découvrir le récit.</p></article><div class="story-grid"><article><div class="story-icon">🏗️</div><h3>Le lieu change</h3><p id="historyBuild">Constructions et transformations à cette époque.</p></article><article><div class="story-icon">🛣️</div><h3>Le territoire évolue</h3><p id="historyRoads">Routes, accès et organisation du territoire.</p></article><article><div class="story-icon">🧭</div><h3>Sur la carte</h3><p id="historyMap">Frontières et géographie historique.</p></article></div><div class="next-story"><b>🎯 À retenir</b><p id="historyRemember">—</p></div><div class="history-sources" id="historySources">Sources : ChronoMap.</div></section>
 
 <script id="chronomap-region-model">
 window.CHRONOMAP_REGION_MODEL={
