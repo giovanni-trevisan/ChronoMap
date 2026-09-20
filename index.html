@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#07101f">
 <link rel="manifest" href="manifest.webmanifest">
-<title>ChronoMap V13.7</title>
+<title>ChronoMap V14.5</title>
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
 <style>
 :root{--bg:#07101f;--p:#0d1c30;--line:#294563;--text:#f4f7fb;--muted:#9db0c8;--gold:#f5b83d;--blue:#4b8cff}
@@ -89,24 +89,24 @@ input,button{font:inherit;border-radius:10px;border:1px solid var(--line);paddin
 
 /* V13.3 — interface tactile + fiche immersive */
 .panel{touch-action:none;user-select:none}.panel-head{cursor:grab}.panel.dragging .panel-head{cursor:grabbing}.panel .panel-tip,.panel .badges,.panel #desc{display:none!important}.date-link{justify-content:center;min-height:42px;margin:5px 0}.date-link b{min-width:0!important;font-size:15px!important}.date-link span{display:none!important}
-.history-sheet{background:linear-gradient(180deg,#081526,#0b1c31);padding:18px 12px 28px}.date-hero{font-size:42px;line-height:1;font-weight:950;color:#f5b83d;text-shadow:0 4px 18px #f5b83d33}.history-title-row h1{margin:4px 0 0}.playful-strip{display:flex;gap:6px;overflow:auto;margin:10px 0}.story-pill{background:#17304e;border:1px solid #315c91;border-radius:999px;padding:7px 10px;font-size:10px;white-space:nowrap}.summary-card{position:relative;overflow:hidden}.story-icon{font-size:24px;margin-bottom:3px}.summary-card h2{font-size:18px}.summary-card p{font-size:13px;line-height:1.65}.story-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:8px}.story-grid article,.next-story{background:#0b1a2d;border:1px solid #294563;border-radius:12px;padding:10px}.story-grid h3{font-size:11px;margin:3px 0}.story-grid p,.next-story p{font-size:10px;line-height:1.45;margin:0;color:#cbd8e6}.next-story{margin-top:8px}.next-story b{color:#f5b83d;font-size:11px}.map-time-layer{pointer-events:none}.history-map-badge{position:absolute;z-index:900;left:10px;bottom:10px;background:#07101fe8;border:1px solid #38506e;border-radius:10px;padding:7px 9px;color:#fff;font-size:10px;backdrop-filter:blur(6px)}
+.history-sheet{background:linear-gradient(180deg,#081526,#0b1c31);padding:18px 12px 28px}.date-hero{font-size:42px;line-height:1;font-weight:950;color:#f5b83d;text-shadow:0 4px 18px #f5b83d33}.history-title-row h1{margin:4px 0 0}.playful-strip{display:flex;gap:6px;overflow:auto;margin:10px 0}.story-pill{background:#17304e;border:1px solid #315c91;border-radius:999px;padding:7px 10px;font-size:10px;white-space:nowrap}.summary-card{position:relative;overflow:hidden}.story-icon{font-size:24px;margin-bottom:3px}.summary-card h2{font-size:18px}.summary-card p{font-size:13px;line-height:1.65}.map-time-layer{pointer-events:none}.history-map-badge{position:absolute;z-index:900;left:10px;bottom:10px;background:#07101fe8;border:1px solid #38506e;border-radius:10px;padding:7px 9px;color:#fff;font-size:10px;backdrop-filter:blur(6px)}
 .map-modes{position:absolute;top:76px;left:10px;z-index:1000}.map-modes details{position:relative}.map-modes summary{list-style:none;cursor:pointer;padding:8px 10px;background:rgba(7,16,31,.96);border:1px solid #38506e;border-radius:10px;box-shadow:0 8px 25px #0008;color:#eaf2fb;font-size:11px;font-weight:800;user-select:none}.map-modes summary::-webkit-details-marker{display:none}.map-modes details[open] summary{border-radius:10px 10px 0 0}.map-mode-list{position:absolute;top:100%;left:0;min-width:120px;background:rgba(7,16,31,.98);border:1px solid #38506e;border-top:0;border-radius:0 0 10px 10px;overflow:hidden;box-shadow:0 8px 25px #0008}.map-mode-list button{display:block;width:100%;border:0;border-radius:0;background:transparent;color:#eaf2fb;text-align:left;padding:9px 10px;font-size:11px;font-weight:700}.map-mode-list button:hover,.map-mode-list button.active{background:#17304e}.step-inline{margin-left:4px!important;width:auto!important;min-width:58px;padding:2px 3px!important;border:1px solid #52708f!important;border-radius:6px!important;background:#284664!important;color:#fff!important;font-size:9px!important;font-weight:800!important}.actions button{display:flex;align-items:center;justify-content:center;gap:2px}
 .lesson{margin-top:10px;border-radius:18px;overflow:hidden;background:#0b1a2d;border:1px solid #294563}.lesson-img{width:100%;height:190px;object-fit:cover;display:block;background:#142942}.lesson-placeholder{height:190px;display:flex;align-items:center;justify-content:center;font-size:58px;background:#142942}.lesson-body{padding:13px}.lesson-kicker{font-size:10px;color:#f5b83d;font-weight:900;text-transform:uppercase}.lesson h2{margin:4px 0 7px;font-size:20px}.lesson p{font-size:12px;line-height:1.55;color:#dbe6f1;margin:7px 0}.lesson-card{margin-top:9px;padding:10px;border-radius:13px;background:#10243a}.lesson-card b{display:block;color:#f5b83d;font-size:10px;margin-bottom:3px}.lesson-challenge{margin-top:10px;padding:10px;border-radius:13px;background:#17304e;font-size:11px}.lesson-credit{font-size:8px!important;color:#8498ae!important;margin-top:5px!important}
 
-@media(max-width:600px){.story-grid{grid-template-columns:1fr}.date-hero{font-size:36px}.history-sheet{padding:14px 9px 24px}}
+@media(max-width:600px){.date-hero{font-size:36px}.history-sheet{padding:14px 9px 24px}}
 
 .timeline-eras{display:flex;justify-content:space-between;gap:2px;margin:0 8px 5px;color:#8fa4bb;font-size:8px;font-weight:800;letter-spacing:.2px}
 .timeline-eras span{flex:1;text-align:center;white-space:nowrap}
 .date-panel-title{font-size:14px;font-weight:900;color:#f5f7fb;margin-bottom:6px;letter-spacing:.2px}
 
-/* V13.7 — clean date rows + young-public fiche */
+/* Interface historique — lignes de dates + fiche jeunesse */
 .date-link{justify-content:flex-start!important;min-height:38px!important}
 .date-link b{flex:0 0 64px!important;color:#f5b83d!important;font-size:12px!important}
 .date-link span{display:block!important;flex:1!important;font-size:11px!important;font-weight:800!important;color:#e7eef7!important;overflow:hidden!important;text-overflow:ellipsis!important;white-space:nowrap!important}
 .history-sheet .playful-strip{margin-top:10px}
 .history-sheet .story-pill{font-weight:800}
 .history-sheet .summary-card{border-radius:16px}
-.history-sheet .story-grid article,.history-sheet .next-story{border-radius:14px}
+.history-sheet .next-story{border-radius:14px}
 
 /* V14.5 — carte compacte + fiche jeunesse en une seule page */
 .map-modes details{position:relative}.map-modes summary{min-width:104px;text-align:center;padding:8px 10px;border-radius:9px;background:#07101ff5;border:1px solid #4b6d90;box-shadow:0 4px 14px #0009}.map-mode-list{min-width:140px}.map-mode-list button{padding:10px 12px;font-size:11px}.map-modes details[open] summary{border-radius:9px}.map-mode-list{border:1px solid #38506e;border-radius:9px;top:calc(100% + 4px);box-shadow:0 8px 22px #0009}
