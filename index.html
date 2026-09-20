@@ -90,7 +90,7 @@ input,button{font:inherit;border-radius:10px;border:1px solid var(--line);paddin
 /* V13.3 — interface tactile + fiche immersive */
 .panel{touch-action:none;user-select:none}.panel-head{cursor:grab}.panel.dragging .panel-head{cursor:grabbing}.panel .panel-tip,.panel .badges,.panel #desc{display:none!important}.date-link{justify-content:center;min-height:42px;margin:5px 0}.date-link b{min-width:0!important;font-size:15px!important}.date-link span{display:none!important}
 .history-sheet{background:linear-gradient(180deg,#081526,#0b1c31);padding:18px 12px 28px}.date-hero{font-size:42px;line-height:1;font-weight:950;color:#f5b83d;text-shadow:0 4px 18px #f5b83d33}.history-title-row h1{margin:4px 0 0}.playful-strip{display:flex;gap:6px;overflow:auto;margin:10px 0}.story-pill{background:#17304e;border:1px solid #315c91;border-radius:999px;padding:7px 10px;font-size:10px;white-space:nowrap}.summary-card{position:relative;overflow:hidden}.story-icon{font-size:24px;margin-bottom:3px}.summary-card h2{font-size:18px}.summary-card p{font-size:13px;line-height:1.65}.story-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:8px}.story-grid article,.next-story{background:#0b1a2d;border:1px solid #294563;border-radius:12px;padding:10px}.story-grid h3{font-size:11px;margin:3px 0}.story-grid p,.next-story p{font-size:10px;line-height:1.45;margin:0;color:#cbd8e6}.next-story{margin-top:8px}.next-story b{color:#f5b83d;font-size:11px}.map-time-layer{pointer-events:none}.history-map-badge{position:absolute;z-index:900;left:10px;bottom:10px;background:#07101fe8;border:1px solid #38506e;border-radius:10px;padding:7px 9px;color:#fff;font-size:10px;backdrop-filter:blur(6px)}
-.map-modes{position:absolute;top:10px;right:10px;z-index:1000;display:flex;gap:4px;padding:5px;background:rgba(7,16,31,.94);border:1px solid #38506e;border-radius:13px;box-shadow:0 8px 25px #0008}.map-modes select{width:auto;padding:7px 9px;border:0;border-radius:9px;background:#172b47;color:#eaf2fb;font-size:10px;font-weight:800}
+.map-modes{position:absolute;top:74px;left:10px;z-index:1000}.map-modes details{position:relative}.map-modes summary{list-style:none;cursor:pointer;padding:8px 10px;background:rgba(7,16,31,.96);border:1px solid #38506e;border-radius:10px;box-shadow:0 8px 25px #0008;color:#eaf2fb;font-size:11px;font-weight:800;user-select:none}.map-modes summary::-webkit-details-marker{display:none}.map-modes details[open] summary{border-radius:10px 10px 0 0}.map-mode-list{position:absolute;top:100%;left:0;min-width:120px;background:rgba(7,16,31,.98);border:1px solid #38506e;border-top:0;border-radius:0 0 10px 10px;overflow:hidden;box-shadow:0 8px 25px #0008}.map-mode-list button{display:block;width:100%;border:0;border-radius:0;background:transparent;color:#eaf2fb;text-align:left;padding:9px 10px;font-size:11px;font-weight:700}.map-mode-list button:hover,.map-mode-list button.active{background:#17304e}.step-inline{margin-left:4px!important;width:auto!important;min-width:58px;padding:2px 3px!important;border:1px solid #52708f!important;border-radius:6px!important;background:#284664!important;color:#fff!important;font-size:9px!important;font-weight:800!important}.actions button{display:flex;align-items:center;justify-content:center;gap:2px}
 .lesson{margin-top:10px;border-radius:18px;overflow:hidden;background:#0b1a2d;border:1px solid #294563}.lesson-img{width:100%;height:190px;object-fit:cover;display:block;background:#142942}.lesson-placeholder{height:190px;display:flex;align-items:center;justify-content:center;font-size:58px;background:#142942}.lesson-body{padding:13px}.lesson-kicker{font-size:10px;color:#f5b83d;font-weight:900;text-transform:uppercase}.lesson h2{margin:4px 0 7px;font-size:20px}.lesson p{font-size:12px;line-height:1.55;color:#dbe6f1;margin:7px 0}.lesson-card{margin-top:9px;padding:10px;border-radius:13px;background:#10243a}.lesson-card b{display:block;color:#f5b83d;font-size:10px;margin-bottom:3px}.lesson-challenge{margin-top:10px;padding:10px;border-radius:13px;background:#17304e;font-size:11px}.lesson-credit{font-size:8px!important;color:#8498ae!important;margin-top:5px!important}
 
 @media(max-width:600px){.story-grid{grid-template-columns:1fr}.date-hero{font-size:36px}.history-sheet{padding:14px 9px 24px}}
@@ -118,7 +118,7 @@ input,button{font:inherit;border-radius:10px;border:1px solid var(--line);paddin
 <div id="paymentBox" class="payment-box hidden"><b>Passer à <span id="selectedPlan">Famille</span></b><div id="paymentGains"></div><div class="payments"><button data-pay="card">💳 Carte</button><button data-pay="paypal">🅿️ PayPal</button><button data-pay="wallet">📱 Apple / Google Pay</button></div><small>Paiement réel à connecter avant mise en production.</small></div>
 <div class="controls"><input id="search" value="Avignon" placeholder="Rechercher une ville…"><button id="go">Explorer</button></div>
 <div id="map"></div>
-<div class="map-modes" aria-label="Type de carte"><select id="mapModeSelect" aria-label="Mode de carte"><option value="street">🗺️ Carte</option><option value="relief">⛰️ Relief</option><option value="satellite">🛰️ Satellite</option></select></div>
+<div class="map-modes" aria-label="Type de carte"><details id="mapModeMenu"><summary id="mapModeSummary">🗺️ Carte ▾</summary><div class="map-mode-list"><button type="button" data-map-mode="street" class="active">🗺️ Carte</button><button type="button" data-map-mode="relief">⛰️ Relief</button><button type="button" data-map-mode="satellite">🛰️ Satellite</button></div></details></div>
 <section id="panel" class="panel" aria-label="Dates historiques"><div class="panel-head" id="dragHandle"><h2 id="title">Avignon</h2><span class="drag-hint">↕ Maintenir pour déplacer</span><button id="closePanel" class="panel-close">×</button></div><div id="events"></div></section>
 <button id="openPanel" class="panel-toggle" aria-label="Afficher les explications">ℹ️</button>
 <div class="bottom">
@@ -127,7 +127,7 @@ input,button{font:inherit;border-radius:10px;border:1px solid var(--line);paddin
 <span>Préhistoire</span><span>Antiquité</span><span>Moyen Âge</span><span>Époque moderne</span><span>Époque contemporaine</span>
 </div>
 <input id="timeline" class="timeline" type="range" min="-3000" max="2026" value="2026" step="1">
- <div class="actions"><button id="back">◀ <span id="backStepLabel">10 ans</span></button><button id="play" class="play">▶ Lecture</button><button id="next"><span id="nextStepLabel">10 ans</span> ▶</button></div><div style="display:flex;align-items:center;gap:7px;margin-top:6px"><span class="meta" style="white-space:nowrap">Pas</span><select id="timelineStep" class="timeline-step"><option value="5">5 ans</option><option value="10" selected>10 ans</option><option value="25">25 ans</option><option value="50">50 ans</option><option value="100">100 ans</option></select></div>
+ <div class="actions"><button id="back">◀ <select id="backStep" class="step-inline" aria-label="Pas de recul"><option value="5">5 ans</option><option value="10" selected>10 ans</option><option value="25">25 ans</option><option value="50">50 ans</option><option value="100">100 ans</option></select></button><button id="play" class="play">▶ Lecture</button><button id="next"><select id="nextStep" class="step-inline" aria-label="Pas d'avance"><option value="5">5 ans</option><option value="10" selected>10 ans</option><option value="25">25 ans</option><option value="50">50 ans</option><option value="100">100 ans</option></select> ▶</button></div>
  <div class="hint">Tape une ville puis déplace la frise. Les données connues avant ou à l’année choisie sont affichées.</div>
 </div>
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
@@ -138,7 +138,8 @@ const streetLayer=L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.pn
 const reliefLayer=L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png',{maxZoom:17,attribution:'© OpenTopoMap contributors'});
 const satelliteLayer=L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',{maxZoom:19,attribution:'Tiles © Esri'});
 streetLayer.addTo(map);
-$('mapModeSelect').onchange=()=>{const mode=$('mapModeSelect').value;[streetLayer,reliefLayer,satelliteLayer].forEach(l=>map.removeLayer(l));(mode==='satellite'?satelliteLayer:mode==='relief'?reliefLayer:streetLayer).addTo(map);setTimeout(()=>map.invalidateSize(),50);};
+function setMapMode(mode){[streetLayer,reliefLayer,satelliteLayer].forEach(l=>map.removeLayer(l));(mode==='satellite'?satelliteLayer:mode==='relief'?reliefLayer:streetLayer).addTo(map);const labels={street:'🗺️ Carte',relief:'⛰️ Relief',satellite:'🛰️ Satellite'};$('mapModeSummary').textContent=labels[mode]+' ▾';document.querySelectorAll('[data-map-mode]').forEach(b=>b.classList.toggle('active',b.dataset.mapMode===mode));$('mapModeMenu').open=false;setTimeout(()=>map.invalidateSize(),50)}
+document.querySelectorAll('[data-map-mode]').forEach(b=>b.onclick=()=>setMapMode(b.dataset.mapMode));
 
 let marker=L.marker([43.9493,4.8055]).addTo(map);
 let territoryLayer=L.geoJSON(null,{style:f=>({color:f.properties?.color||'#f5b83d',weight:2,fillOpacity:.12})}).addTo(map);
@@ -293,11 +294,12 @@ $('openPanel').onclick=()=>{$('panel').classList.remove('closed')};
 $('go').onclick=()=>{lastPlaceKey='';render()};
 $('search').addEventListener('keydown',e=>{if(e.key==='Enter'){lastPlaceKey='';render()}});
 $('timeline').oninput=render;
-function timelineStep(){return +$('timelineStep').value||5}
-function updateStepLabels(){const n=timelineStep();$('backStepLabel').textContent=n+' ans';$('nextStepLabel').textContent=n+' ans';}
-$('timelineStep').onchange=updateStepLabels;
-$('back').onclick=()=>{$('timeline').value=Math.max(-3000,+$('timeline').value-timelineStep());render()};
-$('next').onclick=()=>{$('timeline').value=Math.min(2026,+$('timeline').value+timelineStep());render()};
+function timelineStep(){return +$('backStep').value||5}
+function syncStepSelectors(value){$('backStep').value=String(value);$('nextStep').value=String(value)}
+$('backStep').onchange=()=>syncStepSelectors($('backStep').value);
+$('nextStep').onchange=()=>syncStepSelectors($('nextStep').value);
+$('back').onclick=(e)=>{if(e.target.tagName==='SELECT')return;$('timeline').value=Math.max(-3000,+$('timeline').value-timelineStep());render()};
+$('next').onclick=(e)=>{if(e.target.tagName==='SELECT')return;$('timeline').value=Math.min(2026,+$('timeline').value+timelineStep());render()};
 $('play').onclick=()=>{
   if(timer){clearInterval(timer);timer=null;$('play').textContent='▶ Lecture';return}
   $('historySheet').style.display='none';
