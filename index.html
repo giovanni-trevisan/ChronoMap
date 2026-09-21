@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#07101f">
 <link rel="manifest" href="manifest.webmanifest">
-<title>ChronoMap V14.5</title>
+<title>ChronoMap V14.6</title>
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
 <style>
 :root{--bg:#07101f;--p:#0d1c30;--line:#294563;--text:#f4f7fb;--muted:#9db0c8;--gold:#f5b83d;--blue:#4b8cff}
@@ -90,7 +90,6 @@ input,button{font:inherit;border-radius:10px;border:1px solid var(--line);paddin
 /* V13.3 — interface tactile + fiche immersive */
 .panel{touch-action:none;user-select:none}.panel-head{cursor:grab}.panel.dragging .panel-head{cursor:grabbing}.panel .panel-tip,.panel .badges,.panel #desc{display:none!important}.date-link{justify-content:center;min-height:42px;margin:5px 0}.date-link b{min-width:0!important;font-size:15px!important}.date-link span{display:none!important}
 .history-sheet{background:linear-gradient(180deg,#081526,#0b1c31);padding:18px 12px 28px}.date-hero{font-size:42px;line-height:1;font-weight:950;color:#f5b83d;text-shadow:0 4px 18px #f5b83d33}.history-title-row h1{margin:4px 0 0}.playful-strip{display:flex;gap:6px;overflow:auto;margin:10px 0}.story-pill{background:#17304e;border:1px solid #315c91;border-radius:999px;padding:7px 10px;font-size:10px;white-space:nowrap}.summary-card{position:relative;overflow:hidden}.story-icon{font-size:24px;margin-bottom:3px}.summary-card h2{font-size:18px}.summary-card p{font-size:13px;line-height:1.65}.map-time-layer{pointer-events:none}.history-map-badge{position:absolute;z-index:900;left:10px;bottom:10px;background:#07101fe8;border:1px solid #38506e;border-radius:10px;padding:7px 9px;color:#fff;font-size:10px;backdrop-filter:blur(6px)}
-.map-modes{position:absolute;top:76px;left:10px;z-index:1000}.map-modes details{position:relative}.map-modes summary{list-style:none;cursor:pointer;padding:8px 10px;background:rgba(7,16,31,.96);border:1px solid #38506e;border-radius:10px;box-shadow:0 8px 25px #0008;color:#eaf2fb;font-size:11px;font-weight:800;user-select:none}.map-modes summary::-webkit-details-marker{display:none}.map-modes details[open] summary{border-radius:10px 10px 0 0}.map-mode-list{position:absolute;top:100%;left:0;min-width:120px;background:rgba(7,16,31,.98);border:1px solid #38506e;border-top:0;border-radius:0 0 10px 10px;overflow:hidden;box-shadow:0 8px 25px #0008}.map-mode-list button{display:block;width:100%;border:0;border-radius:0;background:transparent;color:#eaf2fb;text-align:left;padding:9px 10px;font-size:11px;font-weight:700}.map-mode-list button:hover,.map-mode-list button.active{background:#17304e}.step-inline{margin-left:4px!important;width:auto!important;min-width:58px;padding:2px 3px!important;border:1px solid #52708f!important;border-radius:6px!important;background:#284664!important;color:#fff!important;font-size:9px!important;font-weight:800!important}.actions button{display:flex;align-items:center;justify-content:center;gap:2px}
 .lesson{margin-top:10px;border-radius:18px;overflow:hidden;background:#0b1a2d;border:1px solid #294563}.lesson-img{width:100%;height:190px;object-fit:cover;display:block;background:#142942}.lesson-placeholder{height:190px;display:flex;align-items:center;justify-content:center;font-size:58px;background:#142942}.lesson-body{padding:13px}.lesson-kicker{font-size:10px;color:#f5b83d;font-weight:900;text-transform:uppercase}.lesson h2{margin:4px 0 7px;font-size:20px}.lesson p{font-size:12px;line-height:1.55;color:#dbe6f1;margin:7px 0}.lesson-card{margin-top:9px;padding:10px;border-radius:13px;background:#10243a}.lesson-card b{display:block;color:#f5b83d;font-size:10px;margin-bottom:3px}.lesson-challenge{margin-top:10px;padding:10px;border-radius:13px;background:#17304e;font-size:11px}.lesson-credit{font-size:8px!important;color:#8498ae!important;margin-top:5px!important}
 
 @media(max-width:600px){.date-hero{font-size:36px}.history-sheet{padding:14px 9px 24px}}
@@ -108,15 +107,23 @@ input,button{font:inherit;border-radius:10px;border:1px solid var(--line);paddin
 .history-sheet .summary-card{border-radius:16px}
 .history-sheet .next-story{border-radius:14px}
 
-/* V14.5 — carte compacte + fiche jeunesse en une seule page */
-.map-modes details{position:relative}.map-modes summary{min-width:104px;text-align:center;padding:8px 10px;border-radius:9px;background:#07101ff5;border:1px solid #4b6d90;box-shadow:0 4px 14px #0009}.map-mode-list{min-width:140px}.map-mode-list button{padding:10px 12px;font-size:11px}.map-modes details[open] summary{border-radius:9px}.map-mode-list{border:1px solid #38506e;border-radius:9px;top:calc(100% + 4px);box-shadow:0 8px 22px #0009}
+/* V14.6 — carte compacte + fiche jeunesse en une seule page */
 .history-sheet{padding:14px 10px 22px;background:radial-gradient(circle at 50% 0,#153252 0,#081526 52%);border-top:1px solid #294563}
 .lesson-page{max-width:760px;margin:0 auto;text-align:center}.lesson-head{display:flex;align-items:center;justify-content:center;gap:10px}.lesson-avatar{width:72px;height:72px;flex:0 0 72px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:46px;background:#f7d36a;border:4px solid #fff;box-shadow:0 5px 16px #0006}.lesson-avatar.girl{background:#f3a9c9}.lesson-bubble{position:relative;text-align:left;background:#fff;color:#152238;border-radius:20px;padding:12px 14px;box-shadow:0 7px 20px #0005;flex:1;min-width:0}.lesson-bubble:before{content:"";position:absolute;left:-9px;top:23px;border-width:9px 10px 9px 0;border-style:solid;border-color:transparent #fff transparent transparent}.lesson-bubble b{display:block;font-size:12px;color:#315c91;margin-bottom:4px}.lesson-bubble p{font-size:13px;line-height:1.5;margin:0;font-weight:650}.lesson-title{font-size:27px;line-height:1.05;margin:8px 0 5px;color:#fff;font-weight:950}.lesson-date{display:inline-block;background:#f5b83d;color:#152238;padding:5px 10px;border-radius:999px;font-size:12px;font-weight:950}.lesson-illustration{margin:12px auto 10px;max-width:100%;border-radius:18px;overflow:hidden;border:3px solid #fff;background:#142942;box-shadow:0 7px 22px #0006}.lesson-illustration img{width:100%;max-height:250px;object-fit:cover;display:block}.lesson-fact{margin:10px auto;background:#17304e;border:1px solid #41678f;border-radius:16px;padding:10px 12px;color:#fff;text-align:left}.lesson-fact b{color:#f5b83d;font-size:11px}.lesson-fact p{margin:4px 0 0;font-size:11px;line-height:1.45}.lesson-map-note{font-size:11px;color:#dce8f5;margin:7px 0}.lesson-sources{font-size:8px;color:#8fa4bb;margin-top:9px}.lesson-close-note{font-size:10px;color:#8fa4bb;margin-top:7px}
 @media(max-width:600px){.lesson-avatar{width:62px;height:62px;flex-basis:62px;font-size:39px}.lesson-title{font-size:23px}.lesson-bubble p{font-size:12px}.lesson-illustration img{max-height:205px}.lesson-head{align-items:flex-start}}
+
+.chronomap-map-control{position:relative!important;margin-top:4px!important;}
+.chronomap-map-control .map-mode-summary{display:block;width:34px;height:34px;padding:0;border:1px solid rgba(0,0,0,.2);border-radius:4px;background:rgba(255,255,255,.95);color:#172231;box-shadow:0 1px 5px rgba(0,0,0,.35);font-size:17px;line-height:32px;text-align:center;font-weight:900;cursor:pointer;user-select:none;}
+.chronomap-map-control.open .map-mode-summary{border-radius:4px 4px 0 0;background:#eef3f8;}
+.chronomap-map-control .map-mode-list{position:absolute;left:0;top:34px;min-width:132px;background:rgba(7,16,31,.98);border:1px solid #38506e;border-radius:0 8px 8px 8px;box-shadow:0 8px 22px #0009;overflow:hidden;display:none;z-index:2000;}
+.chronomap-map-control.open .map-mode-list{display:block;}
+.chronomap-map-control .map-mode-list button{display:block;width:100%;padding:9px 11px;border:0;border-bottom:1px solid #263b55;background:transparent;color:#eef3f8;text-align:left;font:700 11px system-ui;cursor:pointer;}
+.chronomap-map-control .map-mode-list button:last-child{border-bottom:0;}
+.chronomap-map-control .map-mode-list button.active,.chronomap-map-control .map-mode-list button:hover{background:#17304e;}
 </style>
 </head>
 <body>
-<header><div><div class="brand">🌍 Chrono<span>Map</span> <small>V14.5</small></div><small>La machine à remonter le temps géographique</small></div><button id="install" class="install">Installer</button></header>
+<header><div><div class="brand">🌍 Chrono<span>Map</span> <small>V14.6</small></div><small>La machine à remonter le temps géographique</small></div><button id="install" class="install">Installer</button></header>
 <section class="top-menus" aria-label="Navigation principale">
   <div class="top-menu"><label for="versionSelect">Version</label><select id="versionSelect"><option value="public">🌍 Public</option><option value="famille">👨‍👩‍👧‍👦 Famille</option><option value="ecole">🎓 École</option></select></div>
   <div class="top-menu"><label for="scopeSelect">Carte</label><select id="scopeSelect"><option value="city">📍 Ville</option><option value="region">🧭 Région</option><option value="country">🇫🇷 Pays</option><option value="europe">🇪🇺 Europe</option><option value="world">🌍 Monde</option></select></div>
@@ -124,7 +131,6 @@ input,button{font:inherit;border-radius:10px;border:1px solid var(--line);paddin
 <div id="paymentBox" class="payment-box hidden"><b>Passer à <span id="selectedPlan">Famille</span></b><div id="paymentGains"></div><div class="payments"><button data-pay="card">💳 Carte</button><button data-pay="paypal">🅿️ PayPal</button><button data-pay="wallet">📱 Apple / Google Pay</button></div><small>Paiement réel à connecter avant mise en production.</small></div>
 <div class="controls"><input id="search" value="Avignon" placeholder="Rechercher une ville…"><button id="go">Explorer</button></div>
 <div id="map"></div>
-<div class="map-modes" aria-label="Type de carte"><details id="mapModeMenu"><summary id="mapModeSummary">🗺️ Carte ▾</summary><div class="map-mode-list"><button type="button" data-map-mode="street" class="active">🗺️ Carte</button><button type="button" data-map-mode="relief">⛰️ Relief</button><button type="button" data-map-mode="satellite">🛰️ Satellite</button></div></details></div>
 <section id="panel" class="panel" aria-label="Dates historiques"><div class="panel-head" id="dragHandle"><h2 id="title">Avignon</h2><span class="drag-hint">↕ Maintenir pour déplacer</span><button id="closePanel" class="panel-close">×</button></div><div id="events"></div></section>
 <button id="openPanel" class="panel-toggle" aria-label="Afficher les explications">ℹ️</button>
 <div class="bottom">
@@ -144,8 +150,29 @@ const streetLayer=L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.pn
 const reliefLayer=L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png',{maxZoom:17,attribution:'© OpenTopoMap contributors'});
 const satelliteLayer=L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',{maxZoom:19,attribution:'Tiles © Esri'});
 streetLayer.addTo(map);
-function setMapMode(mode){[streetLayer,reliefLayer,satelliteLayer].forEach(l=>map.removeLayer(l));(mode==='satellite'?satelliteLayer:mode==='relief'?reliefLayer:streetLayer).addTo(map);const labels={street:'🗺️ Carte',relief:'⛰️ Relief',satellite:'🛰️ Satellite'};$('mapModeSummary').textContent=labels[mode]+' ▾';document.querySelectorAll('[data-map-mode]').forEach(b=>b.classList.toggle('active',b.dataset.mapMode===mode));$('mapModeMenu').open=false;setTimeout(()=>map.invalidateSize(),50)}
-document.querySelectorAll('[data-map-mode]').forEach(b=>b.onclick=()=>setMapMode(b.dataset.mapMode));
+let currentMapMode='street';
+function setMapMode(mode){
+  currentMapMode=mode;
+  [streetLayer,reliefLayer,satelliteLayer].forEach(l=>map.removeLayer(l));
+  (mode==='satellite'?satelliteLayer:mode==='relief'?reliefLayer:streetLayer).addTo(map);
+  const labels={street:'🗺️ Carte',relief:'⛰️ Relief',satellite:'🛰️ Satellite'};
+  document.querySelectorAll('.chronomap-map-control [data-map-mode]').forEach(b=>b.classList.toggle('active',b.dataset.mapMode===mode));
+}
+const mapModeControl=L.control({position:'topleft'});
+mapModeControl.onAdd=function(){
+  const box=L.DomUtil.create('div','leaflet-control chronomap-map-control');
+  box.setAttribute('aria-label','Choisir le type de carte');
+  box.innerHTML='<button type=\"button\" class=\"map-mode-summary\" aria-label=\"Type de carte\" title=\"Type de carte\">•••</button><div class=\"map-mode-list\"><button type=\"button\" data-map-mode=\"street\">🗺️ Carte</button><button type=\"button\" data-map-mode=\"relief\">⛰️ Relief</button><button type=\"button\" data-map-mode=\"satellite\">🛰️ Satellite</button></div>';
+  L.DomEvent.disableClickPropagation(box);
+  L.DomEvent.on(box,'click',e=>{
+    const button=e.target.closest('[data-map-mode]');
+    if(button){setMapMode(button.dataset.mapMode);box.classList.remove('open');return;}
+    if(e.target.closest('.map-mode-summary'))box.classList.toggle('open');
+  });
+  return box;
+};
+mapModeControl.addTo(map);
+setMapMode('street');
 
 let marker=L.marker([43.9493,4.8055]).addTo(map);
 let territoryLayer=L.geoJSON(null,{style:f=>({color:f.properties?.color||'#f5b83d',weight:2,fillOpacity:.12})}).addTo(map);
@@ -307,7 +334,7 @@ function render(){
 
 $('closePanel').onclick=()=>{$('panel').classList.add('closed')};
 $('openPanel').onclick=()=>{$('panel').classList.remove('closed')};
-$('go').onclick=()=>{lastPlaceKey='';render()};
+$('go').onclick=()=>{window._chronomapPlaceId=null;lastPlaceKey='';render()};
 $('search').addEventListener('keydown',e=>{if(e.key==='Enter'){lastPlaceKey='';render()}});
 $('timeline').oninput=render;
 function timelineStep(){return +$('backStep').value||5}
