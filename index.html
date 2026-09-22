@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#07101f">
 <link rel="manifest" href="manifest.webmanifest">
-<title>ChronoMap V14.6</title>
+<title>ChronoMap V14.7</title>
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
 <style>
 :root{--bg:#07101f;--p:#0d1c30;--line:#294563;--text:#f4f7fb;--muted:#9db0c8;--gold:#f5b83d;--blue:#4b8cff}
@@ -112,7 +112,7 @@ input,button{font:inherit;border-radius:10px;border:1px solid var(--line);paddin
 .lesson-page{max-width:760px;margin:0 auto;text-align:center}.lesson-head{display:flex;align-items:center;justify-content:center;gap:10px}.lesson-avatar{width:72px;height:72px;flex:0 0 72px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:46px;background:#f7d36a;border:4px solid #fff;box-shadow:0 5px 16px #0006}.lesson-avatar.girl{background:#f3a9c9}.lesson-bubble{position:relative;text-align:left;background:#fff;color:#152238;border-radius:20px;padding:12px 14px;box-shadow:0 7px 20px #0005;flex:1;min-width:0}.lesson-bubble:before{content:"";position:absolute;left:-9px;top:23px;border-width:9px 10px 9px 0;border-style:solid;border-color:transparent #fff transparent transparent}.lesson-bubble b{display:block;font-size:12px;color:#315c91;margin-bottom:4px}.lesson-bubble p{font-size:13px;line-height:1.5;margin:0;font-weight:650}.lesson-title{font-size:27px;line-height:1.05;margin:8px 0 5px;color:#fff;font-weight:950}.lesson-date{display:inline-block;background:#f5b83d;color:#152238;padding:5px 10px;border-radius:999px;font-size:12px;font-weight:950}.lesson-illustration{margin:12px auto 10px;max-width:100%;border-radius:18px;overflow:hidden;border:3px solid #fff;background:#142942;box-shadow:0 7px 22px #0006}.lesson-illustration img{width:100%;max-height:250px;object-fit:cover;display:block}.lesson-fact{margin:10px auto;background:#17304e;border:1px solid #41678f;border-radius:16px;padding:10px 12px;color:#fff;text-align:left}.lesson-fact b{color:#f5b83d;font-size:11px}.lesson-fact p{margin:4px 0 0;font-size:11px;line-height:1.45}.lesson-map-note{font-size:11px;color:#dce8f5;margin:7px 0}.lesson-sources{font-size:8px;color:#8fa4bb;margin-top:9px}.lesson-close-note{font-size:10px;color:#8fa4bb;margin-top:7px}
 @media(max-width:600px){.lesson-avatar{width:62px;height:62px;flex-basis:62px;font-size:39px}.lesson-title{font-size:23px}.lesson-bubble p{font-size:12px}.lesson-illustration img{max-height:205px}.lesson-head{align-items:flex-start}}
 
-.chronomap-map-control{position:relative!important;margin-top:4px!important;}
+.chronomap-map-control{position:relative!important;float:left!important;clear:both!important;margin:6px 0 0 0!important;}
 .chronomap-map-control .map-mode-summary{display:block;width:34px;height:34px;padding:0;border:1px solid rgba(0,0,0,.2);border-radius:4px;background:rgba(255,255,255,.95);color:#172231;box-shadow:0 1px 5px rgba(0,0,0,.35);font-size:17px;line-height:32px;text-align:center;font-weight:900;cursor:pointer;user-select:none;}
 .chronomap-map-control.open .map-mode-summary{border-radius:4px 4px 0 0;background:#eef3f8;}
 .chronomap-map-control .map-mode-list{position:absolute;left:0;top:34px;min-width:132px;background:rgba(7,16,31,.98);border:1px solid #38506e;border-radius:0 8px 8px 8px;box-shadow:0 8px 22px #0009;overflow:hidden;display:none;z-index:2000;}
@@ -162,8 +162,9 @@ const mapModeControl=L.control({position:'topleft'});
 mapModeControl.onAdd=function(){
   const box=L.DomUtil.create('div','leaflet-control chronomap-map-control');
   box.setAttribute('aria-label','Choisir le type de carte');
-  box.innerHTML='<button type=\"button\" class=\"map-mode-summary\" aria-label=\"Type de carte\" title=\"Type de carte\">•••</button><div class=\"map-mode-list\"><button type=\"button\" data-map-mode=\"street\">🗺️ Carte</button><button type=\"button\" data-map-mode=\"relief\">⛰️ Relief</button><button type=\"button\" data-map-mode=\"satellite\">🛰️ Satellite</button></div>';
+  box.innerHTML='<button type="button" class="map-mode-summary" aria-label="Type de carte" title="Type de carte">•••</button><div class="map-mode-list" role="menu"><button type="button" data-map-mode="street" role="menuitem">🗺️ Carte</button><button type="button" data-map-mode="relief" role="menuitem">⛰️ Relief</button><button type="button" data-map-mode="satellite" role="menuitem">🛰️ Satellite</button></div>';
   L.DomEvent.disableClickPropagation(box);
+  L.DomEvent.disableScrollPropagation(box);
   L.DomEvent.on(box,'click',e=>{
     const button=e.target.closest('[data-map-mode]');
     if(button){setMapMode(button.dataset.mapMode);box.classList.remove('open');return;}
@@ -172,6 +173,12 @@ mapModeControl.onAdd=function(){
   return box;
 };
 mapModeControl.addTo(map);
+// Force the control immediately below Leaflet's + / − control.
+const zoomControlEl=map.getContainer().querySelector('.leaflet-control-zoom');
+const mapModeControlEl=map.getContainer().querySelector('.chronomap-map-control');
+if(zoomControlEl && mapModeControlEl && zoomControlEl.parentNode){
+  zoomControlEl.parentNode.insertBefore(mapModeControlEl,zoomControlEl.nextSibling);
+}
 setMapMode('street');
 
 let marker=L.marker([43.9493,4.8055]).addTo(map);
