@@ -120,6 +120,28 @@ input,button{font:inherit;border-radius:10px;border:1px solid var(--line);paddin
 .chronomap-map-control .map-mode-list button{display:block;width:100%;padding:9px 11px;border:0;border-bottom:1px solid #263b55;background:transparent;color:#eef3f8;text-align:left;font:700 11px system-ui;cursor:pointer;}
 .chronomap-map-control .map-mode-list button:last-child{border-bottom:0;}
 .chronomap-map-control .map-mode-list button.active,.chronomap-map-control .map-mode-list button:hover{background:#17304e;}
+
+/* V14.8 — fiche explicative ultra-ludique, pensée jeune public, une seule page */
+.lesson-page{position:relative;max-width:760px;margin:0 auto;padding:14px 12px 24px;overflow:hidden;background:radial-gradient(circle at 12% 8%,#203b63 0,transparent 28%),radial-gradient(circle at 92% 18%,#3b275b 0,transparent 25%),linear-gradient(160deg,#071323,#102542 58%,#081524);border-radius:24px;box-shadow:0 14px 45px #0008}
+.lesson-page:before{content:'✦  ✧  ★  ✦';position:absolute;right:8px;top:8px;color:#f5b83d88;font-size:20px;letter-spacing:8px;transform:rotate(8deg);pointer-events:none}
+.lesson-date{display:inline-block;background:#f5b83d;color:#102033;font-weight:1000;font-size:18px;padding:6px 12px;border-radius:999px;box-shadow:0 5px 0 #a87912;margin-bottom:6px}
+.lesson-title{font-size:clamp(24px,6vw,40px);line-height:1.02;font-weight:1000;color:#fff;letter-spacing:-.7px;text-shadow:0 4px 18px #0007;margin:3px 0 12px}
+.lesson-head{display:grid;grid-template-columns:92px 1fr;gap:9px;align-items:end;margin-bottom:10px}
+.lesson-avatar{width:92px;height:92px;border-radius:28px 28px 22px 22px;background:linear-gradient(145deg,#ffd86b,#f5b83d);display:flex;align-items:center;justify-content:center;box-shadow:0 8px 0 #8e6817,0 12px 25px #0006;overflow:hidden;position:relative;font-size:0}
+.lesson-avatar.girl{background:linear-gradient(145deg,#ffb8dc,#d967aa);box-shadow:0 8px 0 #86365f,0 12px 25px #0006}
+.lesson-avatar svg{width:100%;height:100%}
+.lesson-bubble{position:relative;background:#fff;color:#16253a;border-radius:24px 24px 24px 7px;padding:13px 15px;box-shadow:0 8px 0 #0003;font-size:13px;line-height:1.5}
+.lesson-bubble:before{content:'';position:absolute;left:-11px;bottom:12px;border-width:10px 12px 10px 0;border-style:solid;border-color:transparent #fff transparent transparent}
+.lesson-bubble b{color:#315c91;font-size:12px}.lesson-bubble p{margin:4px 0 0;font-weight:650}
+.lesson-illustration{position:relative;min-height:205px;margin:10px 0;border-radius:24px;overflow:hidden;background:linear-gradient(135deg,#dfefff,#fff6d6);border:4px solid #fff;box-shadow:0 10px 28px #0006}
+.lesson-illustration:after{content:'🔎';position:absolute;right:12px;bottom:10px;font-size:27px;background:#fff;border-radius:50%;padding:5px;box-shadow:0 3px 10px #0004}
+.lesson-img{display:block;width:100%;height:230px;object-fit:cover}.lesson-placeholder{height:205px;display:flex;align-items:center;justify-content:center;font-size:70px}
+.lesson-fact{position:relative;margin:9px 0;padding:12px 15px 12px 17px;background:#fff7d7;color:#18283d;border-radius:18px;box-shadow:0 5px 0 #c5a64d;transform:rotate(-.5deg)}
+.lesson-fact:nth-of-type(odd){background:#e3f5ff;box-shadow:0 5px 0 #6c9ab7;transform:rotate(.4deg)}
+.lesson-fact b{font-size:14px}.lesson-fact p{margin:4px 0 0;font-size:12px;line-height:1.45;font-weight:650}
+.lesson-map-note{margin:10px 0;padding:10px 13px;background:#183758;color:#eaf5ff;border:1px dashed #6ca4d6;border-radius:16px;font-size:12px;font-weight:700}
+.lesson-sources{font-size:8px;color:#91a8c0;margin:8px 2px}.lesson-close-note{font-size:10px;color:#d7e3ef;text-align:center;margin-top:8px}
+@media(max-width:520px){.lesson-page{border-radius:18px;padding:11px 9px 20px}.lesson-head{grid-template-columns:72px 1fr}.lesson-avatar{width:72px;height:72px;border-radius:22px}.lesson-bubble{font-size:12px;padding:10px 11px}.lesson-illustration,.lesson-img{min-height:175px;height:190px}.lesson-placeholder{height:175px;font-size:58px}.lesson-title{font-size:27px}}
 </style>
 </head>
 <body>
@@ -259,6 +281,18 @@ async function showLessonImage(title){
   }catch(err){console.warn('Illustration indisponible',err)}
 }
 
+
+function lessonAvatarSvg(girl){
+  const hair=girl?'#5b2b20':'#2d211c';
+  const shirt=girl?'#7b4db4':'#3978c9';
+  const accessory=girl?'<path d=\"M20 25 Q46 3 72 25 L68 42 Q46 30 24 42Z\" fill=\"#5b2b20\"/><circle cx=70 cy=27 r=5 fill=\"#ffd34e\"/>':'<path d=\"M20 27 Q47 4 74 27 L70 37 Q47 25 25 38Z\" fill=\"#2d211c\"/>';
+  return `<svg viewBox=\"0 0 92 92\" aria-hidden=\"true\">\n    <rect width=\"92\" height=\"92\" rx=\"24\" fill=\"transparent\"/>\n    <path d=\"M20 92 Q21 62 46 61 Q71 62 73 92Z\" fill=\"${shirt}\"/>\n    <circle cx=\"46\" cy=\"43\" r=\"22\" fill=\"#f5c79e\"/>${accessory}
+    <circle cx=\"38\" cy=\"45\" r=\"2.7\" fill=\"#172231\"/><circle cx=\"54\" cy=\"45\" r=\"2.7\" fill=\"#172231\"/>
+    <path d=\"M39 55 Q46 60 53 55\" fill=\"none\" stroke=\"#8c4c43\" stroke-width=\"2.5\" stroke-linecap=\"round\"/>
+    <circle cx=\"20\" cy=\"73\" r=\"7\" fill=\"#fff\" opacity=\".9\"/><path d=\"M17 73h6M20 70v6\" stroke=\"${shirt}\" stroke-width=\"2\"/>
+  </svg>`;
+}
+
 function showSummary(p,e,scroll){
   if(!e)return;
   const y=e.year??e[0];
@@ -279,8 +313,8 @@ function showSummary(p,e,scroll){
   $('historyConfidence').textContent='● Date sélectionnée';
   $('lessonTitle').textContent=title;
   $('lessonDate').textContent=fmt(y);
-  $('lessonAvatar').textContent=girl?'👧':'👦';
   $('lessonAvatar').className='lesson-avatar '+(girl?'girl':'boy');
+  $('lessonAvatar').innerHTML=lessonAvatarSvg(girl);
   $('lessonCharacter').textContent=girl?'Lina':'Léo';
   $('lessonNarrative').textContent=narrative;
   $('lessonFact').textContent=build;
@@ -495,7 +529,7 @@ Promise.all([
   <div class="lesson-title" id="lessonTitle">Une aventure dans le temps</div>
   <div class="lesson-head">
     <div id="lessonAvatar" class="lesson-avatar boy">👦</div>
-    <div class="lesson-bubble"><b><span id="lessonCharacter">Léo</span> te raconte :</b><p id="lessonNarrative">Clique sur une date pour découvrir l’histoire.</p></div>
+    <div class="lesson-bubble"><b>💬 <span id="lessonCharacter">Léo</span> te raconte…</b><p id="lessonNarrative">Clique sur une date pour découvrir l’histoire.</p></div>
   </div>
   <div id="lessonMedia" class="lesson-illustration"><div class="lesson-placeholder">🏛️</div></div>
   <div class="lesson-fact"><b>🔎 Regarde bien !</b><p id="lessonFact">Observe ce qui change à cette époque.</p></div>
