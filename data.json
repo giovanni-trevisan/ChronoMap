@@ -1,0 +1,807 @@
+{
+  "version": "avignon-test-1",
+  "places": [
+    {
+      "name": "Avignon",
+      "aliases": [
+        "avignon"
+      ],
+      "lat": 43.9493,
+      "lon": 4.8055,
+      "zoom": 13,
+      "region": "Vaucluse",
+      "department": "Vaucluse",
+      "country": "France",
+      "context": {
+        "-3000": "Rocher des Doms et Rhône",
+        "1177": "Rhône et franchissement par le Pont Saint-Bénézet",
+        "1377": "Grande enceinte médiévale",
+        "1995": "Centre historique inscrit à l’UNESCO",
+        "2026": "Ville patrimoniale et numérique"
+      },
+      "events": [
+        [
+          -3000,
+          "Le Rocher des Doms accueille les premiers habitants",
+          "Le Rocher des Doms domine le Rhône : c’est un excellent poste d’observation et un lieu naturellement défendable. Les sources municipales indiquent une occupation humaine dès la Préhistoire, particulièrement importante au Néolithique.",
+          "Le Rocher des Doms domine le Rhône : c’est un excellent poste d’observation et un lieu naturellement défendable. Les sources municipales indiquent une occupation humaine dès la Préhistoire, particulièrement importante au Néolithique.",
+          "sourcé",
+          "Ville d’Avignon — Rapport de présentation du PSMV, analyse historique générale.",
+          "Pas encore de ville monumentale : l’occupation se concentre sur le relief du Rocher des Doms.",
+          "Les déplacements suivent surtout les passages naturels autour du Rhône et du relief.",
+          "Le paysage est celui d’un site élevé au bord du Rhône, avec la plaine autour.",
+          "🪨 Imagine Avignon avant ses rues : un promontoire, le fleuve et des chemins."
+        ],
+        [
+          -200,
+          "Avenio : une cité du monde des Cavares",
+          "À l’époque protohistorique, l’agglomération est associée aux Cavares et porte les formes anciennes Aouennion, Avenion ou Avennio. Le rapport historique de la Ville cite Strabon pour le IIe siècle avant notre ère.",
+          "À l’époque protohistorique, l’agglomération est associée aux Cavares et porte les formes anciennes Aouennion, Avenion ou Avennio. Le rapport historique de la Ville cite Strabon pour le IIe siècle avant notre ère.",
+          "sourcé",
+          "Ville d’Avignon — Rapport de présentation du PSMV.",
+          "L’habitat se concentre autour du Rocher des Doms et du site urbain.",
+          "La position sur le couloir rhodanien favorise les échanges.",
+          "Avignon se trouve à un point stratégique entre le Rhône, la Durance et les grands axes du Midi.",
+          "🗺️ La future Avignon est déjà placée sur une vraie autoroute naturelle : le couloir du Rhône."
+        ],
+        [
+          50,
+          "Avignon entre dans le monde romain",
+          "L’agglomération s’insère dans l’organisation du monde romain. Le site conserve ensuite une enceinte urbaine dont le tracé antique sera repris et transformé au fil des siècles.",
+          "L’agglomération s’insère dans l’organisation du monde romain. Le site conserve ensuite une enceinte urbaine dont le tracé antique sera repris et transformé au fil des siècles.",
+          "sourcé",
+          "Ville d’Avignon — Rapport de présentation du PSMV ; Ville d’Avignon — histoire urbaine des remparts.",
+          "Le noyau urbain se structure progressivement autour du Rocher des Doms.",
+          "Le couloir rhodanien devient un axe majeur de circulation et d’échanges.",
+          "La ville reste concentrée sur son site élevé, au contact du Rhône.",
+          "🏛️ Le décor change : Avignon devient une cité organisée dans le monde romain."
+        ],
+        [
+          300,
+          "Une première enceinte protège le cœur de la cité",
+          "À la fin de l’Antiquité, les murailles forment une enceinte de repli autour d’un cœur urbain plus resserré. La Ville d’Avignon décrit ses limites en les replaçant sur le plan actuel.",
+          "À la fin de l’Antiquité, les murailles forment une enceinte de repli autour d’un cœur urbain plus resserré. La Ville d’Avignon décrit ses limites en les replaçant sur le plan actuel.",
+          "sourcé",
+          "Ville d’Avignon — Les remparts dans l’histoire urbaine d’Avignon.",
+          "Le cœur fortifié se concentre autour du Rocher des Doms et du secteur aujourd’hui occupé par le centre historique.",
+          "Les circulations se concentrent à l’intérieur et autour de l’enceinte.",
+          "La ville fortifiée occupe une surface bien plus petite que l’Avignon actuelle.",
+          "🛡️ Première grande transformation visible : la ville se dessine comme une forteresse."
+        ],
+        [
+          1150,
+          "Notre-Dame des Doms prend sa forme romane",
+          "La cathédrale Notre-Dame des Doms est datée de 1150 par l’UNESCO. Elle devient un repère majeur du paysage du Rocher des Doms.",
+          "La cathédrale Notre-Dame des Doms est datée de 1150 par l’UNESCO. Elle devient un repère majeur du paysage du Rocher des Doms.",
+          "sourcé",
+          "UNESCO — Centre historique d’Avignon.",
+          "La cathédrale apparaît au sommet du rocher, au nord du futur Palais des Papes.",
+          "Les accès convergent vers le cœur religieux de la cité.",
+          "Le Rocher des Doms devient un point de repère majeur dans la silhouette urbaine.",
+          "⛪ Regarde la carte : un grand monument apparaît au sommet du rocher."
+        ],
+        [
+          1177,
+          "Le chantier du Pont Saint-Bénézet commence",
+          "Le célèbre pont sur le Rhône est construit à partir de 1177. Il relie Avignon à la rive opposée et renforce le rôle de la ville dans les circulations rhodaniennes.",
+          "Le célèbre pont sur le Rhône est construit à partir de 1177. Il relie Avignon à la rive opposée et renforce le rôle de la ville dans les circulations rhodaniennes.",
+          "sourcé",
+          "Ville d’Avignon — document sur le Pont Saint-Bénézet ; UNESCO.",
+          "Les premières piles et arches du pont apparaissent progressivement.",
+          "🌉 Une nouvelle grande liaison traverse le Rhône.",
+          "La ville se connecte directement à l’autre rive.",
+          "🌉 La carte s’ouvre : Avignon n’est plus seulement tournée vers son rocher, elle franchit le fleuve."
+        ],
+        [
+          1226,
+          "Le siège de Louis VIII frappe les fortifications",
+          "En 1226, l’armée de Louis VIII assiège Avignon. La double enceinte du XIIIe siècle ralentit l’armée, puis le roi ordonne la destruction des murailles.",
+          "En 1226, l’armée de Louis VIII assiège Avignon. La double enceinte du XIIIe siècle ralentit l’armée, puis le roi ordonne la destruction des murailles.",
+          "sourcé",
+          "Ville d’Avignon — Les remparts dans l’histoire urbaine d’Avignon.",
+          "Les fortifications sont endommagées et doivent être reconstruites.",
+          "Les accès sont contrôlés par les défenses et les fossés.",
+          "La cité apparaît comme une place forte stratégique du couloir rhodanien.",
+          "⚔️ La carte devient une carte de siège : murs, fossés et portes sont essentiels."
+        ],
+        [
+          1231,
+          "Avignon reconstruit ses remparts",
+          "À partir de 1231, les Avignonnais reconstruisent les remparts après le siège de 1226.",
+          "À partir de 1231, les Avignonnais reconstruisent les remparts après le siège de 1226.",
+          "sourcé",
+          "Ville d’Avignon — Les remparts dans l’histoire urbaine d’Avignon.",
+          "Une nouvelle enceinte défensive se développe autour du cœur urbain.",
+          "Les portes organisent les entrées et sorties de la cité.",
+          "La ville retrouve une enveloppe fortifiée visible sur la carte.",
+          "🧱 La ville se reconstruit : la muraille revient autour d’Avignon."
+        ],
+        [
+          1309,
+          "Clément V arrive à Avignon",
+          "Le 9 mars 1309, le pape Clément V s’arrête à Avignon. Cette présence ouvre une période de transformation majeure pour la cité.",
+          "Le 9 mars 1309, le pape Clément V s’arrête à Avignon. Cette présence ouvre une période de transformation majeure pour la cité.",
+          "sourcé",
+          "Palais des Papes / Avignon Tourisme — Avignon au temps des papes.",
+          "La résidence épiscopale devient progressivement un centre pontifical.",
+          "La ville attire davantage de circulation et de nouveaux habitants.",
+          "Avignon devient un centre politique et religieux à l’échelle européenne.",
+          "👑 Changement de niveau : Avignon passe du rôle de cité régionale à celui de ville pontificale."
+        ],
+        [
+          1316,
+          "Jean XXII fait d’Avignon une résidence pontificale",
+          "Jean XXII investit la demeure épiscopale voisine de la cathédrale et la transforme en résidence pontificale. Il fait également construire une salle d’audience.",
+          "Jean XXII investit la demeure épiscopale voisine de la cathédrale et la transforme en résidence pontificale. Il fait également construire une salle d’audience.",
+          "sourcé",
+          "Palais des Papes — Le plus grand palais gothique.",
+          "Le premier ensemble pontifical se développe près de Notre-Dame des Doms.",
+          "Les circulations convergent vers le nouveau centre du pouvoir.",
+          "Le cœur politique de la ville se déplace fortement vers le Rocher des Doms.",
+          "🏰 Le centre de gravité de la ville change."
+        ],
+        [
+          1335,
+          "Benoît XII lance le nouveau Palais des Papes",
+          "En 1335, Benoît XII lance le chantier du Palais des Papes. Le premier palais est construit entre 1335 et 1342 sous la direction de Pierre Poisson.",
+          "En 1335, Benoît XII lance le chantier du Palais des Papes. Le premier palais est construit entre 1335 et 1342 sous la direction de Pierre Poisson.",
+          "sourcé",
+          "Palais des Papes — Le plus grand palais gothique.",
+          "Le Palais Vieux apparaît avec ses tours et ses espaces pontificaux.",
+          "Les quartiers proches sont transformés pour accompagner le chantier.",
+          "Le Rocher des Doms devient le cœur monumental d’Avignon.",
+          "🏗️ Sur la carte, un énorme chantier vient de commencer !"
+        ],
+        [
+          1342,
+          "Le Palais Neuf agrandit encore le cœur d’Avignon",
+          "Clément VI lance les grandes extensions du Palais des Papes. Le chantier mobilise en moyenne 600 hommes et transforme profondément le secteur.",
+          "Clément VI lance les grandes extensions du Palais des Papes. Le chantier mobilise en moyenne 600 hommes et transforme profondément le secteur.",
+          "sourcé",
+          "Palais des Papes — Le plus grand palais gothique.",
+          "Grande Audience, Grande Chapelle, ailes des Grands Dignitaires et Cour d’Honneur prennent forme.",
+          "Des quartiers voisins sont démolis ou réorganisés pour le chantier.",
+          "Le centre monumental s’étend autour du Rocher des Doms.",
+          "🏗️🏗️ Avignon devient un gigantesque chantier médiéval."
+        ],
+        [
+          1348,
+          "Clément VI achète Avignon",
+          "En 1348, Clément VI achète la ville à la reine Jeanne de Naples, comtesse de Provence.",
+          "En 1348, Clément VI achète la ville à la reine Jeanne de Naples, comtesse de Provence.",
+          "sourcé",
+          "Palais des Papes — 9 papes à Avignon.",
+          "Le centre pontifical est déjà dominé par le Palais en construction.",
+          "Les flux autour de la cour pontificale augmentent.",
+          "Avignon est désormais directement liée au pouvoir pontifical qui s’y installe durablement.",
+          "👑 La ville change de propriétaire politique : la carte devient celle d’une cité pontificale."
+        ],
+        [
+          1355,
+          "Une nouvelle grande enceinte englobe les faubourgs",
+          "Au milieu du XIVe siècle, la ville s’est fortement étendue et urbanisée. Une nouvelle enceinte est décidée pour protéger l’ensemble de la population.",
+          "Au milieu du XIVe siècle, la ville s’est fortement étendue et urbanisée. Une nouvelle enceinte est décidée pour protéger l’ensemble de la population.",
+          "sourcé",
+          "Ville d’Avignon — Les remparts dans l’histoire urbaine d’Avignon ; Archives d’Avignon.",
+          "Les faubourgs et quartiers installés hors des anciennes fortifications sont désormais englobés.",
+          "Les nouvelles portes organisent les accès à une ville beaucoup plus vaste.",
+          "L’empreinte urbaine s’élargit nettement sur la carte.",
+          "🧱➡️🧱 La ville grandit : les murs doivent grandir avec elle."
+        ],
+        [
+          1377,
+          "Les grands remparts d’Avignon sont achevés",
+          "Le chantier des nouvelles murailles dure environ vingt ans et s’achève en 1377 sous le pontificat de Grégoire XI. L’enceinte actuelle développe environ 4,6 km, dont 4,33 km de muraille et 270 m de rocher.",
+          "Le chantier des nouvelles murailles dure environ vingt ans et s’achève en 1377 sous le pontificat de Grégoire XI. L’enceinte actuelle développe environ 4,6 km, dont 4,33 km de muraille et 270 m de rocher.",
+          "sourcé",
+          "Ville d’Avignon — Les remparts dans l’histoire urbaine d’Avignon.",
+          "Tours, portes et chemins de ronde forment une ceinture défensive continue.",
+          "Les portes deviennent les points d’entrée et de sortie de la cité.",
+          "C’est l’une des transformations cartographiques les plus spectaculaires : Avignon prend presque son contour historique actuel.",
+          "🏰 BOUM ! La grande couronne de remparts apparaît autour de la ville."
+        ],
+        [
+          1378,
+          "Le Grand Schisme bouleverse le rôle d’Avignon",
+          "Après le retour de la papauté à Rome, le Grand Schisme d’Occident conduit des papes à résider à Avignon de 1378 à 1403.",
+          "Après le retour de la papauté à Rome, le Grand Schisme d’Occident conduit des papes à résider à Avignon de 1378 à 1403.",
+          "sourcé",
+          "Ville d’Avignon — Rapport de présentation du PSMV.",
+          "Le Palais reste un centre majeur du pouvoir pontifical.",
+          "Les circulations européennes liées à la cour continuent d’alimenter la ville.",
+          "Avignon conserve une influence européenne exceptionnelle.",
+          "🌍 La ville est petite sur la carte… mais son influence dépasse largement ses remparts."
+        ],
+        [
+          1610,
+          "Le Mont-de-piété ouvre ses portes",
+          "Le Mont-de-piété d’Avignon ouvre pour la première fois le 6 mai 1610. Il s’inscrit dans une longue histoire sociale et économique de la ville.",
+          "Le Mont-de-piété d’Avignon ouvre pour la première fois le 6 mai 1610. Il s’inscrit dans une longue histoire sociale et économique de la ville.",
+          "sourcé",
+          "Archives d’Avignon — Du Mont-de-piété au Crédit municipal.",
+          "Un nouvel équipement économique et social entre dans le paysage urbain.",
+          "Les activités économiques se développent dans le tissu urbain existant.",
+          "La ville conserve ses remparts tout en développant de nouveaux usages à l’intérieur.",
+          "💰 La ville fortifiée devient aussi une ville de commerce et de services."
+        ],
+        [
+          1791,
+          "Avignon devient française",
+          "En septembre 1791, la réunion d’Avignon et du Comtat Venaissin à la France est entérinée. Avignon devient le chef-lieu du département du Vaucluse.",
+          "En septembre 1791, la réunion d’Avignon et du Comtat Venaissin à la France est entérinée. Avignon devient le chef-lieu du département du Vaucluse.",
+          "sourcé",
+          "Ville d’Avignon — document sur le rattachement à la France ; PSMV.",
+          "Les anciennes structures du pouvoir pontifical changent progressivement de fonction.",
+          "La ville s’insère dans les réseaux administratifs français.",
+          "La frontière politique change : Avignon entre dans la France révolutionnaire.",
+          "🇫🇷 Changement de carte politique ! Avignon change de pays."
+        ],
+        [
+          1849,
+          "Le chemin de fer arrive à Avignon",
+          "La gare d’Avignon Centre est mise en service en 1849 par la Compagnie du chemin de fer d’Avignon à Marseille, selon le dossier municipal du PEM.",
+          "La gare d’Avignon Centre est mise en service en 1849 par la Compagnie du chemin de fer d’Avignon à Marseille, selon le dossier municipal du PEM.",
+          "sourcé",
+          "Ville d’Avignon — Requalification du PEM d’Avignon Centre.",
+          "Une nouvelle gare apparaît à proximité des remparts.",
+          "🚂 Le rail devient un nouvel axe majeur de déplacement.",
+          "La ville commence à se réorienter vers le sud et vers la gare.",
+          "🚂 La carte accélère : les rails changent les directions de croissance de la ville."
+        ],
+        [
+          1854,
+          "La liaison Lyon–Avignon–Marseille renforce le rail",
+          "La Ville d’Avignon indique qu’en 1854 la liaison Lyon–Avignon–Marseille est ouverte, donnant une nouvelle dynamique aux transports et aux échanges.",
+          "La Ville d’Avignon indique qu’en 1854 la liaison Lyon–Avignon–Marseille est ouverte, donnant une nouvelle dynamique aux transports et aux échanges.",
+          "sourcé",
+          "Ville d’Avignon — Histoire de la rue Thiers / Porte de la République.",
+          "La gare devient un nouveau pôle urbain.",
+          "Le rail complète puis concurrence les anciens circuits centrés sur le Rhône.",
+          "La ville s’oriente progressivement vers le sud.",
+          "🚂➡️ Le nouveau réseau fait bouger le centre de gravité urbain."
+        ],
+        [
+          1856,
+          "La rue de la République commence à ouvrir la ville",
+          "Le premier tronçon de la rue de la République est percé entre 1856 et 1857 pour relier la gare à la ville historique.",
+          "Le premier tronçon de la rue de la République est percé entre 1856 et 1857 pour relier la gare à la ville historique.",
+          "sourcé",
+          "Ville d’Avignon — Porte de la République.",
+          "Des bâtiments et façades sont transformés le long du nouvel axe.",
+          "Une grande artère relie directement la gare au cœur de la ville.",
+          "Une nouvelle direction de circulation traverse le tissu urbain.",
+          "🛣️ Une ligne droite apparaît sur la carte : la ville se modernise."
+        ],
+        [
+          1860,
+          "Les remparts sont restaurés après les grandes crues",
+          "Les inondations de 1840 et 1856 conduisent à des restaurations des remparts à partir de 1860, avec contre-murs et reprises des parties hautes et des tours.",
+          "Les inondations de 1840 et 1856 conduisent à des restaurations des remparts à partir de 1860, avec contre-murs et reprises des parties hautes et des tours.",
+          "sourcé",
+          "Ville d’Avignon — Les remparts dans l’histoire urbaine d’Avignon.",
+          "Les murailles sont consolidées et transformées.",
+          "Les abords des remparts sont progressivement réaménagés.",
+          "Le Rhône devient un élément majeur des choix de protection urbaine.",
+          "🌊 La ville doit maintenant apprendre à vivre avec les crues."
+        ],
+        [
+          1869,
+          "La rue Thiers prépare une nouvelle traversée",
+          "Le chantier de la rue Thiers débute en 1869 et se poursuit principalement entre 1874 et 1877. L’axe traverse une zone maraîchère et ouvre une brèche dans les remparts.",
+          "Le chantier de la rue Thiers débute en 1869 et se poursuit principalement entre 1874 et 1877. L’axe traverse une zone maraîchère et ouvre une brèche dans les remparts.",
+          "sourcé",
+          "Ville d’Avignon — Le renouveau de la rue Thiers.",
+          "Le tissu urbain se densifie autour du nouvel axe.",
+          "Une nouvelle grande voie traverse l’enceinte.",
+          "La muraille n’est plus seulement une barrière : elle devient une interface traversée par les nouvelles circulations.",
+          "🚪 La ville commence à percer ses propres murs pour laisser entrer la modernité."
+        ],
+        [
+          1892,
+          "Le Monument du Centenaire s’installe dans la ville",
+          "Un monument commémorant la réunion d’Avignon et du Comtat à la France est achevé en 1892. Il sera déplacé aux allées de l’Oulle en 1975.",
+          "Un monument commémorant la réunion d’Avignon et du Comtat à la France est achevé en 1892. Il sera déplacé aux allées de l’Oulle en 1975.",
+          "sourcé",
+          "Ville d’Avignon — Les remparts, protection contre les inondations.",
+          "Un nouveau monument civique marque la mémoire de la ville.",
+          "Les espaces publics et promenades deviennent des lieux importants de représentation.",
+          "La ville moderne construit une nouvelle mémoire dans son paysage.",
+          "🗿 Même les monuments peuvent voyager dans la ville !"
+        ],
+        [
+          1922,
+          "La ville accueille le Grand Critérium Paris-Nice",
+          "La Ville d’Avignon mentionne le passage du Grand Critérium Paris-Nice au pied des remparts en 1922.",
+          "La Ville d’Avignon mentionne le passage du Grand Critérium Paris-Nice au pied des remparts en 1922.",
+          "sourcé",
+          "Ville d’Avignon — Les remparts, lieu de promenade et de détente.",
+          "Les remparts deviennent aussi un décor urbain et sportif.",
+          "Les routes autour des murailles accueillent de nouveaux usages.",
+          "L’ancienne frontière défensive devient un espace public de circulation et de spectacle.",
+          "🏎️ Les anciens remparts deviennent une scène !"
+        ],
+        [
+          1935,
+          "Le Circuit des Remparts transforme la muraille en décor automobile",
+          "En 1935, le Circuit des Remparts se déroule sur les bords du Rhône à l’ouest de la ville.",
+          "En 1935, le Circuit des Remparts se déroule sur les bords du Rhône à l’ouest de la ville.",
+          "sourcé",
+          "Ville d’Avignon — Les remparts, lieu de promenade et de détente.",
+          "Les remparts sont désormais perçus comme un patrimoine à mettre en scène.",
+          "Le réseau routier devient une piste événementielle.",
+          "La fonction de l’espace autour des murailles change complètement.",
+          "🏁 Même endroit, nouvelle époque : de la défense militaire à la course automobile."
+        ],
+        [
+          1974,
+          "Une nouvelle porte est creusée dans le Rocher des Doms",
+          "La création du parking du Palais des Papes entraîne une nouvelle porte creusée dans le rocher, inaugurée en 1974.",
+          "La création du parking du Palais des Papes entraîne une nouvelle porte creusée dans le rocher, inaugurée en 1974.",
+          "sourcé",
+          "Ville d’Avignon — Les remparts, système de défense.",
+          "Une ouverture moderne modifie le Rocher des Doms.",
+          "L’accès automobile transforme les circulations autour du Palais.",
+          "La roche historique est adaptée aux besoins contemporains.",
+          "🚗 Même un rocher vieux de plusieurs siècles peut être transformé par la ville moderne."
+        ],
+        [
+          1975,
+          "Le Monument du Centenaire est déplacé aux allées de l’Oulle",
+          "Le monument commémoratif installé à l’origine place de l’Horloge est déplacé aux allées de l’Oulle en 1975.",
+          "Le monument commémoratif installé à l’origine place de l’Horloge est déplacé aux allées de l’Oulle en 1975.",
+          "sourcé",
+          "Ville d’Avignon — Les remparts, protection contre les inondations.",
+          "Le monument change d’emplacement.",
+          "Les allées de l’Oulle deviennent un nouvel espace de mise en scène du patrimoine.",
+          "Le paysage urbain contemporain réorganise les traces du passé.",
+          "🔄 La ville réutilise son patrimoine au lieu de le laisser figé."
+        ],
+        [
+          1995,
+          "Le centre historique d’Avignon entre au patrimoine mondial",
+          "En 1995, l’UNESCO inscrit le centre historique d’Avignon : Palais des Papes, ensemble épiscopal et Pont d’Avignon.",
+          "En 1995, l’UNESCO inscrit le centre historique d’Avignon : Palais des Papes, ensemble épiscopal et Pont d’Avignon.",
+          "sourcé",
+          "UNESCO — Centre historique d’Avignon.",
+          "Palais, ensemble épiscopal et pont deviennent un ensemble patrimonial mondialement reconnu.",
+          "Le centre historique devient un espace majeur de découverte et de tourisme.",
+          "La carte patrimoniale d’Avignon dépasse largement la ville : elle entre dans une histoire européenne et mondiale.",
+          "🌍 Avignon change d’échelle une nouvelle fois : son patrimoine devient mondial."
+        ],
+        [
+          2003,
+          "Une crue majeure rappelle le rôle du Rhône",
+          "La Ville d’Avignon indique que la crue de 2003 est la plus marquante et conséquente de son dispositif d’endiguement contemporain.",
+          "La Ville d’Avignon indique que la crue de 2003 est la plus marquante et conséquente de son dispositif d’endiguement contemporain.",
+          "sourcé",
+          "Ville d’Avignon — Les remparts, système d’endiguement.",
+          "Les ouvrages de protection prennent toute leur importance.",
+          "Les accès et protections doivent être adaptés au risque de crue.",
+          "Le Rhône redevient très visible comme force géographique qui façonne la ville.",
+          "🌊 Le fleuve n’est pas le décor d’Avignon : il participe directement à son histoire."
+        ],
+        [
+          2026,
+          "Avignon transforme encore la façon de raconter son patrimoine",
+          "En 2026, le Palais des Papes ouvre une nouvelle étape de médiation avec de nouveaux récits, maquettes interactives, films et outils numériques.",
+          "En 2026, le Palais des Papes ouvre une nouvelle étape de médiation avec de nouveaux récits, maquettes interactives, films et outils numériques.",
+          "sourcé",
+          "Palais des Papes — programme de transformation 2026-2027.",
+          "Le monument historique devient aussi un support de médiation numérique.",
+          "Les visiteurs explorent désormais le patrimoine avec des outils numériques en plus du parcours physique.",
+          "L’histoire d’Avignon peut être racontée à différentes échelles, de la rue au monde.",
+          "📱 Et maintenant, c’est ChronoMap qui te fait voyager dans cette histoire !"
+        ]
+      ]
+    }
+  ],
+  "regionEvents": [
+    {
+      "year": 1791,
+      "region": "Vaucluse",
+      "title": "Avignon devient le chef-lieu du Vaucluse",
+      "recap": "La réunion d’Avignon et du Comtat à la France est entérinée en 1791 ; Avignon devient le chef-lieu du département du Vaucluse.",
+      "source": "Ville d’Avignon"
+    },
+    {
+      "year": 2026,
+      "region": "Vaucluse",
+      "title": "Le patrimoine d’Avignon rayonne dans le Vaucluse",
+      "recap": "Avignon reste un pôle patrimonial majeur du Vaucluse.",
+      "source": "UNESCO / Ville d’Avignon"
+    }
+  ],
+  "europeEvents": [
+    {
+      "year": 1309,
+      "title": "Avignon devient un centre pontifical européen",
+      "recap": "L’installation pontificale transforme Avignon en centre de pouvoir et d’échanges à l’échelle européenne.",
+      "source": "UNESCO / Palais des Papes"
+    },
+    {
+      "year": 1995,
+      "title": "Le patrimoine d’Avignon est reconnu mondialement",
+      "recap": "Le centre historique d’Avignon entre sur la Liste du patrimoine mondial.",
+      "source": "UNESCO"
+    }
+  ],
+  "worldEvents": [
+    {
+      "year": 1995,
+      "title": "Avignon entre au patrimoine mondial",
+      "recap": "L’UNESCO inscrit le centre historique d’Avignon sur la Liste du patrimoine mondial.",
+      "source": "UNESCO"
+    }
+  ],
+  "mapHistoryVersion": "1",
+  "mapHistoryDescription": "Couches historiques schématiques destinées au premier test visuel de ChronoMap. Elles seront remplacées progressivement par des géométries historiques documentées.",
+  "mapHistory": [
+    {
+      "from": -3000,
+      "to": 2026,
+      "type": "point",
+      "coords": [
+        43.9532,
+        4.8064
+      ],
+      "radius": 9,
+      "label": "🪨 Rocher des Doms — cœur des premières occupations"
+    },
+    {
+      "from": -200,
+      "to": 450,
+      "type": "polygon",
+      "coords": [
+        [
+          [
+            43.957,
+            4.803
+          ],
+          [
+            43.954,
+            4.814
+          ],
+          [
+            43.948,
+            4.813
+          ],
+          [
+            43.944,
+            4.805
+          ],
+          [
+            43.949,
+            4.798
+          ],
+          [
+            43.956,
+            4.799
+          ]
+        ]
+      ],
+      "label": "🏛️ Noyau urbain antique — schématique"
+    },
+    {
+      "from": 300,
+      "to": 1200,
+      "type": "polygon",
+      "coords": [
+        [
+          [
+            43.957,
+            4.802
+          ],
+          [
+            43.953,
+            4.81
+          ],
+          [
+            43.948,
+            4.81
+          ],
+          [
+            43.947,
+            4.803
+          ],
+          [
+            43.952,
+            4.798
+          ],
+          [
+            43.956,
+            4.799
+          ]
+        ]
+      ],
+      "label": "🛡️ Enceinte du Bas-Empire — tracé schématique"
+    },
+    {
+      "from": 900,
+      "to": 1230,
+      "type": "polygon",
+      "coords": [
+        [
+          [
+            43.958,
+            4.8
+          ],
+          [
+            43.954,
+            4.813
+          ],
+          [
+            43.946,
+            4.813
+          ],
+          [
+            43.943,
+            4.803
+          ],
+          [
+            43.949,
+            4.797
+          ],
+          [
+            43.956,
+            4.798
+          ]
+        ]
+      ],
+      "label": "🧱 Extension urbaine médiévale — schématique"
+    },
+    {
+      "from": 1177,
+      "to": 1600,
+      "type": "line",
+      "coords": [
+        [
+          43.9535,
+          4.798
+        ],
+        [
+          43.9525,
+          4.791
+        ],
+        [
+          43.9515,
+          4.784
+        ],
+        [
+          43.9505,
+          4.777
+        ]
+      ],
+      "weight": 6,
+      "label": "🌉 Pont Saint-Bénézet — tracé schématique"
+    },
+    {
+      "from": 1335,
+      "to": 2026,
+      "type": "polygon",
+      "coords": [
+        [
+          [
+            43.9539,
+            4.807
+          ],
+          [
+            43.9538,
+            4.809
+          ],
+          [
+            43.9528,
+            4.8092
+          ],
+          [
+            43.9527,
+            4.8073
+          ]
+        ]
+      ],
+      "weight": 3,
+      "label": "🏰 Palais des Papes — emprise simplifiée"
+    },
+    {
+      "from": 1355,
+      "to": 2026,
+      "type": "polygon",
+      "coords": [
+        [
+          [
+            43.959,
+            4.798
+          ],
+          [
+            43.96,
+            4.806
+          ],
+          [
+            43.957,
+            4.814
+          ],
+          [
+            43.95,
+            4.817
+          ],
+          [
+            43.944,
+            4.813
+          ],
+          [
+            43.94,
+            4.804
+          ],
+          [
+            43.941,
+            4.798
+          ],
+          [
+            43.947,
+            4.794
+          ],
+          [
+            43.954,
+            4.795
+          ]
+        ]
+      ],
+      "weight": 5,
+      "label": "🏰 Grande enceinte du XIVe siècle — schématique"
+    },
+    {
+      "from": 1320,
+      "to": 2026,
+      "type": "line",
+      "coords": [
+        [
+          43.961,
+          4.818
+        ],
+        [
+          43.958,
+          4.814
+        ],
+        [
+          43.955,
+          4.812
+        ],
+        [
+          43.951,
+          4.813
+        ],
+        [
+          43.947,
+          4.812
+        ],
+        [
+          43.944,
+          4.814
+        ]
+      ],
+      "weight": 4,
+      "label": "💧 Réseau de canaux — schématique"
+    },
+    {
+      "from": 1849,
+      "to": 2026,
+      "type": "line",
+      "coords": [
+        [
+          43.939,
+          4.805
+        ],
+        [
+          43.944,
+          4.806
+        ],
+        [
+          43.949,
+          4.807
+        ],
+        [
+          43.955,
+          4.808
+        ],
+        [
+          43.961,
+          4.809
+        ]
+      ],
+      "weight": 5,
+      "label": "🚂 Axe ferroviaire — schématique"
+    },
+    {
+      "from": 1856,
+      "to": 2026,
+      "type": "line",
+      "coords": [
+        [
+          43.944,
+          4.805
+        ],
+        [
+          43.947,
+          4.806
+        ],
+        [
+          43.95,
+          4.807
+        ],
+        [
+          43.953,
+          4.807
+        ]
+      ],
+      "weight": 4,
+      "label": "🛣️ Rue de la République — axe schématique"
+    },
+    {
+      "from": 1869,
+      "to": 2026,
+      "type": "line",
+      "coords": [
+        [
+          43.956,
+          4.803
+        ],
+        [
+          43.952,
+          4.806
+        ],
+        [
+          43.949,
+          4.809
+        ],
+        [
+          43.945,
+          4.812
+        ]
+      ],
+      "weight": 4,
+      "label": "🛣️ Rue Thiers — axe schématique"
+    },
+    {
+      "from": 1900,
+      "to": 2026,
+      "type": "polygon",
+      "coords": [
+        [
+          [
+            43.963,
+            4.795
+          ],
+          [
+            43.964,
+            4.813
+          ],
+          [
+            43.958,
+            4.821
+          ],
+          [
+            43.948,
+            4.823
+          ],
+          [
+            43.938,
+            4.817
+          ],
+          [
+            43.934,
+            4.804
+          ],
+          [
+            43.939,
+            4.791
+          ],
+          [
+            43.95,
+            4.788
+          ]
+        ]
+      ],
+      "weight": 2,
+      "label": "🏙️ Extension urbaine moderne — schématique"
+    }
+  ]
+}
