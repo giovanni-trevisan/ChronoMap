@@ -85,6 +85,7 @@ input,button{font:inherit;border-radius:10px;border:1px solid var(--line);paddin
 .navtabs{display:none!important}
 .history-sheet{display:none;margin:0;background:#081526;border-top:1px solid #294563;padding:16px 12px 24px;scroll-margin-top:10px}
 .date-link{display:flex;gap:7px;align-items:center;width:100%;text-align:left;background:#0d1f34;border:1px solid #213a56;margin:4px 0;padding:7px 9px;border-radius:9px;cursor:pointer}
+.date-link{position:relative;z-index:2005;pointer-events:auto!important;touch-action:manipulation;}
 @media(max-width:600px){.plans{grid-template-columns:repeat(3,1fr)!important}.plan p{display:none}.plan b{font-size:10px}.scope{font-size:9px;padding:6px 2px}.controls{grid-template-columns:1fr 88px}.history-sheet{padding:13px 9px 22px}}
 
 /* V13.3 — interface tactile + fiche immersive */
@@ -321,12 +322,19 @@ function render(){
     :'<div class="event">Aucune date disponible.</div>';
 
   document.querySelectorAll('[data-event-index]').forEach(b=>{
-    b.onclick=()=>{
+    b.onclick=(ev)=>{
+      ev.preventDefault();
+      ev.stopPropagation();
+      const index=Number(b.dataset.eventIndex);
+      const chosen=events[index];
+      if(!chosen)return;
       if(timer){clearInterval(timer);timer=null;$('play').textContent='▶ Lecture';}
-      selectedEvent=events[+b.dataset.eventIndex];
-      $('timeline').value=selectedEvent.year;
+      selectedEvent=chosen;
+      $('timeline').value=chosen.year;
+      // Affiche immédiatement la fiche, puis synchronise la carte sans la refermer.
+      showSummary(p,chosen,true);
       render();
-      showSummary(p,selectedEvent,true);
+      showSummary(p,chosen,true);
     };
   });
 
