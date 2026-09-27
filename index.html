@@ -123,6 +123,12 @@ input,button{font:inherit;border-radius:10px;border:1px solid var(--line);paddin
 .chronomap-map-control .map-mode-list button.active,.chronomap-map-control .map-mode-list button:hover{background:#17304e;}
 /* V14.9 illustration locale garantie */ .lesson-svg{display:block;width:100%;height:auto;min-height:190px}.lesson-illustration{background:#dfefff}@media(max-width:520px){.lesson-page{padding:10px 8px 16px}.lesson-head{grid-template-columns:68px 1fr;gap:7px}.lesson-avatar{width:68px;height:68px}.lesson-bubble{font-size:11.5px;padding:9px 10px}.lesson-bubble p{line-height:1.4}.lesson-illustration{min-height:150px;margin:8px 0}.lesson-svg{min-height:150px}.lesson-fact{margin:7px 0;padding:9px 11px}.lesson-map-note{margin:7px 0;padding:8px 10px;font-size:10.5px}}
 /* V14.9 — illustration locale garantie */ .lesson-svg{display:block;width:100%;height:auto;min-height:190px}.lesson-illustration{background:#dfefff}@media(max-width:520px){.lesson-page{padding:10px 8px 16px}.lesson-head{grid-template-columns:68px 1fr;gap:7px}.lesson-avatar{width:68px;height:68px}.lesson-bubble{font-size:11.5px;padding:9px 10px}.lesson-bubble p{line-height:1.4}.lesson-illustration{min-height:150px;margin:8px 0}.lesson-svg{min-height:150px}.lesson-fact{margin:7px 0;padding:9px 11px}.lesson-fact p{font-size:11px}.lesson-map-note{margin:7px 0;padding:8px 10px;font-size:10.5px}}
+
+.lesson-photo{position:relative;margin:14px 0 16px;border-radius:22px;overflow:hidden;background:#e8edf2;box-shadow:0 10px 28px rgba(20,32,45,.12)}
+.lesson-photo img{display:block;width:100%;height:min(42vw,360px);min-height:190px;object-fit:cover}
+.lesson-photo figcaption{padding:9px 12px;font-size:.78rem;line-height:1.35;background:rgba(255,255,255,.96);color:#52606d}
+.lesson-photo .photo-credit{display:block;margin-top:3px;font-size:.68rem;opacity:.75}
+.lesson-map-build{margin:10px 0;padding:10px 12px;border-radius:14px;background:linear-gradient(135deg,#eef7ff,#f7f3ff);font-weight:700;font-size:.86rem}
 </style>
 </head>
 <body>
@@ -229,37 +235,61 @@ function centerMapForScope(p,force=false){
 
 function renderHistoricalMap(p,y){
   historicalVectorLayer.clearLayers();
-  const features=(data?.mapHistory||[]).filter(f=>y>=(f.from??-99999)&&y<=(f.to??99999));
-  features.forEach(f=>{
-    let layer=null;
-    if(f.type==='line'&&f.coords)layer=L.polyline(f.coords,{weight:f.weight||4,opacity:.9});
-    else if(f.type==='polygon'&&f.coords)layer=L.polygon(f.coords,{weight:f.weight||2,fillOpacity:.12});
-    else if(f.type==='point'&&f.coords)layer=L.circleMarker(f.coords,{radius:f.radius||6,weight:2,fillOpacity:.8});
-    if(layer){layer.bindTooltip(f.label||'Transformation historique');historicalVectorLayer.addLayer(layer);}
-  });
-  let badge=$('mapTimeBadge');
-  if(!badge){
-    badge=document.createElement('div');
-    badge.id='mapTimeBadge';
-    badge.className='history-map-badge';
-    $('map').appendChild(badge);
-  }
-  badge.textContent=`🕰️ Carte historique · ${fmt(y)}`;
+  const features=(data?.mapHistory||[]).filter(f=>y>=(f.from??-99999));
+  const buildRanges={
+    '🪨 Rocher des Doms — cœur des premières occupations':[-3000,-3000],
+    '🏛️ Noyau urbain antique — schématique':[-200,50],
+    '🛡️ Enceinte du Bas-Empire — tracé schématique':[300,450],
+    '🧱 Extension urbaine médiévale — schématique':[900,1100],
+    '🌉 Pont Saint-Bénézet — tracé schématique':[1177,1185],
+    '🏰 Palais des Papes — emprise simplifiée':[1335,1364],
+    '🏰 Grande enceinte du XIVe siècle — schématique':[1355,1377],
+    '💧 Réseau de canaux — schématique':[1320,1400],
+    '🚂 Axe ferroviaire — schématique':[1849,1854],
+    '🛣️ Rue de la République — axe schématique':[1856,1857],
+    '🛣️ Rue Thiers — axe schématique':[1869,1872],
+    '🏙️ Extension urbaine moderne — schématique':[1900,2026]
+  };
+  const lerp=(a,b,t)=>a+(b-a)*t;
+  const progressOf=f=>{const r=buildRanges[f.label]||[f.from??-99999,f.from??-99999];if(r[1]<=r[0])return y>=r[0]?1:0;return Math.max(0,Math.min(1,(y-r[0])/(r[1]-r[0])))};
+  const partialLine=(coords,t)=>{if(!coords||coords.length<2||t>=1)return coords;const total=coords.length-1,pos=Math.max(0,Math.min(total,t*total)),idx=Math.floor(pos),frac=pos-idx,out=coords.slice(0,idx+1);if(idx<coords.length-1){const a=coords[idx],b=coords[idx+1];out.push([lerp(a[0],b[0],frac),lerp(a[1],b[1],frac)])}return out};
+  const scaleRing=(ring,t)=>{if(!ring||!ring.length)return ring;const c=ring.reduce((a,q)=>[a[0]+q[0]/ring.length,a[1]+q[1]/ring.length],[0,0]),sc=.12+.88*t;return ring.map(q=>[c[0]+(q[0]-c[0])*sc,c[1]+(q[1]-c[1])*sc])};
+  features.forEach(f=>{const t=progressOf(f);if(t<=0)return;let layer=null;if(f.type==='line'&&f.coords)layer=L.polyline(partialLine(f.coords,t),{weight:f.weight||4,opacity:.95,lineCap:'round',lineJoin:'round'});else if(f.type==='polygon'&&f.coords)layer=L.polygon(f.coords.map(r=>scaleRing(r,t)),{weight:f.weight||2,fillOpacity:.12+.10*t,opacity:.95});else if(f.type==='point'&&f.coords)layer=L.circleMarker(f.coords,{radius:(f.radius||6)*(.55+.45*t),weight:2,opacity:.95,fillOpacity:.35+.55*t});if(layer){layer.bindTooltip(f.label||'Transformation historique');historicalVectorLayer.addLayer(layer)}});
+  let badge=$('mapTimeBadge');if(!badge){badge=document.createElement('div');badge.id='mapTimeBadge';badge.className='history-map-badge';$('map').appendChild(badge)}
+  const active=(data?.mapHistory||[]).find(f=>{const r=buildRanges[f.label];return r&&y>=r[0]&&y<r[1]});
+  badge.textContent=active?`🕰️ ${fmt(y)} · construction : ${active.label.replace(/^\S+\s*/,'')}`:`🕰️ Carte historique · ${fmt(y)}`;
 }
-
 function escapeSvgText(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
-function showLessonImage(title,year){
-  const box=$('lessonMedia'); if(!box)return;
-  const t=(title||'').toLowerCase();
-  let scene='<rect x="45" y="145" width="330" height="105" rx="8" fill="#f2c66d"/><path d="M35 150L95 95L155 150L215 82L275 150L335 105L395 150V250H35Z" fill="#c77c4d"/><rect x="82" y="165" width="42" height="85" fill="#8e573d"/><rect x="177" y="145" width="55" height="105" fill="#9b6041"/>';
-  if(/pont|bénézet/.test(t)) scene='<path d="M25 205 Q105 130 180 205 Q255 130 415 205 L415 245H25Z" fill="#b8794f"/><path d="M35 205 Q105 150 180 205 Q255 150 405 205" fill="none" stroke="#704832" stroke-width="10"/><path d="M20 247H420" stroke="#5f6f7d" stroke-width="8"/>';
-  else if(/pap|palais|roi|château|fort|muraille|enceinte/.test(t)) scene='<rect x="45" y="120" width="330" height="130" fill="#a86e4a"/><rect x="62" y="82" width="55" height="168" fill="#8d5c43"/><rect x="303" y="82" width="55" height="168" fill="#8d5c43"/><path d="M45 120h330" stroke="#714936" stroke-width="12"/>';
-  else if(/train|ferroviaire|rail|gare/.test(t)) scene='<path d="M55 160H345Q370 160 370 190V235H55Z" fill="#b54e4e"/><rect x="75" y="178" width="60" height="38" fill="#bfe4f2"/><rect x="150" y="178" width="60" height="38" fill="#bfe4f2"/><rect x="225" y="178" width="60" height="38" fill="#bfe4f2"/><circle cx="110" cy="240" r="18" fill="#273646"/><circle cx="315" cy="240" r="18" fill="#273646"/>';
-  else if(/romain|avenio|antiqu|colonne/.test(t)) scene='<rect x="55" y="165" width="320" height="85" fill="#d8b77c"/><path d="M70 165V105H110V165M145 165V105H185V165M220 165V105H260V165M295 165V105H335V165" fill="#efe0b4" stroke="#9f7b50" stroke-width="6"/><path d="M55 105H375" stroke="#8d6a43" stroke-width="14"/>';
-  else if(/préhist|néolith|oppidum|gaulois/.test(t)) scene='<path d="M35 250Q70 105 210 115Q350 105 405 250Z" fill="#765a49"/><path d="M95 250Q120 155 210 150Q300 155 340 250Z" fill="#172231"/><path d="M150 205q25-45 50 0q25-45 50 0" fill="none" stroke="#d36e4e" stroke-width="8"/>';
-  box.innerHTML='<svg class="lesson-svg" viewBox="0 0 440 285" role="img" aria-label="Illustration de '+escapeSvgText(title)+'" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#7dc7ff"/><stop offset="1" stop-color="#f8e6ad"/></linearGradient></defs><rect width="440" height="285" rx="18" fill="url(#sky)"/><circle cx="365" cy="58" r="28" fill="#ffd75e"/><path d="M0 245Q110 205 220 240T440 225V285H0Z" fill="#79a85a"/>'+scene+'<rect x="18" y="18" width="150" height="40" rx="20" fill="#fff" opacity=".95"/><text x="32" y="44" font-family="system-ui,sans-serif" font-size="14" font-weight="800" fill="#172231">'+escapeSvgText(fmt(year))+'</text></svg>';
+function lessonPhotoFor(title,year){
+  const base='https://commons.wikimedia.org/wiki/Special:Redirect/file/';
+  const enc=f=>base+encodeURIComponent(f).replace(/%2F/g,'/');
+  const photos={
+    panorama:[enc("Pont d'Avignon, rocher des Doms, palais des papes.jpg"),'Chimigi — Wikimedia Commons — CC BY-SA 2.0 FR'],
+    bridge:[enc('Avignon le pont St-Bénezet depuis le Rocher des Doms.JPG'),'Provence13 — Wikimedia Commons — Creative Commons'],
+    cathedral:[enc('Notre Dame des doms.jpg'),'Lofty — Wikimedia Commons — CC BY 2.0'],
+    palace:[enc('Palais des Papes et place du Palais.jpg'),'Poiesia — Wikimedia Commons — CC BY-SA 3.0'],
+    walls:[enc('Avignon - Remparts.jpg'),'Véronique PAGNIER — Wikimedia Commons — domaine public'],
+    railway:[enc("Gare d'Avignon-Centre.JPG"),'Florian Pépellin — Wikimedia Commons — domaine public'],
+    republic:[enc('Avignon Cours et rue de la République.jpg'),'Wikimedia Commons — domaine public']
+  };
+  let p=photos.panorama,caption='Vue d’Avignon — ce que l’on peut encore observer aujourd’hui.';
+  if(year===-3000){caption='Le Rocher des Doms domine le Rhône : le site des premières occupations.'}
+  else if(year===-200||year===50){caption='Le site d’Avignon vu depuis le Rhône permet de comprendre sa position stratégique.'}
+  else if([300,1231,1355,1377,1860,1935,1974].includes(year)){p=photos.walls;caption='Les remparts actuels permettent de visualiser l’emprise défensive de la ville.'}
+  else if(year===1150){p=photos.cathedral;caption='Notre-Dame des Doms : la cathédrale domine le Rocher des Doms.'}
+  else if(year===1177||year===1226){p=photos.bridge;caption='Le Pont Saint-Bénézet rappelle le franchissement historique du Rhône.'}
+  else if([1309,1316,1335,1342,1348,1378,1610,1791,1892,1995,2026].includes(year)){p=photos.palace;caption='Le Palais des Papes et le centre historique permettent de visualiser le cœur monumental d’Avignon.'}
+  else if(year===1849||year===1854){p=photos.railway;caption='La gare d’Avignon-Centre rappelle le rôle du chemin de fer dans la transformation de la ville.'}
+  else if(year===1856||year===1869){p=photos.republic;caption='Les grands axes modernes ouvrent progressivement la ville au-delà de son organisation médiévale.'}
+  else if([1922,1975,2003].includes(year)){caption='Le paysage urbain et le Rhône permettent de replacer cet événement dans la ville actuelle.'}
+  return {url:p[0],credit:p[1],caption};
 }
 
+function showLessonImage(title,year){
+  const box=$('lessonMedia');if(!box)return;
+  const media=lessonPhotoFor(title,year);
+  box.innerHTML='<figure class="lesson-photo"><img loading="lazy" src="'+media.url+'" alt="'+escapeSvgText(title)+'" referrerpolicy="no-referrer"><figcaption>'+escapeSvgText(media.caption)+'<span class="photo-credit">'+escapeSvgText(media.credit)+'</span></figcaption></figure>';
+}
 function showSummary(p,e,scroll){
   if(!e||!p)return;
   const y=e.year??e[0];
@@ -477,7 +507,7 @@ try{
 }catch(e){}
 
 if('serviceWorker' in navigator){
-  navigator.serviceWorker.register('./sw.js?v=15-2').then(reg=>reg.update()).catch(()=>{});
+  navigator.serviceWorker.register('./sw.js?v=15-3').then(reg=>reg.update()).catch(()=>{});
 }
 
 Promise.all([
