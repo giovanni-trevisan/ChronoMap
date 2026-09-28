@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#07101f">
 <link rel="manifest" href="manifest.webmanifest">
-<title>ChronoMap V15.5 — Avignon enrichi</title>
+<title>ChronoMap V15.5.1 — Avignon enrichi</title>
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
 <style>
 :root{--bg:#07101f;--p:#0d1c30;--line:#294563;--text:#f4f7fb;--muted:#9db0c8;--gold:#f5b83d;--blue:#4b8cff}
@@ -129,6 +129,7 @@ input,button{font:inherit;border-radius:10px;border:1px solid var(--line);paddin
 .lesson-photo figcaption{padding:9px 12px;font-size:.78rem;line-height:1.35;background:rgba(255,255,255,.96);color:#52606d}
 .lesson-photo .photo-credit{display:block;margin-top:3px;font-size:.68rem;opacity:.75}
 .lesson-map-build{margin:10px 0;padding:10px 12px;border-radius:14px;background:linear-gradient(135deg,#eef7ff,#f7f3ff);font-weight:700;font-size:.86rem}
+.step-action{display:flex;align-items:center;gap:4px}.step-action button{padding:9px 11px}.step-action .step-inline{height:40px}
 </style>
 </head>
 <body>
@@ -148,7 +149,7 @@ input,button{font:inherit;border-radius:10px;border:1px solid var(--line);paddin
 <span>Préhistoire</span><span>Antiquité</span><span>Moyen Âge</span><span>Époque moderne</span><span>Époque contemporaine</span>
 </div>
 <input id="timeline" class="timeline" type="range" min="-3000" max="2026" value="2026" step="1">
- <div class="actions"><button id="back">◀ <select id="backStep" class="step-inline" aria-label="Pas de recul"><option value="5">5 ans</option><option value="10" selected>10 ans</option><option value="25">25 ans</option><option value="50">50 ans</option><option value="100">100 ans</option></select></button><button id="play" class="play">▶ Lecture</button><button id="next"><select id="nextStep" class="step-inline" aria-label="Pas d'avance"><option value="5">5 ans</option><option value="10" selected>10 ans</option><option value="25">25 ans</option><option value="50">50 ans</option><option value="100">100 ans</option></select> ▶</button></div>
+ <div class="actions"><div class="step-action"><select id="backStep" class="step-inline" aria-label="Pas de recul"><option value="5">5 ans</option><option value="10" selected>10 ans</option><option value="25">25 ans</option><option value="50">50 ans</option><option value="100">100 ans</option></select><button id="back" type="button" aria-label="Reculer">◀</button></div><button id="play" class="play" type="button">▶ Lecture</button><div class="step-action"><button id="next" type="button" aria-label="Avancer">▶</button><select id="nextStep" class="step-inline" aria-label="Pas d'avance"><option value="5">5 ans</option><option value="10" selected>10 ans</option><option value="25">25 ans</option><option value="50">50 ans</option><option value="100">100 ans</option></select></div></div>
  <div class="hint">Tape une ville puis déplace la frise. Les données connues avant ou à l’année choisie sont affichées.</div>
 </div>
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
@@ -357,8 +358,7 @@ function render(){
       if(timer){clearInterval(timer);timer=null;$('play').textContent='▶ Lecture';}
       selectedEvent=chosen;
       $('timeline').value=chosen.year;
-      // Affiche immédiatement la fiche, puis synchronise la carte sans la refermer.
-      showSummary(p,chosen,true);
+      // Synchronise la carte puis affiche une seule fois la fiche et le défilement.
       render();
       showSummary(p,chosen,true);
     };
@@ -398,6 +398,15 @@ $('play').onclick=()=>{
 };
 
 $('scopeSelect').onchange=()=>{infoScope=$('scopeSelect').value;lastPlaceKey='';render();};
+$('versionSelect').onchange=()=>{
+  const p=$('versionSelect').value;
+  if(p==='public') $('paymentBox').classList.add('hidden');
+  else {
+    $('paymentBox').classList.remove('hidden');
+    $('selectedPlan').textContent=p==='famille'?'Famille':'École';
+    $('paymentGains').textContent=planInfo[p]||'';
+  }
+};
 
 const planInfo={
   famille:'Chronologies enrichies, fiches locales plus détaillées et exploration familiale.',
