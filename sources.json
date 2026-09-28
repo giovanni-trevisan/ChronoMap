@@ -70,6 +70,31 @@
       "id": "palais-2026",
       "title": "Palais des Papes — transformation 2026-2027",
       "url": "https://palais-des-papes.com/"
+    },
+    {
+      "id": "avignon-floods",
+      "title": "Ville d’Avignon — Les remparts, protection contre les inondations",
+      "url": "https://www.avignon.fr/les-remparts-une-protection-contre-les-inondations"
+    },
+    {
+      "id": "avignon-promenades",
+      "title": "Ville d’Avignon — Les remparts, lieu de promenade et de détente",
+      "url": "https://www.avignon.fr/les-remparts-lieu-de-promenade-et-de-detente"
+    },
+    {
+      "id": "avignon-remparts-restauration",
+      "title": "Ville d’Avignon — Les remparts, un chantier permanent de restauration",
+      "url": "https://www.avignon.fr/les-remparts-un-chantier-permanent-de-restauration"
+    },
+    {
+      "id": "archives-patrimoine",
+      "title": "Archives d’Avignon — Épatant patrimoine",
+      "url": "https://www.expositions-archives.avignon.fr/epatant-patrimoine"
+    },
+    {
+      "id": "avignon-remparts-vie",
+      "title": "Ville d’Avignon — Les remparts, jadis un lieu de vie foisonnant",
+      "url": "https://www.avignon.fr/les-remparts-jadis-un-lieu-de-vie-foisonnant"
     }
   ]
 }

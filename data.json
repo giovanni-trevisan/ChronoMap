@@ -69,6 +69,18 @@
           "🛡️ Première grande transformation visible : la ville se dessine comme une forteresse."
         ],
         [
+          1000,
+          "La prospérité d’Avignon favorise l’extension urbaine",
+          "Au XIe siècle, la prospérité de la ville permet son extension et prépare le renforcement de ses défenses au début du XIIIe siècle.",
+          "La ville commence à dépasser son ancien cœur fortifié.",
+          "sourcé",
+          "Ville d’Avignon — Les remparts dans l’histoire urbaine d’Avignon.",
+          "L’habitat s’étend autour du cœur ancien.",
+          "Les circulations se multiplient autour de la cité.",
+          "Le site urbain gagne progressivement de l’espace.",
+          "🏘️ La ville commence à grandir autour de son ancien cœur."
+        ],
+        [
           1150,
           "Notre-Dame des Doms prend sa forme romane",
           "La cathédrale Notre-Dame des Doms est datée de 1150 par l’UNESCO. Elle devient un repère majeur du paysage du Rocher des Doms.",
@@ -91,6 +103,18 @@
           "🌉 Une nouvelle grande liaison traverse le Rhône.",
           "La ville se connecte directement à l’autre rive.",
           "🌉 La carte s’ouvre : Avignon n’est plus seulement tournée vers son rocher, elle franchit le fleuve."
+        ],
+        [
+          1200,
+          "Une deuxième enceinte et un fossé renforcent la ville",
+          "Au début du XIIIe siècle, une deuxième enceinte est construite à l’extérieur de la première, avec un fossé d’environ 30 mètres entre les deux murailles.",
+          "Deux lignes défensives structurent le territoire urbain.",
+          "sourcé",
+          "Ville d’Avignon — Les remparts dans l’histoire urbaine d’Avignon.",
+          "La surface protégée augmente.",
+          "Les portes et fossés organisent les accès.",
+          "La ville est davantage protégée mais aussi plus fortement structurée par ses défenses.",
+          "🛡️ Deux murailles : Avignon se prépare à résister."
         ],
         [
           1226,
@@ -141,6 +165,18 @@
           "🏰 Le centre de gravité de la ville change."
         ],
         [
+          1320,
+          "La Sorgue devient une composante des défenses",
+          "À partir de 1320, des autorisations permettent de construire au-dessus du canal de la Sorgue, qui avait participé au système de fossés de la ville.",
+          "Les espaces liés aux canaux sont progressivement urbanisés.",
+          "sourcé",
+          "Ville d’Avignon — Les remparts dans l’histoire urbaine d’Avignon.",
+          "Des constructions apparaissent au-dessus ou à proximité des canaux.",
+          "Les canaux participent aux circulations et à la défense.",
+          "L’eau devient une composante importante de l’organisation urbaine.",
+          "💧 À Avignon, l’eau fait aussi partie de la carte de la ville."
+        ],
+        [
           1335,
           "Benoît XII lance le nouveau Palais des Papes",
           "En 1335, Benoît XII lance le chantier du Palais des Papes. Le premier palais est construit entre 1335 et 1342 sous la direction de Pierre Poisson.",
@@ -177,6 +213,18 @@
           "👑 La ville change de propriétaire politique : la carte devient celle d’une cité pontificale."
         ],
         [
+          1352,
+          "Innocent VI renforce les défenses d’Avignon",
+          "Innocent VI affecte d’importantes sommes à la construction de nouveaux remparts autour d’Avignon pour protéger la ville des routiers de la guerre de Cent Ans.",
+          "Le système défensif est renforcé.",
+          "sourcé",
+          "Palais des Papes / Avignon Tourisme — 9 papes à Avignon.",
+          "Les défenses autour de la ville sont développées.",
+          "Les accès deviennent stratégiques.",
+          "La ville pontificale doit protéger une population et un pouvoir installés durablement.",
+          "⚔️ La ville pontificale doit aussi devenir une ville-forteresse."
+        ],
+        [
           1355,
           "Une nouvelle grande enceinte englobe les faubourgs",
           "Au milieu du XIVe siècle, la ville s’est fortement étendue et urbanisée. Une nouvelle enceinte est décidée pour protéger l’ensemble de la population.",
@@ -187,6 +235,18 @@
           "Les nouvelles portes organisent les accès à une ville beaucoup plus vaste.",
           "L’empreinte urbaine s’élargit nettement sur la carte.",
           "🧱➡️🧱 La ville grandit : les murs doivent grandir avec elle."
+        ],
+        [
+          1377,
+          "La grande enceinte du XIVe siècle est achevée",
+          "Le chantier de la nouvelle enceinte dure environ vingt ans et s’achève en 1377 sous le pontificat de Grégoire XI.",
+          "La grande ceinture défensive englobe la ville agrandie.",
+          "sourcé",
+          "Ville d’Avignon — Les remparts dans l’histoire urbaine d’Avignon.",
+          "Les remparts entourent désormais le centre urbain développé au XIVe siècle.",
+          "Les portes organisent les échanges entre l’intérieur et l’extérieur.",
+          "L’emprise historique d’Avignon devient très proche de celle du centre ancien actuel.",
+          "🏰 La grande muraille d’Avignon prend sa forme."
         ],
         [
           1377,
@@ -213,6 +273,18 @@
           "🌍 La ville est petite sur la carte… mais son influence dépasse largement ses remparts."
         ],
         [
+          1414,
+          "Le Châtelet du Pont Saint-Bénézet est reconstruit",
+          "Le Châtelet, point stratégique à l’entrée du Pont Saint-Bénézet, est reconstruit en 1414 après les dégâts du deuxième siège du palais apostolique.",
+          "L’accès au pont et aux défenses est renforcé.",
+          "sourcé",
+          "Ville d’Avignon — Les remparts, système de défense face aux attaques.",
+          "Un ouvrage défensif contrôle l’entrée du pont.",
+          "Le pont devient un point de contrôle majeur du passage du Rhône.",
+          "Le fleuve et la muraille fonctionnent ensemble dans la défense de la cité.",
+          "🌉 Le pont n’est pas seulement un passage : c’est aussi une porte fortifiée."
+        ],
+        [
           1610,
           "Le Mont-de-piété ouvre ses portes",
           "Le Mont-de-piété d’Avignon ouvre pour la première fois le 6 mai 1610. Il s’inscrit dans une longue histoire sociale et économique de la ville.",
@@ -225,6 +297,30 @@
           "💰 La ville fortifiée devient aussi une ville de commerce et de services."
         ],
         [
+          1675,
+          "Les premières promenades apparaissent près des remparts",
+          "À la fin du XVIIe siècle, les douves remblayées permettent de créer de nouvelles promenades entre certaines portes de la ville.",
+          "Les abords des murailles changent progressivement de fonction.",
+          "sourcé",
+          "Ville d’Avignon — Les remparts, lieu de promenade et de détente.",
+          "Des espaces publics apparaissent autour des fortifications.",
+          "Les chemins de promenade remplacent progressivement certains usages défensifs.",
+          "La muraille commence à devenir une interface entre ville et promenade.",
+          "🚶 Les remparts deviennent aussi un lieu où l’on se promène."
+        ],
+        [
+          1750,
+          "Le Cours Saint-Lazare et les allées de l’Oulle s’embellissent",
+          "Au milieu du XVIIIe siècle, le Cours Saint-Lazare devient un lieu privilégié et des rangées d’arbres sont plantées aux allées de l’Oulle.",
+          "Les espaces publics et promenades structurent davantage le paysage.",
+          "sourcé",
+          "Ville d’Avignon — Les remparts, lieu de promenade et de détente.",
+          "Le paysage autour des remparts est aménagé.",
+          "Les promenades accompagnent les circulations hors des murs.",
+          "Les anciens espaces militaires deviennent des espaces urbains et sociaux.",
+          "🌳 La ville commence à transformer ses défenses en promenades."
+        ],
+        [
           1791,
           "Avignon devient française",
           "En septembre 1791, la réunion d’Avignon et du Comtat Venaissin à la France est entérinée. Avignon devient le chef-lieu du département du Vaucluse.",
@@ -235,6 +331,42 @@
           "La ville s’insère dans les réseaux administratifs français.",
           "La frontière politique change : Avignon entre dans la France révolutionnaire.",
           "🇫🇷 Changement de carte politique ! Avignon change de pays."
+        ],
+        [
+          1840,
+          "La grande crue du Rhône rappelle la fragilité de la ville",
+          "La crue de 1840 est décrite par la Ville comme une crue exceptionnelle qui renforce la nécessité de protéger Avignon contre le Rhône.",
+          "Les protections des remparts doivent être repensées.",
+          "sourcé",
+          "Ville d’Avignon — Les remparts, protection contre les inondations.",
+          "Les ouvrages défensifs deviennent aussi des protections contre l’eau.",
+          "Des dispositifs hydrauliques et des aménagements des berges sont nécessaires.",
+          "Le Rhône devient un facteur majeur de l’aménagement urbain.",
+          "🌊 Le même mur qui protégeait des armées protège maintenant aussi contre le fleuve."
+        ],
+        [
+          1840,
+          "Plusieurs monuments d’Avignon sont inscrits parmi les premiers monuments historiques",
+          "Les Archives d’Avignon indiquent qu’en 1840 le Pont Saint-Bénézet et sa chapelle, le Palais des Papes et Notre-Dame des Doms figurent parmi les monuments inscrits sur les premières listes de protection.",
+          "Le patrimoine monumental commence à être protégé par l’État.",
+          "sourcé",
+          "Archives d’Avignon — Épatant patrimoine.",
+          "Les monuments historiques deviennent des éléments protégés du paysage urbain.",
+          "La conservation influence progressivement les transformations de la ville.",
+          "Avignon commence à être considérée comme un ensemble patrimonial.",
+          "🏛️ La ville commence à protéger officiellement ses grands monuments."
+        ],
+        [
+          1849,
+          "Des ouvrages de protection contre les crues sont créés",
+          "La Ville indique que des digues et des barrages reliés aux remparts sont créés en 1849 puis renforcés en 1860.",
+          "Les abords du Rhône commencent à être équipés pour limiter les inondations.",
+          "sourcé",
+          "Ville d’Avignon — Les remparts, protection contre les inondations.",
+          "Le système défensif devient aussi un système d’endiguement.",
+          "Les digues complètent les remparts.",
+          "Le fleuve influence directement les infrastructures de la ville.",
+          "🌊 La carte montre maintenant une ville qui se protège contre l’eau."
         ],
         [
           1849,
@@ -273,6 +405,18 @@
           "🛣️ Une ligne droite apparaît sur la carte : la ville se modernise."
         ],
         [
+          1856,
+          "Une crue détruit une partie des remparts",
+          "Le 31 mai 1856, une crue exceptionnelle du Rhône provoque une rupture d’environ 30 mètres de la muraille près de la Porte Saint-Dominique.",
+          "Une portion de la muraille est détruite par les eaux.",
+          "sourcé",
+          "Ville d’Avignon — Les remparts, protection contre les inondations.",
+          "La brèche devient un chantier prioritaire.",
+          "Les dispositifs de fermeture et de protection sont renforcés.",
+          "Le Rhône impose une nouvelle lecture des remparts comme ouvrages hydrauliques.",
+          "🌊 Le fleuve peut modifier directement la forme de la ville."
+        ],
+        [
           1860,
           "Les remparts sont restaurés après les grandes crues",
           "Les inondations de 1840 et 1856 conduisent à des restaurations des remparts à partir de 1860, avec contre-murs et reprises des parties hautes et des tours.",
@@ -283,6 +427,18 @@
           "Les abords des remparts sont progressivement réaménagés.",
           "Le Rhône devient un élément majeur des choix de protection urbaine.",
           "🌊 La ville doit maintenant apprendre à vivre avec les crues."
+        ],
+        [
+          1862,
+          "Les remparts sont inscrits sur la liste des monuments historiques",
+          "Les Archives d’Avignon indiquent qu’en 1862 les remparts d’Avignon sont inscrits sur la liste des monuments historiques protégés.",
+          "La muraille devient officiellement un patrimoine à conserver.",
+          "sourcé",
+          "Archives d’Avignon — Épatant patrimoine.",
+          "Les remparts sont désormais considérés comme un monument.",
+          "Les travaux de modernisation doivent composer avec leur protection.",
+          "La ville entre dans une nouvelle période où patrimoine et modernisation doivent cohabiter.",
+          "🧱 Le mur devient officiellement un monument."
         ],
         [
           1869,
@@ -309,6 +465,30 @@
           "🗿 Même les monuments peuvent voyager dans la ville !"
         ],
         [
+          1896,
+          "La Porte Limbert est démolie malgré la protection des remparts",
+          "En juillet 1896, la Porte Limbert est démolie de nuit dans le contexte des projets de modernisation et de circulation de la ville.",
+          "Une porte historique disparaît du paysage.",
+          "sourcé",
+          "Archives d’Avignon — Épatant patrimoine.",
+          "La muraille connaît des percements et des disparitions de portes.",
+          "La modernisation des circulations entre en tension avec la conservation.",
+          "La ville montre que le patrimoine peut être transformé ou détruit.",
+          "🚪 Une porte disparaît : la modernisation change aussi la carte historique."
+        ],
+        [
+          1906,
+          "Les remparts sont classés au titre des monuments historiques",
+          "Les Archives d’Avignon indiquent un classement des remparts au titre des monuments historiques en 1906, avec des classements complétés jusqu’en 1937.",
+          "La protection patrimoniale des murailles est renforcée.",
+          "sourcé",
+          "Archives d’Avignon — Épatant patrimoine.",
+          "La ceinture médiévale devient un monument protégé.",
+          "Les transformations des voies doivent tenir compte du patrimoine.",
+          "Le centre historique conserve sa grande enveloppe fortifiée.",
+          "🏰 La muraille entre pleinement dans le patrimoine protégé."
+        ],
+        [
           1922,
           "La ville accueille le Grand Critérium Paris-Nice",
           "La Ville d’Avignon mentionne le passage du Grand Critérium Paris-Nice au pied des remparts en 1922.",
@@ -331,6 +511,30 @@
           "Le réseau routier devient une piste événementielle.",
           "La fonction de l’espace autour des murailles change complètement.",
           "🏁 Même endroit, nouvelle époque : de la défense militaire à la course automobile."
+        ],
+        [
+          1943,
+          "Un plan d’alignement prépare la transformation des abords des remparts",
+          "En 1943, le conseil municipal adopte un plan d’alignement prévoyant la destruction de bâtiments accolés aux remparts afin de créer une promenade publique.",
+          "Les abords de la muraille sont réorganisés.",
+          "sourcé",
+          "Ville d’Avignon — Les remparts, jadis un lieu de vie foisonnant.",
+          "Des bâtiments accolés aux murs sont progressivement remis en question.",
+          "Une promenade publique est privilégiée autour de l’enceinte.",
+          "La muraille change encore de rôle : de façade urbaine habitée à monument dégagé.",
+          "🚶 Les remparts commencent à être davantage visibles depuis l’espace public."
+        ],
+        [
+          1956,
+          "Un vaste programme de protection contre les crues démarre",
+          "Entre 1956 et 1973, des travaux comprennent notamment une station de pompage, un grand collecteur, le renforcement des digues et un collecteur de drainage en bordure du fleuve.",
+          "Le système d’endiguement devient un réseau moderne d’infrastructures.",
+          "sourcé",
+          "Ville d’Avignon — Les remparts, protection contre les inondations.",
+          "Des ouvrages hydrauliques complètent les remparts.",
+          "Les réseaux de drainage et de pompage structurent les abords du Rhône.",
+          "La protection de la ville dépend désormais d’un système d’infrastructures plus large que la seule muraille.",
+          "💧 La carte de la ville inclut désormais tout un système de protection contre les crues."
         ],
         [
           1974,
@@ -379,6 +583,18 @@
           "Les accès et protections doivent être adaptés au risque de crue.",
           "Le Rhône redevient très visible comme force géographique qui façonne la ville.",
           "🌊 Le fleuve n’est pas le décor d’Avignon : il participe directement à son histoire."
+        ],
+        [
+          2007,
+          "Le plan de sauvegarde et de mise en valeur du centre historique est approuvé",
+          "L’UNESCO indique que le plan de sauvegarde et de mise en valeur de l’intra-muros avignonnais a été approuvé en 2007.",
+          "La protection du centre historique devient un outil de planification urbaine.",
+          "sourcé",
+          "UNESCO — Centre historique d’Avignon.",
+          "Le tissu urbain historique est pris en compte à l’échelle de l’ensemble de la ville ancienne.",
+          "Les projets urbains doivent intégrer la conservation du patrimoine.",
+          "Avignon protège désormais un paysage urbain complet, pas seulement quelques monuments.",
+          "🗺️ La protection passe du monument isolé à tout un morceau de ville."
         ],
         [
           2026,
@@ -433,8 +649,8 @@
       "source": "UNESCO"
     }
   ],
-  "mapHistoryVersion": "1",
-  "mapHistoryDescription": "Couches historiques schématiques destinées au premier test visuel de ChronoMap. Elles seront remplacées progressivement par des géométries historiques documentées.",
+  "mapHistoryVersion": "avignon-v2-progressive",
+  "mapHistoryDescription": "Couches historiques schématiques pour le test visuel de ChronoMap. Les géométries seront progressivement remplacées par des géométries historiques documentées.",
   "mapHistory": [
     {
       "from": -3000,
@@ -802,6 +1018,121 @@
       ],
       "weight": 2,
       "label": "🏙️ Extension urbaine moderne — schématique"
+    },
+    {
+      "from": 1849,
+      "to": 1860,
+      "type": "line",
+      "coords": [
+        [
+          43.94,
+          4.802
+        ],
+        [
+          43.944,
+          4.803
+        ],
+        [
+          43.948,
+          4.804
+        ],
+        [
+          43.952,
+          4.805
+        ]
+      ],
+      "weight": 3,
+      "label": "🌊 Ouvrages de protection contre les crues — schématique"
+    },
+    {
+      "from": 1956,
+      "to": 1973,
+      "type": "line",
+      "coords": [
+        [
+          43.939,
+          4.8
+        ],
+        [
+          43.943,
+          4.801
+        ],
+        [
+          43.948,
+          4.802
+        ],
+        [
+          43.954,
+          4.803
+        ]
+      ],
+      "weight": 3,
+      "label": "💧 Réseau moderne de protection hydraulique — schématique"
+    },
+    {
+      "from": 1943,
+      "to": 2026,
+      "type": "line",
+      "coords": [
+        [
+          43.959,
+          4.798
+        ],
+        [
+          43.961,
+          4.806
+        ],
+        [
+          43.957,
+          4.814
+        ]
+      ],
+      "weight": 3,
+      "label": "🚶 Promenade des remparts — emprise schématique"
+    }
+  ],
+  "education": [
+    {
+      "year": 1150,
+      "title": "Pourquoi Notre-Dame des Doms est importante ?",
+      "text": "Elle domine le Rocher des Doms et fait partie du grand ensemble historique d’Avignon.",
+      "source": "UNESCO"
+    },
+    {
+      "year": 1226,
+      "title": "Pourquoi construire des remparts ?",
+      "text": "Les murailles protègent la ville et contrôlent les accès. En 1226, elles ralentissent l’armée de Louis VIII.",
+      "source": "Ville d’Avignon"
+    },
+    {
+      "year": 1335,
+      "title": "Pourquoi le Palais des Papes change-t-il la ville ?",
+      "text": "Le chantier concentre le pouvoir pontifical, les constructions et les circulations autour du Rocher des Doms.",
+      "source": "Palais des Papes / Avignon Tourisme"
+    },
+    {
+      "year": 1377,
+      "title": "Pourquoi les remparts sont-ils si longs ?",
+      "text": "La grande enceinte protège la ville qui s’est fortement étendue au XIVe siècle.",
+      "source": "Ville d’Avignon"
+    },
+    {
+      "year": 1856,
+      "title": "Comment le Rhône transforme-t-il la ville ?",
+      "text": "La crue de 1856 détruit une partie des remparts et accélère les travaux de protection.",
+      "source": "Ville d’Avignon"
+    },
+    {
+      "year": 1906,
+      "title": "Quand un rempart devient-il un monument ?",
+      "text": "Les remparts sont classés comme monument historique au début du XXe siècle.",
+      "source": "Archives d’Avignon"
+    },
+    {
+      "year": 1995,
+      "title": "Pourquoi Avignon est-elle au patrimoine mondial ?",
+      "text": "Le centre historique, le Palais des Papes, l’ensemble épiscopal et le Pont d’Avignon sont inscrits par l’UNESCO.",
+      "source": "UNESCO"
     }
   ]
 }

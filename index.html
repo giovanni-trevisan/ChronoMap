@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#07101f">
 <link rel="manifest" href="manifest.webmanifest">
-<title>ChronoMap V15 — Fiche jeunesse</title>
+<title>ChronoMap V15.5 — Avignon enrichi</title>
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
 <style>
 :root{--bg:#07101f;--p:#0d1c30;--line:#294563;--text:#f4f7fb;--muted:#9db0c8;--gold:#f5b83d;--blue:#4b8cff}
@@ -164,6 +164,7 @@ function setMapMode(mode){
   currentMapMode=mode;
   [streetLayer,reliefLayer,satelliteLayer].forEach(l=>map.removeLayer(l));
   (mode==='satellite'?satelliteLayer:mode==='relief'?reliefLayer:streetLayer).addTo(map);
+  if(typeof renderHistoricalMap==='function' && data){ const y=+$('timeline').value,p=place(); if(p)renderHistoricalMap(p,y); }
   const labels={street:'🗺️ Carte',relief:'⛰️ Relief',satellite:'🛰️ Satellite'};
   document.querySelectorAll('.chronomap-map-control [data-map-mode]').forEach(b=>b.classList.toggle('active',b.dataset.mapMode===mode));
 }
@@ -251,12 +252,12 @@ function renderHistoricalMap(p,y){
     '🏙️ Extension urbaine moderne — schématique':[1900,2026]
   };
   const lerp=(a,b,t)=>a+(b-a)*t;
-  const progressOf=f=>{const r=buildRanges[f.label]||[f.from??-99999,f.from??-99999];if(r[1]<=r[0])return y>=r[0]?1:0;return Math.max(0,Math.min(1,(y-r[0])/(r[1]-r[0])))};
+  const progressOf=f=>{const r=buildRanges[f.label]||[f.from??-99999,f.to??(f.from??-99999)];if(r[1]<=r[0])return y>=r[0]?1:0;return Math.max(0,Math.min(1,(y-r[0])/(r[1]-r[0])))};
   const partialLine=(coords,t)=>{if(!coords||coords.length<2||t>=1)return coords;const total=coords.length-1,pos=Math.max(0,Math.min(total,t*total)),idx=Math.floor(pos),frac=pos-idx,out=coords.slice(0,idx+1);if(idx<coords.length-1){const a=coords[idx],b=coords[idx+1];out.push([lerp(a[0],b[0],frac),lerp(a[1],b[1],frac)])}return out};
   const scaleRing=(ring,t)=>{if(!ring||!ring.length)return ring;const c=ring.reduce((a,q)=>[a[0]+q[0]/ring.length,a[1]+q[1]/ring.length],[0,0]),sc=.12+.88*t;return ring.map(q=>[c[0]+(q[0]-c[0])*sc,c[1]+(q[1]-c[1])*sc])};
   features.forEach(f=>{const t=progressOf(f);if(t<=0)return;let layer=null;if(f.type==='line'&&f.coords)layer=L.polyline(partialLine(f.coords,t),{weight:f.weight||4,opacity:.95,lineCap:'round',lineJoin:'round'});else if(f.type==='polygon'&&f.coords)layer=L.polygon(f.coords.map(r=>scaleRing(r,t)),{weight:f.weight||2,fillOpacity:.12+.10*t,opacity:.95});else if(f.type==='point'&&f.coords)layer=L.circleMarker(f.coords,{radius:(f.radius||6)*(.55+.45*t),weight:2,opacity:.95,fillOpacity:.35+.55*t});if(layer){layer.bindTooltip(f.label||'Transformation historique');historicalVectorLayer.addLayer(layer)}});
   let badge=$('mapTimeBadge');if(!badge){badge=document.createElement('div');badge.id='mapTimeBadge';badge.className='history-map-badge';$('map').appendChild(badge)}
-  const active=(data?.mapHistory||[]).find(f=>{const r=buildRanges[f.label];return r&&y>=r[0]&&y<r[1]});
+  const active=(data?.mapHistory||[]).find(f=>{const r=buildRanges[f.label]||[f.from??-99999,f.to??(f.from??-99999)];return r&&y>=r[0]&&y<r[1]});
   badge.textContent=active?`🕰️ ${fmt(y)} · construction : ${active.label.replace(/^\S+\s*/,'')}`:`🕰️ Carte historique · ${fmt(y)}`;
 }
 function escapeSvgText(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
