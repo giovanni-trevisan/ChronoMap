@@ -369,15 +369,17 @@ function render(){
     const active=y>=(pr.from??-99999)&&y<=(pr.to??99999);
     l.setStyle({opacity:active?1:0,fillOpacity:active?.16:0});
   });
-  if(!selectedEvent || selectedEvent.year!==y) $('historySheet').style.display='none';
+  // La fiche est gérée explicitement par les actions utilisateur.
+  // Ne jamais la masquer ici : render() est aussi appelé après un clic sur une date.
   renderHistoricalMap(p,y);
 }
 
 $('closePanel').onclick=()=>{$('panel').classList.add('closed')};
 $('openPanel').onclick=()=>{$('panel').classList.remove('closed')};
-$('go').onclick=()=>{window._chronomapPlaceId=null;lastPlaceKey='';render()};
-$('search').addEventListener('keydown',e=>{if(e.key==='Enter'){lastPlaceKey='';render()}});
-$('timeline').oninput=()=>{selectedEvent=null;render()};
+function closeLesson(){selectedEvent=null;$('historySheet').style.display='none';}
+$('go').onclick=()=>{window._chronomapPlaceId=null;lastPlaceKey='';closeLesson();render()};
+$('search').addEventListener('keydown',e=>{if(e.key==='Enter'){lastPlaceKey='';closeLesson();render()}});
+$('timeline').oninput=()=>{closeLesson();render()};
 function timelineStep(){return +$('backStep').value||5}
 function syncStepSelectors(value){$('backStep').value=String(value);$('nextStep').value=String(value)}
 $('backStep').onchange=()=>syncStepSelectors($('backStep').value);
@@ -397,7 +399,7 @@ $('play').onclick=()=>{
   },90);
 };
 
-$('scopeSelect').onchange=()=>{infoScope=$('scopeSelect').value;lastPlaceKey='';render();};
+$('scopeSelect').onchange=()=>{infoScope=$('scopeSelect').value;lastPlaceKey='';closeLesson();render();};
 $('versionSelect').onchange=()=>{
   const p=$('versionSelect').value;
   if(p==='public') $('paymentBox').classList.add('hidden');
@@ -517,7 +519,7 @@ try{
 }catch(e){}
 
 if('serviceWorker' in navigator){
-  navigator.serviceWorker.register('./sw.js?v=15-3').then(reg=>reg.update()).catch(()=>{});
+  navigator.serviceWorker.register('./sw.js?v=15-5-2').then(reg=>reg.update()).catch(()=>{});
 }
 
 Promise.all([
