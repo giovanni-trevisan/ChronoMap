@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#07101f">
 <link rel="manifest" href="manifest.webmanifest">
-<title>ChronoMap V15.5.3 — Avignon enrichi</title>
+<title>ChronoMap V15.5.4 — Avignon photos événementielles</title>
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
 <style>
 :root{--bg:#07101f;--p:#0d1c30;--line:#294563;--text:#f4f7fb;--muted:#9db0c8;--gold:#f5b83d;--blue:#4b8cff}
@@ -265,26 +265,69 @@ function escapeSvgText(s){return String(s||'').replace(/&/g,'&amp;').replace(/</
 function lessonPhotoFor(title,year){
   const base='https://commons.wikimedia.org/wiki/Special:Redirect/file/';
   const enc=f=>base+encodeURIComponent(f).replace(/%2F/g,'/');
+  const commons=(file,caption)=>({url:enc(file),credit:'Wikimedia Commons — '+file,caption});
+  const exactFlood2003='https://cdn-s-www.ledauphine.com/images/92772EEF-75F7-435F-97D2-D9AE086B42BE/NW_detail/le-3-decembre-la-crue-du-rhone-est-montee-jusqu-a-7-62-m-a-avignon-photo-archives-le-dl-pierre-deleuil-1542214452.jpg';
   const photos={
-    panorama:[enc("Pont d'Avignon, rocher des Doms, palais des papes.jpg"),'Chimigi — Wikimedia Commons — CC BY-SA 2.0 FR'],
-    bridge:[enc('Avignon le pont St-Bénezet depuis le Rocher des Doms.JPG'),'Provence13 — Wikimedia Commons — Creative Commons'],
-    cathedral:[enc('Notre Dame des doms.jpg'),'Lofty — Wikimedia Commons — CC BY 2.0'],
-    palace:[enc('Palais des Papes et place du Palais.jpg'),'Poiesia — Wikimedia Commons — CC BY-SA 3.0'],
-    walls:[enc('Avignon - Remparts.jpg'),'Véronique PAGNIER — Wikimedia Commons — domaine public'],
-    railway:[enc("Gare d'Avignon-Centre.JPG"),'Florian Pépellin — Wikimedia Commons — domaine public'],
-    republic:[enc('Avignon Cours et rue de la République.jpg'),'Wikimedia Commons — domaine public']
+    '-3000':commons('Avignon - rocher des Doms.jpg','Le Rocher des Doms : le relief qui domine le Rhône et le site des premières occupations.'),
+    '-200':commons('Album Laincel 18 Rocher des Doms et St Martin.jpg','Vue historique du Rocher des Doms, utile pour comprendre le site d’Avenio.'),
+    '50':commons('Avignon (3221152899).jpg','Vue du site d’Avignon et du Rhône, pour situer la cité dans le couloir rhodanien.'),
+    '300':commons('.00 3165 Stadtmauer von Avignon (Rundturm) - Frankreich.jpg','Tour des remparts : photographie actuelle d’un élément défensif du site urbain.'),
+    '1000':commons('.00 3171 Stadtmauer von Avignon, Frankreich.jpg','Vue d’un tronçon des fortifications, en lien avec l’extension et la défense de la ville.'),
+    '1150':commons('1020 Cathédrale Notre-Dame-des-Doms d’Avignon golden statue Photo by Giles Laurent.jpg','Notre-Dame des Doms : la cathédrale romane qui domine le Rocher des Doms.'),
+    '1177':commons('Le pont Saint-Bénézet dit Pont d\'Avignon, la chapelle Saint-Bénézet et la chapelle Saint-Nicolas - A7834.jpg','Photographie historique du Pont Saint-Bénézet et de ses chapelles.'),
+    '1200':commons('Avignon - Remparts XIIeme Siècle.JPG','Les remparts du XIIe siècle permettent de visualiser l’organisation défensive médiévale.'),
+    '1226':commons('ETH-BIB-Avignon, Porte St. Rock von aussen-Dia 247-10471.tif','Une porte des fortifications : image liée au système défensif frappé par le siège de 1226.'),
+    '1231':commons('Les remparts Anonyme Archives municipales Avignon 1847.jpg','Vue ancienne des remparts d’Avignon, en lien avec leur reconstruction et leur évolution.'),
+    '1309':commons('Avignon - Palais des Papes - btv1b106645816.jpg','Vue historique du Palais des Papes, cœur du pouvoir pontifical à Avignon.'),
+    '1316':commons('Avignon, le château des Papes - btv1b6929402d.jpg','Le Palais des Papes, résidence pontificale à partir du XIVe siècle.'),
+    '1320':commons('Avignon - Boulevard de l\'Oulle - View NNE along the 14th century Ramparts built by the popes, restored by Eugène Viollet-le-Duc.jpg','Les remparts du XIVe siècle au bord du Rhône, en lien avec les ouvrages défensifs et hydrauliques.'),
+    '1335':commons('Avignon - Jardin de Benoit XII - Panorama View on Consistoire & Chapelle Saint-Jean du Palais des Papes 01.jpg','Vue du Palais de Benoît XII, lancé en 1335.'),
+    '1342':commons('Avignon - palais des papes - Grande Audience 1.jpg','La Grande Audience du Palais des Papes, liée à l’agrandissement du complexe pontifical.'),
+    '1348':commons('Avignon palais serrur clement VI.JPG','Portrait de Clément VI au Palais des Papes, en lien avec l’achat d’Avignon en 1348.'),
+    '1352':commons('Avignon - Boulevard de l\'Oulle - View NNE - 14th century City Walls built by the popes, restored by Eugène Viollet-le-Duc.jpg','Les grandes murailles pontificales, renforcées au XIVe siècle.'),
+    '1355':commons('Avignon - Boulevard de l\'Oulle - View NNE along the 14th century City Walls built by the popes, restored by Eugène Viollet-le-Duc.jpg','Vue des remparts du XIVe siècle, en lien avec l’extension de l’enceinte.'),
+    '1377a':commons('Avignon - Boulevard de l\'Oulle - View SSW along the 14th century City Walls built by the popes, restored by Eugène Viollet-le-Duc.jpg','Les remparts du XIVe siècle, achevés autour de 1377.'),
+    '1377b':commons('Avignon - Boulevard de l\'Oulle - View SSW along the medieval ramparts of Avignon.jpg','Vue des remparts médiévaux achevés à la fin du XIVe siècle.'),
+    '1378':commons('Avignon - palais des papes - Grande Audience 2.jpg','Intérieur du Palais des Papes : un lieu directement associé au rôle politique d’Avignon au temps du Grand Schisme.'),
+    '1414':commons('Pont d\'Avignon chapelle Saint Bénézet.jpg','Le Pont Saint-Bénézet et sa chapelle, en lien avec le Châtelet et les ouvrages du pont.'),
+    '1610':commons("Archives municipales d'Avignon - ancienne salle publique du mont-de-piété.jpg",'L’ancienne salle publique du Mont-de-Piété, directement liée à l’institution créée à Avignon.'),
+    '1675':commons('Avignon tour allées del\'Oulle.jpg','Les allées de l’Oulle : paysage des promenades aménagées près des remparts.'),
+    '1750':commons('Avignon - Boulevard de l\'Oulle - Pont Edouard Daladier - Panorama View on Rhône river bank in front of the ramparts of Avignon - Pont Saint-Bénézet (Pont d\'Avignon) 01.jpg','Les abords de l’Oulle et du Rhône, directement liés aux promenades historiques.'),
+    '1791':commons('Avignon Entrée de la ville.jpg','Entrée historique d’Avignon : image du franchissement des remparts et de la ville devenue française.'),
+    '1840a':commons('Avignon Zeiller 15793.jpg','Vue historique des remparts, utile pour replacer les monuments dans le paysage urbain du XIXe siècle.'),
+    '1840b':commons('Les remparts d\'Avignon Antoine-Alphonse Montfort (1808-1884).jpg','Vue artistique et historique des remparts, au moment où leur protection patrimoniale commence à se renforcer.'),
+    '1849a':commons('Avignon - Boulevard de l\'Oulle - View NE on the medieval ramparts of Avignon - Bords du Rhône (Avignon).jpg','Le Rhône et les remparts : paysage directement lié aux ouvrages de protection contre les crues.'),
+    '1849b':commons('Vue prise de la gare du chemine de fer - Avignon - Médiathèque de l\'architecture et du patrimoine - APMH00007631.jpg','Vue historique depuis la gare, liée à l’arrivée du chemin de fer à Avignon.'),
+    '1854':commons('Avignon tramway Gare.jpg','La gare et les transports : image liée au développement des liaisons ferroviaires.'),
+    '1856a':commons('Avignon Cours et rue de la République.jpg','Vue historique de la rue de la République, nouvel axe ouvert au XIXe siècle.'),
+    '1856b':commons('Remparts d\'Avignon Inondation 1856 par Édouard Baldus.jpg','Photographie originale des remparts lors de la crue de 1856.'),
+    '1860':commons('Avignon - restoration remparts.JPG','Les remparts restaurés : photographie directement liée aux travaux de restauration.'),
+    '1862':commons('Remparts - Vue intra-muros - Avignon - Médiathèque de l\'architecture et du patrimoine - APMH00007638.jpg','Vue intra-muros des remparts, document photographique du patrimoine.'),
+    '1869':commons('Avignon - Rue de la Republique - View East - Neo-Baroque architecture.jpg','L’axe urbain moderne et ses façades, dans le contexte des grands travaux du XIXe siècle.'),
+    '1892':commons('Avignon Monument du Centenaire.jpg','Le Monument du Centenaire, érigé pour commémorer le rattachement d’Avignon à la France.'),
+    '1896':commons('Porte Limbert Avignon AMA.jpg','La Porte Limbert photographiée avant sa démolition en 1896.'),
+    '1906':commons('Avignon.Remparts.Vers 1890.jpg','Vue historique des remparts, avant leur classement de 1906.'),
+    '1922':commons('Avignon passage du Paris-Nice 1922 aux remparts.jpg','Photographie du Critérium Paris-Nice 1922 passant devant les remparts.'),
+    '1935':commons('Avignon - Place Crillon - View WSW on Porte de l\'Oulle - Medieval 14th century city walls built by the popes, restored by Eugène Viollet-le-Duc.jpg','Les remparts servant de décor au paysage urbain, en lien avec le Circuit des Remparts.'),
+    '1943':commons('Les batardeaux au début du XXème siècle Archives municipales d\'Avignon,.jpg','Les dispositifs de fermeture et de protection des remparts, dans le contexte de leur transformation en promenade.'),
+    '1956':commons('Avignon - Boulevard de l\'Oulle - View NNE on Eugene Viollet-le-Duc\'s \'restoration\' (re-invention) of the 14th century Ramparts of Avignon.jpg','Les remparts et leurs protections : image liée à l’évolution du système de défense contre les crues.'),
+    '1974':commons('Avignon - Montée des Moulins - View NW on Côtes du Rhône vineyard, ramparts, Pont St-Bénézet, Île de la Barthelasse, Villeneuve-lès-Avignon & Fort Saint-André.jpg','Le secteur du Rocher des Doms et des remparts, dans le paysage urbain contemporain.'),
+    '1975':commons('Avignon - Boulevard de l\'Oulle - Pont Edouard Daladier - Panorama View on Rhône river bank in front of the ramparts of Avignon - Pont Saint-Bénézet (Pont d\'Avignon) 04.jpg','Les allées de l’Oulle et le paysage du Rhône, en lien avec le déplacement du monument.'),
+    '1995':commons('Avignon - Place de l\'Amírande - View West on Palais des Papes d\'Avignon (Tour Saint Laurent, Grande Audience & Tour de la Garde-Robe).jpg','Le Palais des Papes et le centre historique, éléments majeurs du site inscrit au patrimoine mondial.'),
+    '2003':{url:exactFlood2003,credit:'Archives Le Dauphiné Libéré — Pierre Deleuil, décembre 2003',caption:'La crue de décembre 2003 : le Rhône monte à Avignon et submerge les abords de la ville. Photographie d’archive prise pendant l’événement.'},
+    '2007':commons('Avignon (vue depuis le Palais des Papes).jpg','Vue d’Avignon depuis le Palais des Papes, pour situer le centre historique concerné par le plan de sauvegarde.'),
+    '2026':commons('Avignon - Pont Édouard Daladier - View NE towards Pont Saint-Bénézet (Pont d\'Avignon), Jardin des doms, Avignon cathedral & Palais des Papes.jpg','Vue contemporaine du patrimoine d’Avignon, support de la médiation numérique actuelle.')
   };
-  let p=photos.panorama,caption='Vue d’Avignon — ce que l’on peut encore observer aujourd’hui.';
-  if(year===-3000){caption='Le Rocher des Doms domine le Rhône : le site des premières occupations.'}
-  else if(year===-200||year===50){caption='Le site d’Avignon vu depuis le Rhône permet de comprendre sa position stratégique.'}
-  else if([300,1231,1355,1377,1860,1935,1974].includes(year)){p=photos.walls;caption='Les remparts actuels permettent de visualiser l’emprise défensive de la ville.'}
-  else if(year===1150){p=photos.cathedral;caption='Notre-Dame des Doms : la cathédrale domine le Rocher des Doms.'}
-  else if(year===1177||year===1226){p=photos.bridge;caption='Le Pont Saint-Bénézet rappelle le franchissement historique du Rhône.'}
-  else if([1309,1316,1335,1342,1348,1378,1610,1791,1892,1995,2026].includes(year)){p=photos.palace;caption='Le Palais des Papes et le centre historique permettent de visualiser le cœur monumental d’Avignon.'}
-  else if(year===1849||year===1854){p=photos.railway;caption='La gare d’Avignon-Centre rappelle le rôle du chemin de fer dans la transformation de la ville.'}
-  else if(year===1856||year===1869){p=photos.republic;caption='Les grands axes modernes ouvrent progressivement la ville au-delà de son organisation médiévale.'}
-  else if([1922,1975,2003].includes(year)){caption='Le paysage urbain et le Rhône permettent de replacer cet événement dans la ville actuelle.'}
-  return {url:p[0],credit:p[1],caption};
+  const keyByYear={1840:['1840a','1840b'],1849:['1849a','1849b'],1856:['1856a','1856b'],1377:['1377a','1377b']};
+  const sameYearIndex=keyByYear[year];
+  if(sameYearIndex){
+    const matching=(title||'').toLowerCase();
+    if(year===1377) return matching.includes('grands remparts')?photos['1377b']:photos['1377a'];
+    if(year===1840) return matching.includes('monuments')?photos['1840b']:photos['1840a'];
+    if(year===1849) return matching.includes('chemin de fer')?photos['1849b']:photos['1849a'];
+    if(year===1856) return matching.includes('crue')?photos['1856b']:photos['1856a'];
+  }
+  return photos[String(year)]||photos['2026'];
 }
 
 function showLessonImage(title,year){
