@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#07101f">
 <link rel="manifest" href="manifest.webmanifest">
-<title>ChronoMap V15.5.1 — Avignon enrichi</title>
+<title>ChronoMap V15.5.3 — Avignon enrichi</title>
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
 <style>
 :root{--bg:#07101f;--p:#0d1c30;--line:#294563;--text:#f4f7fb;--muted:#9db0c8;--gold:#f5b83d;--blue:#4b8cff}
@@ -183,6 +183,7 @@ mapModeControl.onAdd=function(){
   });
   return box;
 };
+let data,timer=null,infoScope='city',selectedEvent=null,lastPlaceKey='',lastScope='';
 mapModeControl.addTo(map);
 // Force the control immediately below Leaflet's + / − control.
 const zoomControlEl=map.getContainer().querySelector('.leaflet-control-zoom');
@@ -195,7 +196,6 @@ setMapMode('street');
 let marker=L.marker([43.9493,4.8055]).addTo(map);
 let territoryLayer=L.geoJSON(null,{style:f=>({color:f.properties?.color||'#f5b83d',weight:2,fillOpacity:.12})}).addTo(map);
 let historicalVectorLayer=L.layerGroup().addTo(map);
-let data,timer=null,infoScope='city',selectedEvent=null,lastPlaceKey='',lastScope='';
 
 const fmt=y=>y<0?Math.abs(y)+' av. J.-C.':y;
 function place(){
