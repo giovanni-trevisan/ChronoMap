@@ -90,7 +90,7 @@ input,button{font:inherit;border-radius:10px;border:1px solid var(--line);paddin
 
 /* V13.3 — interface tactile + fiche immersive */
 .panel{touch-action:none;user-select:none}.panel-head{cursor:grab}.panel.dragging .panel-head{cursor:grabbing}.panel .panel-tip,.panel .badges,.panel #desc{display:none!important}.date-link{justify-content:center;min-height:42px;margin:5px 0}.date-link b{min-width:0!important;font-size:15px!important}.date-link span{display:none!important}
-.history-sheet{background:linear-gradient(180deg,#081526,#0b1c31);padding:18px 12px 28px}.date-hero{font-size:42px;line-height:1;font-weight:950;color:#f5b83d;text-shadow:0 4px 18px #f5b83d33}.history-title-row h1{margin:4px 0 0}.playful-strip{display:flex;gap:6px;overflow:auto;margin:10px 0}.story-pill{background:#17304e;border:1px solid #315c91;border-radius:999px;padding:7px 10px;font-size:10px;white-space:nowrap}.summary-card{position:relative;overflow:hidden}.story-icon{font-size:24px;margin-bottom:3px}.summary-card h2{font-size:18px}.summary-card p{font-size:13px;line-height:1.65}.map-time-layer{pointer-events:none}.history-map-badge{position:absolute;z-index:900;left:10px;bottom:10px;background:#07101fe8;border:1px solid #38506e;border-radius:10px;padding:7px 9px;color:#fff;font-size:10px;backdrop-filter:blur(6px)}
+.history-sheet{background:linear-gradient(180deg,#081526,#0b1c31);padding:18px 12px 28px}.date-hero{font-size:42px;line-height:1;font-weight:950;color:#f5b83d;text-shadow:0 4px 18px #f5b83d33}.history-title-row h1{margin:4px 0 0}.playful-strip{display:flex;gap:6px;overflow:auto;margin:10px 0}.story-pill{background:#17304e;border:1px solid #315c91;border-radius:999px;padding:7px 10px;font-size:10px;white-space:nowrap}.summary-card{position:relative;overflow:hidden}.story-icon{font-size:24px;margin-bottom:3px}.summary-card h2{font-size:18px}.summary-card p{font-size:13px;line-height:1.65}.map-time-layer{pointer-events:none}.history-map-badge{position:absolute;z-index:900;left:10px;bottom:10px;background:#07101fe8;border:1px solid #38506e;border-radius:10px;padding:7px 9px;color:#fff;font-size:10px;backdrop-filter:blur(6px);max-width:min(360px,calc(100% - 20px));line-height:1.35}.history-map-info{position:absolute;z-index:900;right:10px;top:10px;width:min(300px,calc(100% - 20px));background:#07101fe8;border:1px solid #38506e;border-radius:14px;padding:9px 11px;color:#fff;backdrop-filter:blur(8px);box-shadow:0 8px 24px #0006;pointer-events:none}.history-map-info .history-map-kicker{font-size:9px;text-transform:uppercase;letter-spacing:.5px;color:#f5b83d;font-weight:950}.history-map-info strong{display:block;font-size:12px;margin-top:2px}.history-map-info span{display:block;font-size:10px;color:#dce8f5;margin-top:3px;line-height:1.35}.history-map-info.new{animation:historyPulse .65s ease-out}@keyframes historyPulse{0%{transform:scale(.94);opacity:.25}100%{transform:scale(1);opacity:1}}.history-map-feature{filter:drop-shadow(0 2px 3px rgba(0,0,0,.55))}.history-map-feature-new{stroke-dashoffset:0}.leaflet-pane.leaflet-historicalPane{z-index:650}.history-map-feature-new{animation:featurePulse 1.1s ease-out}@keyframes featurePulse{0%{opacity:.25}35%{opacity:1}100%{opacity:1}}
 .lesson{margin-top:10px;border-radius:18px;overflow:hidden;background:#0b1a2d;border:1px solid #294563}.lesson-img{width:100%;height:190px;object-fit:cover;display:block;background:#142942}.lesson-placeholder{height:190px;display:flex;align-items:center;justify-content:center;font-size:58px;background:#142942}.lesson-body{padding:13px}.lesson-kicker{font-size:10px;color:#f5b83d;font-weight:900;text-transform:uppercase}.lesson h2{margin:4px 0 7px;font-size:20px}.lesson p{font-size:12px;line-height:1.55;color:#dbe6f1;margin:7px 0}.lesson-card{margin-top:9px;padding:10px;border-radius:13px;background:#10243a}.lesson-card b{display:block;color:#f5b83d;font-size:10px;margin-bottom:3px}.lesson-challenge{margin-top:10px;padding:10px;border-radius:13px;background:#17304e;font-size:11px}.lesson-credit{font-size:8px!important;color:#8498ae!important;margin-top:5px!important}
 
 @media(max-width:600px){.date-hero{font-size:36px}.history-sheet{padding:14px 9px 24px}}
@@ -157,6 +157,10 @@ input,button{font:inherit;border-radius:10px;border:1px solid var(--line);paddin
 <script>
 const $=id=>document.getElementById(id);
 const map=L.map('map',{zoomControl:true,scrollWheelZoom:true,touchZoom:true,doubleClickZoom:true,dragging:true}).setView([43.9493,4.8055],5);
+// Couche historique dédiée : elle reste au-dessus des 3 fonds (carte, relief, satellite).
+map.createPane('historicalPane');
+map.getPane('historicalPane').style.zIndex=650;
+map.getPane('historicalPane').style.pointerEvents='auto';
 const streetLayer=L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{attribution:'© OpenStreetMap contributors'});
 const reliefLayer=L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png',{maxZoom:17,attribution:'© OpenTopoMap contributors'});
 const satelliteLayer=L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',{maxZoom:19,attribution:'Tiles © Esri'});
@@ -197,7 +201,7 @@ setMapMode('street');
 
 let marker=L.marker([43.9493,4.8055]).addTo(map);
 let territoryLayer=L.geoJSON(null,{style:f=>({color:f.properties?.color||'#f5b83d',weight:2,fillOpacity:.12})}).addTo(map);
-let historicalVectorLayer=L.layerGroup().addTo(map);
+let historicalVectorLayer=L.layerGroup([], {pane:'historicalPane'}).addTo(map);
 
 const fmt=y=>y<0?Math.abs(y)+' av. J.-C.':y;
 function place(){
@@ -241,7 +245,10 @@ function centerMapForScope(p,force=false){
 
 function renderHistoricalMap(p,y){
   historicalVectorLayer.clearLayers();
-  const features=(data?.mapHistory||[]).filter(f=>y>=(f.from??-99999));
+  if(!p)return;
+
+  const allFeatures=data?.mapHistory||[];
+  const features=allFeatures.filter(f=>y>=(f.from??-99999));
   const buildRanges={
     '🪨 Rocher des Doms — cœur des premières occupations':[-3000,-3000],
     '🏛️ Noyau urbain antique — schématique':[-200,50],
@@ -251,20 +258,99 @@ function renderHistoricalMap(p,y){
     '🏰 Palais des Papes — emprise simplifiée':[1335,1364],
     '🏰 Grande enceinte du XIVe siècle — schématique':[1355,1377],
     '💧 Réseau de canaux — schématique':[1320,1400],
-    '🚂 Axe ferroviaire — schématique':[1849,1854],
+    '🚂 Axe ferroviaire — tracé schématique':[1849,1854],
     '🛣️ Rue de la République — axe schématique':[1856,1857],
     '🛣️ Rue Thiers — axe schématique':[1869,1872],
     '🏙️ Extension urbaine moderne — schématique':[1900,2026]
   };
   const lerp=(a,b,t)=>a+(b-a)*t;
-  const progressOf=f=>{const r=buildRanges[f.label]||[f.from??-99999,f.to??(f.from??-99999)];if(r[1]<=r[0])return y>=r[0]?1:0;return Math.max(0,Math.min(1,(y-r[0])/(r[1]-r[0])))};
-  const partialLine=(coords,t)=>{if(!coords||coords.length<2||t>=1)return coords;const total=coords.length-1,pos=Math.max(0,Math.min(total,t*total)),idx=Math.floor(pos),frac=pos-idx,out=coords.slice(0,idx+1);if(idx<coords.length-1){const a=coords[idx],b=coords[idx+1];out.push([lerp(a[0],b[0],frac),lerp(a[1],b[1],frac)])}return out};
-  const scaleRing=(ring,t)=>{if(!ring||!ring.length)return ring;const c=ring.reduce((a,q)=>[a[0]+q[0]/ring.length,a[1]+q[1]/ring.length],[0,0]),sc=.12+.88*t;return ring.map(q=>[c[0]+(q[0]-c[0])*sc,c[1]+(q[1]-c[1])*sc])};
-  features.forEach(f=>{const t=progressOf(f);if(t<=0)return;let layer=null;if(f.type==='line'&&f.coords)layer=L.polyline(partialLine(f.coords,t),{weight:f.weight||4,opacity:.95,lineCap:'round',lineJoin:'round'});else if(f.type==='polygon'&&f.coords)layer=L.polygon(f.coords.map(r=>scaleRing(r,t)),{weight:f.weight||2,fillOpacity:.12+.10*t,opacity:.95});else if(f.type==='point'&&f.coords)layer=L.circleMarker(f.coords,{radius:(f.radius||6)*(.55+.45*t),weight:2,opacity:.95,fillOpacity:.35+.55*t});if(layer){layer.bindTooltip(f.label||'Transformation historique');historicalVectorLayer.addLayer(layer)}});
-  let badge=$('mapTimeBadge');if(!badge){badge=document.createElement('div');badge.id='mapTimeBadge';badge.className='history-map-badge';$('map').appendChild(badge)}
-  const active=(data?.mapHistory||[]).find(f=>{const r=buildRanges[f.label]||[f.from??-99999,f.to??(f.from??-99999)];return r&&y>=r[0]&&y<r[1]});
-  badge.textContent=active?`🕰️ ${fmt(y)} · construction : ${active.label.replace(/^\S+\s*/,'')}`:`🕰️ Carte historique · ${fmt(y)}`;
+  const progressOf=f=>{
+    const r=buildRanges[f.label]||[f.from??-99999,f.to??(f.from??-99999)];
+    if(r[1]<=r[0])return y>=r[0]?1:0;
+    return Math.max(0,Math.min(1,(y-r[0])/(r[1]-r[0])));
+  };
+  const partialLine=(coords,t)=>{
+    if(!coords||coords.length<2||t>=1)return coords;
+    const total=coords.length-1,pos=Math.max(0,Math.min(total,t*total)),idx=Math.floor(pos),frac=pos-idx;
+    const out=coords.slice(0,idx+1);
+    if(idx<coords.length-1){const a=coords[idx],b=coords[idx+1];out.push([lerp(a[0],b[0],frac),lerp(a[1],b[1],frac)])}
+    return out;
+  };
+  const scaleRing=(ring,t)=>{
+    if(!ring||!ring.length)return ring;
+    const c=ring.reduce((a,q)=>[a[0]+q[0]/ring.length,a[1]+q[1]/ring.length],[0,0]);
+    const sc=.12+.88*t;
+    return ring.map(q=>[c[0]+(q[0]-c[0])*sc,c[1]+(q[1]-c[1])*sc]);
+  };
+  const styleFor=f=>{
+    const label=(f.label||'').toLowerCase();
+    if(label.includes('pont'))return {color:'#35b7ff',fillColor:'#35b7ff',weight:5,fillOpacity:.18};
+    if(label.includes('palais'))return {color:'#ffbf3f',fillColor:'#ffbf3f',weight:3,fillOpacity:.24};
+    if(label.includes('enceinte')||label.includes('rempart'))return {color:'#ff5f56',fillColor:'#ff5f56',weight:4,fillOpacity:.13};
+    if(label.includes('ferroviaire')||label.includes('rue ')||label.includes('axe'))return {color:'#9b7cff',fillColor:'#9b7cff',weight:4,fillOpacity:.16,dashArray:'7 5'};
+    if(label.includes('canal')||label.includes('hydraulique')||label.includes('crues'))return {color:'#31c7a2',fillColor:'#31c7a2',weight:4,fillOpacity:.14,dashArray:'5 4'};
+    if(label.includes('extension')||label.includes('noyau urbain'))return {color:'#ff8a4c',fillColor:'#ff8a4c',weight:3,fillOpacity:.12};
+    return {color:'#f5b83d',fillColor:'#f5b83d',weight:3,fillOpacity:.16};
+  };
+
+  // Chaque élément historique devient une couche cumulative : lorsqu'une date
+  // est franchie, la transformation apparaît sur la carte et reste visible.
+  features.forEach(f=>{
+    const t=progressOf(f);
+    if(t<=0)return;
+    const style=styleFor(f);
+    const isNew=t>0 && t<1;
+    let layer=null;
+    if(f.type==='line'&&f.coords){
+      layer=L.polyline(partialLine(f.coords,t),{...style,opacity:.98,lineCap:'round',lineJoin:'round',pane:'historicalPane',className:isNew?'history-map-feature-new':'history-map-feature'});
+    }else if(f.type==='polygon'&&f.coords){
+      layer=L.polygon(f.coords.map(r=>scaleRing(r,t)),{...style,opacity:.96,fillOpacity:(style.fillOpacity||.14)*(.45+.55*t),pane:'historicalPane',className:isNew?'history-map-feature-new':'history-map-feature'});
+    }else if(f.type==='point'&&f.coords){
+      layer=L.circleMarker(f.coords,{...style,radius:(f.radius||6)*(0.75+.25*t),pane:'historicalPane',className:isNew?'history-map-feature-new':'history-map-feature'});
+    }
+    if(layer){
+      layer.bindTooltip(f.label||'Transformation historique',{direction:'top',sticky:true,opacity:.96});
+      layer.on('click',()=>layer.openTooltip());
+      historicalVectorLayer.addLayer(layer);
+    }
+  });
+
+  // Événement historique le plus récent : il donne le sens de la modification
+  // visible sur la carte au moment exact où la frise avance.
+  const events=infoScope==='city'?(p.events||[]):[];
+  const past=events.filter(e=>e[0]<=y);
+  const latest=past.length?past[past.length-1]:null;
+  let info=$('mapHistoryInfo');
+  if(!info){info=document.createElement('div');info.id='mapHistoryInfo';info.className='history-map-info';$('map').appendChild(info)}
+  if(latest){
+    const detail=latest[6]||latest[7]||latest[8]||latest[2]||'Une transformation historique est visible sur la carte.';
+    info.innerHTML='<div class="history-map-kicker">🕰️ Ce que la carte raconte</div><strong>'+escapeSvgText(fmt(latest[0])+' — '+latest[1])+'</strong><span>'+escapeSvgText(detail)+'</span>';
+  }else{
+    info.innerHTML='<div class="history-map-kicker">🕰️ Carte historique</div><strong>'+escapeSvgText(fmt(y))+'</strong><span>Avance la frise : les constructions, routes, défenses et extensions apparaissent progressivement sur la carte.</span>';
+  }
+  const infoKey=latest?String(latest[0])+'|'+String(latest[1]):'none|'+String(y);
+  if(info.dataset.historyKey!==infoKey){
+    info.dataset.historyKey=infoKey;
+    info.classList.remove('new');
+    void info.offsetWidth;
+    info.classList.add('new');
+  }
+
+  let badge=$('mapTimeBadge');
+  if(!badge){badge=document.createElement('div');badge.id='mapTimeBadge';badge.className='history-map-badge';$('map').appendChild(badge)}
+  const visible=features.filter(f=>progressOf(f)>0);
+  const inBuild=visible.filter(f=>progressOf(f)<1);
+  const currentMode=currentMapMode==='satellite'?'🛰️ Satellite':currentMapMode==='relief'?'⛰️ Relief':'🗺️ Carte';
+  badge.innerHTML='<b>'+currentMode+' · '+escapeSvgText(fmt(y))+'</b><br>🧭 '+visible.length+' transformation'+(visible.length>1?'s':'')+' historiques visibles'+(inBuild.length?' · ⚒️ '+inBuild.length+' en construction':'');
+
+  // Repère l'événement actuellement atteint par la frise directement sur la carte.
+  // Ce repère change avec la frise sans modifier le zoom ou le déplacement manuel.
+  if(!window._historyEventMarker) window._historyEventMarker=L.circleMarker([p.lat,p.lon],{pane:'historicalPane',radius:7,color:'#ffffff',weight:2,fillColor:'#f5b83d',fillOpacity:1}).addTo(map);
+  window._historyEventMarker.setLatLng([p.lat,p.lon]);
+  window._historyEventMarker.bindTooltip(latest?('🕰️ '+fmt(latest[0])+' — '+latest[1]):('🕰️ '+fmt(y)),{direction:'top',offset:[0,-8],opacity:.98});
+  window._historyEventMarker.bringToFront();
 }
+
 function escapeSvgText(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
 function lessonPhotoFor(title,year){
   const base='https://commons.wikimedia.org/wiki/Special:Redirect/file/';
