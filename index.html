@@ -5,14 +5,14 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#07101f">
 <link rel="manifest" href="manifest.webmanifest">
-<title>ChronoMap V15.5.4 — Avignon photos événementielles</title>
+<title>ChronoMap V15.5.5 — Géolocalisation</title>
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
 <style>
 :root{--bg:#07101f;--p:#0d1c30;--line:#294563;--text:#f4f7fb;--muted:#9db0c8;--gold:#f5b83d;--blue:#4b8cff}
 *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,Segoe UI,sans-serif}
 header{height:58px;padding:7px 10px;display:flex;justify-content:space-between;align-items:center;background:#0c1b30;border-bottom:1px solid var(--line)}
 .brand{font-size:20px;font-weight:900}.brand span{color:var(--gold)}small,.meta{color:var(--muted)}
-.controls{padding:7px;display:grid;grid-template-columns:1fr 100px;gap:6px;background:#091528}
+.controls{padding:7px;display:grid;grid-template-columns:minmax(0,1fr) 100px 46px;gap:6px;background:#091528}
 input,button{font:inherit;border-radius:10px;border:1px solid var(--line);padding:9px;background:#0d1b2d;color:white}button{background:var(--blue);border:0;font-weight:800}
 #map{height:calc(100vh - 315px);min-height:400px}
 .panel{position:absolute;z-index:1000;right:12px;top:78px;width:min(390px,38vw);background:#07101ff5;border:1px solid #38506e;border-radius:14px;padding:11px;max-height:58vh;overflow:auto;box-shadow:0 12px 35px #0008;backdrop-filter:blur(10px);transition:.22s}
@@ -33,13 +33,13 @@ input,button{font:inherit;border-radius:10px;border:1px solid var(--line);paddin
 .navtabs{display:grid;grid-template-columns:repeat(5,1fr);gap:4px;margin-top:7px;position:sticky;bottom:0;z-index:1200}
 .navtab{background:#0d1b2d;border:1px solid #213a56;color:#9db0c8;padding:5px 2px;font-size:10px;display:flex;flex-direction:column;align-items:center;gap:2px}.navtab.active{background:#12365c;color:#fff}.navtab span{font-size:9px}
 .install{display:none}
-@media(min-width:800px){#map{height:calc(100vh - 270px)}.panel{top:76px;width:410px;max-height:64vh}.panel-toggle{top:76px}.controls{grid-template-columns:1fr 150px}}
+@media(min-width:800px){#map{height:calc(100vh - 270px)}.panel{top:76px;width:410px;max-height:64vh}.panel-toggle{top:76px}.controls{grid-template-columns:minmax(0,1fr) 150px 46px}}
 @media(max-width:420px){
  #map{height:calc(100vh - 315px);min-height:360px}
  .panel{top:auto;bottom:174px;left:8px;right:8px;width:auto;max-height:30vh;padding:8px;border-radius:13px} .panel.dragged{left:auto;right:auto;top:auto;bottom:auto;width:min(390px,calc(100vw - 16px))}
  .panel h2{font-size:15px}.panel .event{font-size:11px}
  .panel-toggle{top:auto;bottom:174px;right:9px}
- .top-menus{display:grid;grid-template-columns:1fr 1fr;gap:7px;padding:7px;background:#081526}.top-menu{display:flex;flex-direction:column;gap:3px}.top-menu label{font-size:9px;font-weight:900;color:#8fa4bb;text-transform:uppercase}.top-menu select,.timeline-step{width:100%;font-size:11px;font-weight:800;background:#10243c;color:#fff;border:1px solid #315c91;border-radius:10px;padding:9px}.controls{grid-template-columns:1fr 92px}.controls input,.controls button{font-size:13px;padding:8px}
+ .top-menus{display:grid;grid-template-columns:1fr 1fr;gap:7px;padding:7px;background:#081526}.top-menu{display:flex;flex-direction:column;gap:3px}.top-menu label{font-size:9px;font-weight:900;color:#8fa4bb;text-transform:uppercase}.top-menu select,.timeline-step{width:100%;font-size:11px;font-weight:800;background:#10243c;color:#fff;border:1px solid #315c91;border-radius:10px;padding:9px}.controls{grid-template-columns:minmax(0,1fr) 92px 44px}.controls input,.controls button{font-size:13px;padding:8px}
  .brand{font-size:18px}.bottom{padding-top:5px}.actions button{font-size:10px;padding:7px 4px}
  .navtabs{gap:3px}.navtab{font-size:9px;padding:5px 1px}
 }
@@ -81,12 +81,12 @@ input,button{font:inherit;border-radius:10px;border:1px solid var(--line);paddin
 .scope.active{background:#315c91;color:#fff}
 .plans{display:grid!important;grid-template-columns:repeat(3,1fr)!important;gap:5px!important;padding:7px!important}
 .plan{min-width:0!important;padding:6px!important}.plan b{font-size:11px}.plan p{font-size:8px;line-height:1.25}.plan span{font-size:8px}
-.controls{padding:7px;display:grid;grid-template-columns:1fr 92px;gap:6px;background:#091528}
+.controls{padding:7px;display:grid;grid-template-columns:minmax(0,1fr) 92px 44px;gap:6px;background:#091528}
 .navtabs{display:none!important}
 .history-sheet{display:none;margin:0;background:#081526;border-top:1px solid #294563;padding:16px 12px 24px;scroll-margin-top:10px}
 .date-link{display:flex;gap:7px;align-items:center;width:100%;text-align:left;background:#0d1f34;border:1px solid #213a56;margin:4px 0;padding:7px 9px;border-radius:9px;cursor:pointer}
 .date-link{position:relative;z-index:2005;pointer-events:auto!important;touch-action:manipulation;}
-@media(max-width:600px){.plans{grid-template-columns:repeat(3,1fr)!important}.plan p{display:none}.plan b{font-size:10px}.scope{font-size:9px;padding:6px 2px}.controls{grid-template-columns:1fr 88px}.history-sheet{padding:13px 9px 22px}}
+@media(max-width:600px){.plans{grid-template-columns:repeat(3,1fr)!important}.plan p{display:none}.plan b{font-size:10px}.scope{font-size:9px;padding:6px 2px}.controls{grid-template-columns:minmax(0,1fr) 88px 44px}.history-sheet{padding:13px 9px 22px}}
 
 /* V13.3 — interface tactile + fiche immersive */
 .panel{touch-action:none;user-select:none}.panel-head{cursor:grab}.panel.dragging .panel-head{cursor:grabbing}.panel .panel-tip,.panel .badges,.panel #desc{display:none!important}.date-link{justify-content:center;min-height:42px;margin:5px 0}.date-link b{min-width:0!important;font-size:15px!important}.date-link span{display:none!important}
@@ -130,6 +130,7 @@ input,button{font:inherit;border-radius:10px;border:1px solid var(--line);paddin
 .lesson-photo .photo-credit{display:block;margin-top:3px;font-size:.68rem;opacity:.75}
 .lesson-map-build{margin:10px 0;padding:10px 12px;border-radius:14px;background:linear-gradient(135deg,#eef7ff,#f7f3ff);font-weight:700;font-size:.86rem}
 .step-action{display:flex;align-items:center;gap:4px}.step-action button{padding:9px 11px}.step-action .step-inline{height:40px}
+.locate-button{padding:8px 6px;font-size:18px;background:#17304e;border:1px solid #315c91;display:flex;align-items:center;justify-content:center}.locate-button.locating{opacity:.7;cursor:wait}.locate-button.success{background:#123b29;border-color:#2f8f61}
 </style>
 </head>
 <body>
@@ -139,7 +140,7 @@ input,button{font:inherit;border-radius:10px;border:1px solid var(--line);paddin
   <div class="top-menu"><label for="scopeSelect">Carte</label><select id="scopeSelect"><option value="city">📍 Ville</option><option value="region">🧭 Région</option><option value="country">🇫🇷 Pays</option><option value="europe">🇪🇺 Europe</option><option value="world">🌍 Monde</option></select></div>
 </section>
 <div id="paymentBox" class="payment-box hidden"><b>Passer à <span id="selectedPlan">Famille</span></b><div id="paymentGains"></div><div class="payments"><button data-pay="card">💳 Carte</button><button data-pay="paypal">🅿️ PayPal</button><button data-pay="wallet">📱 Apple / Google Pay</button></div><small>Paiement réel à connecter avant mise en production.</small></div>
-<div class="controls"><input id="search" value="Avignon" placeholder="Rechercher une ville…"><button id="go">Explorer</button></div>
+<div class="controls"><input id="search" value="Avignon" placeholder="Rechercher une ville…"><button id="go" type="button">Explorer</button><button id="locate" type="button" class="locate-button" aria-label="Me géolocaliser" title="Me géolocaliser">📍</button></div>
 <div id="map"></div>
 <section id="panel" class="panel" aria-label="Dates historiques"><div class="panel-head" id="dragHandle"><h2 id="title">Avignon</h2><span class="drag-hint">↕ Maintenir pour déplacer</span><button id="closePanel" class="panel-close">×</button></div><div id="events"></div></section>
 <button id="openPanel" class="panel-toggle" aria-label="Afficher les explications">ℹ️</button>
@@ -184,6 +185,7 @@ mapModeControl.onAdd=function(){
   return box;
 };
 let data,timer=null,infoScope='city',selectedEvent=null,lastPlaceKey='',lastScope='';
+let geolocatedPlace=null;
 mapModeControl.addTo(map);
 // Force the control immediately below Leaflet's + / − control.
 const zoomControlEl=map.getContainer().querySelector('.leaflet-control-zoom');
@@ -201,10 +203,12 @@ const fmt=y=>y<0?Math.abs(y)+' av. J.-C.':y;
 function place(){
   if(!data)return null;
   const q=$('search').value.trim().toLowerCase();
-  return data.places.find(p=>p.name.toLowerCase()===q)
+  const found=data.places.find(p=>p.name.toLowerCase()===q)
     ||data.places.find(p=>p.aliases?.some(a=>a.toLowerCase()===q))
-    ||data.places.find(p=>p.name.toLowerCase().includes(q))
-    ||data.places[0];
+    ||data.places.find(p=>p.name.toLowerCase().includes(q));
+  if(found)return found;
+  if(geolocatedPlace && q===geolocatedPlace.name.toLowerCase())return geolocatedPlace;
+  return data.places[0];
 }
 
 /* IMPORTANT: the map is recentered only when the selected place/scope changes.
@@ -420,8 +424,51 @@ function render(){
 $('closePanel').onclick=()=>{$('panel').classList.add('closed')};
 $('openPanel').onclick=()=>{$('panel').classList.remove('closed')};
 function closeLesson(){selectedEvent=null;$('historySheet').style.display='none';}
-$('go').onclick=()=>{window._chronomapPlaceId=null;lastPlaceKey='';closeLesson();render()};
-$('search').addEventListener('keydown',e=>{if(e.key==='Enter'){lastPlaceKey='';closeLesson();render()}});
+function runExplorer(){window._chronomapPlaceId=null;lastPlaceKey='';closeLesson();render()}
+$('go').onclick=()=>{geolocatedPlace=null;runExplorer()};
+$('search').addEventListener('keydown',e=>{if(e.key==='Enter'){geolocatedPlace=null;runExplorer()}});
+
+$('locate').onclick=()=>{
+  const button=$('locate');
+  if(!navigator.geolocation){alert('La géolocalisation n’est pas disponible sur cet appareil.');return}
+  button.classList.add('locating');
+  button.textContent='⏳';
+  button.disabled=true;
+  navigator.geolocation.getCurrentPosition(async position=>{
+    const lat=position.coords.latitude,lon=position.coords.longitude;
+    let placeName='Ma position';
+    try{
+      const url='https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat='+encodeURIComponent(lat)+'&lon='+encodeURIComponent(lon)+'&zoom=10&addressdetails=1';
+      const response=await fetch(url,{headers:{'Accept':'application/json'}});
+      if(response.ok){
+        const result=await response.json();
+        const a=result.address||{};
+        placeName=a.city||a.town||a.village||a.municipality||a.locality||a.county||result.name||placeName;
+      }
+    }catch(err){console.warn('Reverse geocoding indisponible',err)}
+    const match=data?.places?.find(p=>p.name.toLowerCase()===placeName.toLowerCase())
+      ||data?.places?.find(p=>p.aliases?.some(a=>a.toLowerCase()===placeName.toLowerCase()));
+    geolocatedPlace=match||{name:placeName,lat,lon,zoom:13,events:[]};
+    $('search').value=placeName;
+    lastPlaceKey='';
+    closeLesson();
+    runExplorer();
+    if(!match){
+      $('events').innerHTML='<div class="event">📍 '+placeName+' est bien géolocalisé, mais ce lieu n’est pas encore présent dans la base historique ChronoMap.</div>';
+    }
+    button.classList.remove('locating');
+    button.classList.add('success');
+    button.textContent='📍';
+    button.disabled=false;
+    setTimeout(()=>button.classList.remove('success'),1400);
+  },error=>{
+    button.classList.remove('locating');
+    button.textContent='📍';
+    button.disabled=false;
+    const messages={1:'Autorisation de localisation refusée. Active la localisation pour ChronoMap.',2:'Position indisponible. Vérifie le GPS ou la localisation de ton appareil.',3:'La localisation a pris trop de temps. Réessaie.'};
+    alert(messages[error.code]||'Impossible de récupérer ta position.');
+  },{enableHighAccuracy:true,timeout:12000,maximumAge:300000});
+};
 $('timeline').oninput=()=>{closeLesson();render()};
 function timelineStep(){return +$('backStep').value||5}
 function syncStepSelectors(value){$('backStep').value=String(value);$('nextStep').value=String(value)}
@@ -562,7 +609,7 @@ try{
 }catch(e){}
 
 if('serviceWorker' in navigator){
-  navigator.serviceWorker.register('./sw.js?v=15-5-2').then(reg=>reg.update()).catch(()=>{});
+  navigator.serviceWorker.register('./sw.js?v=15-5-5').then(reg=>reg.update()).catch(()=>{});
 }
 
 Promise.all([
