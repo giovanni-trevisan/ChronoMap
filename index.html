@@ -248,6 +248,32 @@ function renderHistoricalMap(p,y){
   if(!p)return;
 
   const allFeatures=(data?.mapHistory||[]).filter(f=>f.scope==='city'||!f.scope);
+
+  // Reconstruction progressive du tissu urbain : la carte moderne n'est pas
+  // simplement recouverte de quelques traits. On fait évoluer une véritable
+  // emprise bâtie par grandes étapes, pilotées exclusivement par la frise.
+  const urbanBase=(allFeatures.find(f=>(f.label||'').includes('Extension urbaine moderne'))||{}).coords?.[0]||[];
+  const medievalBase=(allFeatures.find(f=>(f.label||'').includes('Extension urbaine médiévale'))||{}).coords?.[0]||[];
+  const ancientBase=(allFeatures.find(f=>(f.label||'').includes('Noyau urbain antique'))||{}).coords?.[0]||[];
+  const footprintPhases=[];
+  const makeFootprint=(source,from,to,label,fill,scale)=>{
+    if(!source?.length)return;
+    const c=source.reduce((a,q)=>[a[0]+q[0]/source.length,a[1]+q[1]/source.length],[0,0]);
+    const ring=source.map(q=>[c[0]+(q[0]-c[0])*scale,c[1]+(q[1]-c[1])*scale]);
+    footprintPhases.push({type:'polygon',coords:[ring],from,to,label,fill});
+  };
+  makeFootprint(ancientBase,-200,900,'🏛️ Empreinte bâtie antique','#9d7448',1);
+  makeFootprint(medievalBase,900,1177,'🏘️ Développement urbain médiéval','#a96f43',.72);
+  makeFootprint(medievalBase,1177,1335,'🏘️ Extension de la cité au XIIIe siècle','#aa7042',.88);
+  makeFootprint(medievalBase,1335,1377,'🏙️ Expansion pontificale du XIVe siècle','#9e633d',1.08);
+  makeFootprint(medievalBase,1377,1700,'🏙️ Ville intra-muros stabilisée','#94613f',1.08);
+  makeFootprint(medievalBase,1700,1850,'🏘️ Transformations des XVIIe-XVIIIe siècles','#9a6945',1.12);
+  makeFootprint(urbanBase,1850,1900,'🏘️ Premières extensions extra-muros','#8e6b52',.62);
+  makeFootprint(urbanBase,1900,1950,'🏙️ Extension urbaine du XXe siècle','#7e6959',.78);
+  makeFootprint(urbanBase,1950,1975,'🏙️ Urbanisation accélérée','#71665e',.90);
+  makeFootprint(urbanBase,1975,2000,'🏙️ Extension contemporaine','#65615d',.96);
+  makeFootprint(urbanBase,2000,2026,'🏙️ Empreinte urbaine actuelle','#5b5b59',1);
+
   const buildRanges={
     '🪨 Rocher des Doms — cœur des premières occupations':[-3000,-200],
     '🏛️ Noyau urbain antique — schématique':[-200,450],
@@ -294,8 +320,11 @@ function renderHistoricalMap(p,y){
   // Avant les grandes constructions, le fond moderne est volontairement atténué.
   // À mesure que la frise avance vers 2026, le fond réel reprend progressivement toute sa visibilité.
   const presentProgress=clamp((y+3000)/(2026+3000));
-  const baseOpacity=.18+.82*presentProgress;
-  [streetLayer,reliefLayer,satelliteLayer].forEach(l=>l.setOpacity(baseOpacity));
+  // Avant l'urbanisation moderne, le fond contemporain est fortement atténué.
+  // La visibilité du fond actuel revient progressivement à mesure que la frise
+  // atteint les XIXe-XXIe siècles.
+  const baseOpacity=y<1850 ? .08 : y<1950 ? .08+.22*((y-1850)/100) : .30+.70*((y-1950)/76);
+  [streetLayer,reliefLayer,satelliteLayer].forEach(l=>l.setOpacity(clamp(baseOpacity,0.08,1)));
 
   // Une surface historique couvre le territoire ancien au début du voyage :
   // on ne montre donc plus simplement la ville moderne avec quelques traits par-dessus.
@@ -305,7 +334,8 @@ function renderHistoricalMap(p,y){
 
   // Les grandes emprises urbaines sont des SURFACES, pas des tracés.
   // Elles s'agrandissent avec la frise et restent visibles une fois construites.
-  allFeatures.forEach(f=>{
+  const visibleFeatures=allFeatures.concat(footprintPhases);
+  visibleFeatures.forEach(f=>{
     const t=progressOf(f);
     if(t<=0)return;
     const label=(f.label||'').toLowerCase();
@@ -358,7 +388,7 @@ function renderHistoricalMap(p,y){
 
   let badge=$('mapTimeBadge');
   if(!badge){badge=document.createElement('div');badge.id='mapTimeBadge';badge.className='history-map-badge';$('map').appendChild(badge)}
-  const visible=allFeatures.filter(f=>progressOf(f)>0);
+  const visible=visibleFeatures.filter(f=>progressOf(f)>0);
   const inBuild=visible.filter(f=>progressOf(f)<1);
   const currentMode=currentMapMode==='satellite'?'🛰️ Satellite':currentMapMode==='relief'?'⛰️ Relief':'🗺️ Carte';
   badge.innerHTML='<b>'+currentMode+' · '+escapeSvgText(fmt(y))+'</b><br>🏙️ '+visible.length+' transformations historiques visibles'+(inBuild.length?' · ⚒️ '+inBuild.length+' en construction':'');
