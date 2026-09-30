@@ -247,109 +247,129 @@ function renderHistoricalMap(p,y){
   historicalVectorLayer.clearLayers();
   if(!p)return;
 
-  const allFeatures=data?.mapHistory||[];
-  const features=allFeatures.filter(f=>y>=(f.from??-99999));
+  const allFeatures=(data?.mapHistory||[]).filter(f=>f.scope==='city'||!f.scope);
   const buildRanges={
-    '🪨 Rocher des Doms — cœur des premières occupations':[-3000,-3000],
-    '🏛️ Noyau urbain antique — schématique':[-200,50],
+    '🪨 Rocher des Doms — cœur des premières occupations':[-3000,-200],
+    '🏛️ Noyau urbain antique — schématique':[-200,450],
     '🛡️ Enceinte du Bas-Empire — tracé schématique':[300,450],
-    '🧱 Extension urbaine médiévale — schématique':[900,1100],
-    '🌉 Pont Saint-Bénézet — tracé schématique':[1177,1185],
+    '🧱 Extension urbaine médiévale — schématique':[900,1230],
+    '🌉 Pont Saint-Bénézet — tracé schématique':[1177,1205],
     '🏰 Palais des Papes — emprise simplifiée':[1335,1364],
     '🏰 Grande enceinte du XIVe siècle — schématique':[1355,1377],
     '💧 Réseau de canaux — schématique':[1320,1400],
-    '🚂 Axe ferroviaire — tracé schématique':[1849,1854],
-    '🛣️ Rue de la République — axe schématique':[1856,1857],
-    '🛣️ Rue Thiers — axe schématique':[1869,1872],
-    '🏙️ Extension urbaine moderne — schématique':[1900,2026]
+    '🚂 Axe ferroviaire — schématique':[1849,1854],
+    '🛣️ Rue de la République — axe schématique':[1856,1865],
+    '🛣️ Rue Thiers — axe schématique':[1869,1875],
+    '🏙️ Extension urbaine moderne — schématique':[1900,2026],
+    '🌊 Ouvrages de protection contre les crues — schématique':[1849,1860],
+    '💧 Réseau moderne de protection hydraulique — schématique':[1956,1973],
+    '🚶 Promenade des remparts — emprise schématique':[1943,2026]
   };
-  const lerp=(a,b,t)=>a+(b-a)*t;
+  const clamp=(v,a=0,b=1)=>Math.max(a,Math.min(b,v));
   const progressOf=f=>{
     const r=buildRanges[f.label]||[f.from??-99999,f.to??(f.from??-99999)];
-    if(r[1]<=r[0])return y>=r[0]?1:0;
-    return Math.max(0,Math.min(1,(y-r[0])/(r[1]-r[0])));
-  };
-  const partialLine=(coords,t)=>{
-    if(!coords||coords.length<2||t>=1)return coords;
-    const total=coords.length-1,pos=Math.max(0,Math.min(total,t*total)),idx=Math.floor(pos),frac=pos-idx;
-    const out=coords.slice(0,idx+1);
-    if(idx<coords.length-1){const a=coords[idx],b=coords[idx+1];out.push([lerp(a[0],b[0],frac),lerp(a[1],b[1],frac)])}
-    return out;
+    if(y<r[0])return 0;
+    if(r[1]<=r[0])return 1;
+    return clamp((y-r[0])/(r[1]-r[0]));
   };
   const scaleRing=(ring,t)=>{
-    if(!ring||!ring.length)return ring;
-    const c=ring.reduce((a,q)=>[a[0]+q[0]/ring.length,a[1]+q[1]/ring.length],[0,0]);
+    const clean=(ring||[]).filter(q=>Array.isArray(q)&&q.length>=2);
+    if(!clean.length)return clean;
+    const c=clean.reduce((a,q)=>[a[0]+q[0]/clean.length,a[1]+q[1]/clean.length],[0,0]);
     const sc=.12+.88*t;
-    return ring.map(q=>[c[0]+(q[0]-c[0])*sc,c[1]+(q[1]-c[1])*sc]);
+    return clean.map(q=>[c[0]+(q[0]-c[0])*sc,c[1]+(q[1]-c[1])*sc]);
   };
-  const styleFor=f=>{
-    const label=(f.label||'').toLowerCase();
-    if(label.includes('pont'))return {color:'#35b7ff',fillColor:'#35b7ff',weight:5,fillOpacity:.18};
-    if(label.includes('palais'))return {color:'#ffbf3f',fillColor:'#ffbf3f',weight:3,fillOpacity:.24};
-    if(label.includes('enceinte')||label.includes('rempart'))return {color:'#ff5f56',fillColor:'#ff5f56',weight:4,fillOpacity:.13};
-    if(label.includes('ferroviaire')||label.includes('rue ')||label.includes('axe'))return {color:'#9b7cff',fillColor:'#9b7cff',weight:4,fillOpacity:.16,dashArray:'7 5'};
-    if(label.includes('canal')||label.includes('hydraulique')||label.includes('crues'))return {color:'#31c7a2',fillColor:'#31c7a2',weight:4,fillOpacity:.14,dashArray:'5 4'};
-    if(label.includes('extension')||label.includes('noyau urbain'))return {color:'#ff8a4c',fillColor:'#ff8a4c',weight:3,fillOpacity:.12};
-    return {color:'#f5b83d',fillColor:'#f5b83d',weight:3,fillOpacity:.16};
+  const corridor=(coords,width=.00045)=>{
+    if(!coords||coords.length<2)return null;
+    const out=[];
+    for(let i=0;i<coords.length-1;i++){
+      const a=coords[i],b=coords[i+1],dx=b[1]-a[1],dy=b[0]-a[0],len=Math.hypot(dx,dy)||1;
+      const ox=width*dy/len,oy=width*dx/len;
+      if(i===0)out.push([a[0]-oy,a[1]+ox],[a[0]+oy,a[1]-ox]);
+      out.push([b[0]+oy,b[1]-ox],[b[0]-oy,b[1]+ox]);
+    }
+    return out;
   };
 
-  // Chaque élément historique devient une couche cumulative : lorsqu'une date
-  // est franchie, la transformation apparaît sur la carte et reste visible.
-  features.forEach(f=>{
+  // Avant les grandes constructions, le fond moderne est volontairement atténué.
+  // À mesure que la frise avance vers 2026, le fond réel reprend progressivement toute sa visibilité.
+  const presentProgress=clamp((y+3000)/(2026+3000));
+  const baseOpacity=.18+.82*presentProgress;
+  [streetLayer,reliefLayer,satelliteLayer].forEach(l=>l.setOpacity(baseOpacity));
+
+  // Une surface historique couvre le territoire ancien au début du voyage :
+  // on ne montre donc plus simplement la ville moderne avec quelques traits par-dessus.
+  const bounds=map.getBounds();
+  const eraWash=L.rectangle(bounds,{pane:'historicalPane',stroke:false,fillColor:'#efe5cc',fillOpacity:.30*(1-presentProgress),interactive:false});
+  historicalVectorLayer.addLayer(eraWash);
+
+  // Les grandes emprises urbaines sont des SURFACES, pas des tracés.
+  // Elles s'agrandissent avec la frise et restent visibles une fois construites.
+  allFeatures.forEach(f=>{
     const t=progressOf(f);
     if(t<=0)return;
-    const style=styleFor(f);
-    const isNew=t>0 && t<1;
-    let layer=null;
-    if(f.type==='line'&&f.coords){
-      layer=L.polyline(partialLine(f.coords,t),{...style,opacity:.98,lineCap:'round',lineJoin:'round',pane:'historicalPane',className:isNew?'history-map-feature-new':'history-map-feature'});
-    }else if(f.type==='polygon'&&f.coords){
-      layer=L.polygon(f.coords.map(r=>scaleRing(r,t)),{...style,opacity:.96,fillOpacity:(style.fillOpacity||.14)*(.45+.55*t),pane:'historicalPane',className:isNew?'history-map-feature-new':'history-map-feature'});
-    }else if(f.type==='point'&&f.coords){
-      layer=L.circleMarker(f.coords,{...style,radius:(f.radius||6)*(0.75+.25*t),pane:'historicalPane',className:isNew?'history-map-feature-new':'history-map-feature'});
+    const label=(f.label||'').toLowerCase();
+    const style={pane:'historicalPane',stroke:false,fillOpacity:.58,interactive:false};
+
+    if(f.type==='polygon'&&f.coords){
+      const rings=f.coords.map(r=>scaleRing(r,t)).filter(r=>r.length>=3);
+      if(rings.length){
+        let fill='#b87945';
+        if(label.includes('antique'))fill='#c89d63';
+        if(label.includes('extension urbaine'))fill='#ad7747';
+        if(label.includes('grande enceinte'))fill='#8f5b3d';
+        if(label.includes('palais'))fill='#d5ad55';
+        historicalVectorLayer.addLayer(L.polygon(rings,{...style,fillColor:fill,fillOpacity:.18+.42*t}));
+      }
+      return;
     }
-    if(layer){
-      layer.bindTooltip(f.label||'Transformation historique',{direction:'top',sticky:true,opacity:.96});
-      layer.on('click',()=>layer.openTooltip());
-      historicalVectorLayer.addLayer(layer);
+
+    if(f.type==='point'&&f.coords){
+      historicalVectorLayer.addLayer(L.circleMarker(f.coords,{pane:'historicalPane',radius:8+7*t,stroke:false,fillColor:'#9a663d',fillOpacity:.72,interactive:false}));
+      return;
+    }
+
+    // Les routes, canaux et le pont deviennent de vraies bandes cartographiques
+    // remplies, sans les anciens traits colorés/dashés qui donnaient l'impression de courses.
+    if(f.type==='line'&&f.coords){
+      const visible=f.coords.slice(0,Math.max(2,Math.ceil((f.coords.length-1)*t)+1));
+      const width=label.includes('pont')?.0008:label.includes('ferroviaire')?.00055:label.includes('canal')?.00038:.00048;
+      const poly=corridor(visible,width);
+      if(poly&&poly.length>=4){
+        const fill=label.includes('pont')?'#6e6254':label.includes('canal')?'#5c91a3':label.includes('ferroviaire')?'#6b625c':'#777066';
+        historicalVectorLayer.addLayer(L.polygon(poly,{pane:'historicalPane',stroke:false,fillColor:fill,fillOpacity:.62*t,interactive:false}));
+      }
     }
   });
 
-  // Événement historique le plus récent : il donne le sens de la modification
-  // visible sur la carte au moment exact où la frise avance.
   const events=infoScope==='city'?(p.events||[]):[];
   const past=events.filter(e=>e[0]<=y);
   const latest=past.length?past[past.length-1]:null;
   let info=$('mapHistoryInfo');
   if(!info){info=document.createElement('div');info.id='mapHistoryInfo';info.className='history-map-info';$('map').appendChild(info)}
   if(latest){
-    const detail=latest[6]||latest[7]||latest[8]||latest[2]||'Une transformation historique est visible sur la carte.';
-    info.innerHTML='<div class="history-map-kicker">🕰️ Ce que la carte raconte</div><strong>'+escapeSvgText(fmt(latest[0])+' — '+latest[1])+'</strong><span>'+escapeSvgText(detail)+'</span>';
+    const detail=latest[6]||latest[7]||latest[8]||latest[2]||'La carte évolue avec cette étape historique.';
+    info.innerHTML='<div class="history-map-kicker">🕰️ Carte en '+escapeSvgText(fmt(y))+'</div><strong>'+escapeSvgText(latest[1])+'</strong><span>'+escapeSvgText(detail)+'</span>';
   }else{
-    info.innerHTML='<div class="history-map-kicker">🕰️ Carte historique</div><strong>'+escapeSvgText(fmt(y))+'</strong><span>Avance la frise : les constructions, routes, défenses et extensions apparaissent progressivement sur la carte.</span>';
+    info.innerHTML='<div class="history-map-kicker">🕰️ Carte en '+escapeSvgText(fmt(y))+'</div><strong>Le territoire se construit progressivement</strong><span>Déplace la frise : les surfaces urbaines et les constructions apparaissent au moment où elles existent.</span>';
   }
   const infoKey=latest?String(latest[0])+'|'+String(latest[1]):'none|'+String(y);
-  if(info.dataset.historyKey!==infoKey){
-    info.dataset.historyKey=infoKey;
-    info.classList.remove('new');
-    void info.offsetWidth;
-    info.classList.add('new');
-  }
+  if(info.dataset.historyKey!==infoKey){info.dataset.historyKey=infoKey;info.classList.remove('new');void info.offsetWidth;info.classList.add('new')}
 
   let badge=$('mapTimeBadge');
   if(!badge){badge=document.createElement('div');badge.id='mapTimeBadge';badge.className='history-map-badge';$('map').appendChild(badge)}
-  const visible=features.filter(f=>progressOf(f)>0);
+  const visible=allFeatures.filter(f=>progressOf(f)>0);
   const inBuild=visible.filter(f=>progressOf(f)<1);
   const currentMode=currentMapMode==='satellite'?'🛰️ Satellite':currentMapMode==='relief'?'⛰️ Relief':'🗺️ Carte';
-  badge.innerHTML='<b>'+currentMode+' · '+escapeSvgText(fmt(y))+'</b><br>🧭 '+visible.length+' transformation'+(visible.length>1?'s':'')+' historiques visibles'+(inBuild.length?' · ⚒️ '+inBuild.length+' en construction':'');
+  badge.innerHTML='<b>'+currentMode+' · '+escapeSvgText(fmt(y))+'</b><br>🏙️ '+visible.length+' transformations historiques visibles'+(inBuild.length?' · ⚒️ '+inBuild.length+' en construction':'');
 
-  // Repère l'événement actuellement atteint par la frise directement sur la carte.
-  // Ce repère change avec la frise sans modifier le zoom ou le déplacement manuel.
-  if(!window._historyEventMarker) window._historyEventMarker=L.circleMarker([p.lat,p.lon],{pane:'historicalPane',radius:7,color:'#ffffff',weight:2,fillColor:'#f5b83d',fillOpacity:1}).addTo(map);
-  window._historyEventMarker.setLatLng([p.lat,p.lon]);
-  window._historyEventMarker.bindTooltip(latest?('🕰️ '+fmt(latest[0])+' — '+latest[1]):('🕰️ '+fmt(y)),{direction:'top',offset:[0,-8],opacity:.98});
-  window._historyEventMarker.bringToFront();
+  if(window._historyEventMarker)window._historyEventMarker.remove();
+  window._historyEventMarker=null;
 }
+
+map.on('moveend',()=>{
+  if(data){const y=+$('timeline').value,p=place();if(p)renderHistoricalMap(p,y)}
+});
 
 function escapeSvgText(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
 function lessonPhotoFor(title,year){
