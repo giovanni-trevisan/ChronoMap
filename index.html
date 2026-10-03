@@ -467,12 +467,13 @@ function lessonPhotoFor(title,year){
     if(year===1849) return matching.includes('chemin de fer')?photos['1849b']:photos['1849a'];
     if(year===1856) return matching.includes('crue')?photos['1856b']:photos['1856a'];
   }
-  return photos[String(year)]||photos['2026'];
+  return photos[String(year)]||null;
 }
 
 function showLessonImage(title,year){
   const box=$('lessonMedia');if(!box)return;
   const media=lessonPhotoFor(title,year);
+  if(!media){ box.innerHTML='<div class="lesson-photo lesson-photo-placeholder"><div style="padding:22px;text-align:center">🗺️</div><figcaption>Nouvelle donnée historique ajoutée à ChronoMap. Illustration photographique à documenter dans la prochaine couche de sources.</figcaption></div>'; return; }
   box.innerHTML='<figure class="lesson-photo"><img loading="lazy" src="'+media.url+'" alt="'+escapeSvgText(title)+'" referrerpolicy="no-referrer"><figcaption>'+escapeSvgText(media.caption)+'<span class="photo-credit">'+escapeSvgText(media.credit)+'</span></figcaption></figure>';
 }
 function showSummary(p,e,scroll){
