@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#07101f">
 <link rel="manifest" href="manifest.webmanifest">
-<title>ChronoMap V15.8 — Cartes historiques réelles</title>
+<title>ChronoMap V16 — Carte réellement évolutive</title>
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
 <style>
 :root{--bg:#07101f;--p:#0d1c30;--line:#294563;--text:#f4f7fb;--muted:#9db0c8;--gold:#f5b83d;--blue:#4b8cff}
@@ -161,9 +161,9 @@ const map=L.map('map',{zoomControl:true,scrollWheelZoom:true,touchZoom:true,doub
 map.createPane('historicalPane');
 map.getPane('historicalPane').style.zIndex=650;
 map.getPane('historicalPane').style.pointerEvents='auto';
-const streetLayer=L.tileLayer('https://mt1.google.com/vt/lyrs=m&x={x}&y={y}&z={z}',{maxZoom:20,attribution:'© Google'});
-const reliefLayer=L.tileLayer('https://mt1.google.com/vt/lyrs=p&x={x}&y={y}&z={z}',{maxZoom:20,attribution:'© Google'});
-const satelliteLayer=L.tileLayer('https://mt1.google.com/vt/lyrs=s&x={x}&y={y}&z={z}',{maxZoom:20,attribution:'© Google'});
+const streetLayer=L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{attribution:'© OpenStreetMap contributors'});
+const reliefLayer=L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png',{maxZoom:17,attribution:'© OpenTopoMap contributors'});
+const satelliteLayer=L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',{maxZoom:19,attribution:'Tiles © Esri'});
 streetLayer.addTo(map);
 let currentMapMode='street';
 function setMapMode(mode){
@@ -247,51 +247,139 @@ function renderHistoricalMap(p,y){
   historicalVectorLayer.clearLayers();
   if(!p)return;
 
-  /* V15.8 — documents cartographiques historiques réels.
-     Aucun polygone, carré, cercle ou route synthétique n'est généré.
-     Les documents sont de véritables plans/cartes historiques d'Avignon,
-     affichés au-dessus de Google Maps et remplacés progressivement selon la date. */
+  /* V16 — RECONSTRUCTION URBAINE TEMPORELLE.
+     La frise pilote une vraie couche historique cumulative : chaque élément
+     apparaît à sa date de construction et les chantiers progressent pendant
+     leur intervalle. Aucune image floutée, aucun fondu de carte d'archive.
+     La couche est commune aux fonds Carte / Relief / Satellite. */
   const clamp=(v,a=0,b=1)=>Math.max(a,Math.min(b,v));
-  const ease=t=>t*t*(3-2*t);
-  const phase=(from,to)=>to<=from?(y>=from?1:0):ease(clamp((y-from)/(to-from)));
-  const file=f=>'https://commons.wikimedia.org/wiki/Special:Redirect/file/'+encodeURIComponent(f).replace(/%2F/g,'/');
+  const smooth=t=>{t=clamp(t);return t*t*(3-2*t)};
+  const progress=(from,to)=>to===from?(y>=to?1:0):smooth((y-from)/(to-from));
+  const add=(layer,style,from,to,kind='polygon')=>{
+    const t=progress(from,to);
+    if(t<=0)return;
+    if(kind==='line'){
+      const pts=layer;
+      const n=Math.max(2,Math.floor(1+(pts.length-1)*t));
+      const cut=pts.slice(0,n);
+      if(n<pts.length){
+        const q=pts[n-1], r=pts[n], f=(pts.length-1)*t-(n-1);
+        cut.push([q[0]+(r[0]-q[0])*f,q[1]+(r[1]-q[1])*f]);
+      }
+      L.polyline(cut,{...style,opacity:Math.max(.15,t),pane:'historicalPane',className:'history-map-feature-new'}).addTo(historicalVectorLayer);
+    }else{
+      L.polygon(layer,{...style,fillOpacity:(style.fillOpacity||.25)*Math.max(.2,t),opacity:Math.max(.35,t),pane:'historicalPane',className:'history-map-feature-new'}).addTo(historicalVectorLayer);
+    }
+  };
 
-  const archiveMaps=[
-    {from:1200,to:1500,url:file("Enceintes d'Avignon Viollet-le-Duc.jpg"),label:'Plan des enceintes médiévales — XIIIe–XIVe siècles'},
-    {from:1500,to:1600,url:file('Avignon - Plan aux personnages (1572).JPG'),label:'Plan aux Personnages — 1572'},
-    {from:1600,to:1700,url:file('Civitatis Avenionis omnimq 1618 map of Avignon.jpg'),label:'Plan d’Avignon — 1618'},
-    {from:1700,to:1800,url:file("Plan de la ville d'Avignon au milieu du XVIII° siècle.jpg"),label:'Plan géométrique d’Avignon — XVIIIe siècle'},
-    {from:1800,to:1870,url:file("Carte d'État-major de la France, Feuille Avignon N.E.jpg"),label:'Carte d’État-major — 1866'},
-    {from:1870,to:1950,url:file("Plan d'Avignon - btv1b53084943g.jpg"),label:'Plan d’Avignon — XIXe siècle'},
+  // Relief / fleuve : le paysage physique reste visible dès les premières dates.
+  const rhone=[[43.957,4.774],[43.953,4.779],[43.949,4.786],[43.945,4.795],[43.941,4.803],[43.937,4.810],[43.933,4.816],[43.929,4.823]];
+  const barthelasse=[[43.971,4.772],[43.960,4.779],[43.949,4.786],[43.938,4.796],[43.927,4.808],[43.916,4.821],[43.909,4.838],[43.913,4.850],[43.930,4.842],[43.948,4.832],[43.964,4.817]];
+  add([[43.971,4.772],[43.960,4.779],[43.949,4.786],[43.938,4.796],[43.927,4.808],[43.916,4.821],[43.909,4.838],[43.913,4.850],[43.930,4.842],[43.948,4.832],[43.964,4.817]],{color:'#315b75',weight:1,fillColor:'#315b75',fillOpacity:.16},-3000,2026);
+  L.polyline(rhone,{color:'#4b7894',weight:7,opacity:.34,pane:'historicalPane'}).addTo(historicalVectorLayer);
+
+  // Rocher des Doms : premier espace habité, puis cœur de la cité.
+  const rocher=[[43.9552,4.8002],[43.9585,4.8021],[43.9601,4.8064],[43.9589,4.8110],[43.9558,4.8134],[43.9525,4.8110],[43.9510,4.8062],[43.9520,4.8020]];
+  add(rocher,{color:'#6f5837',weight:1.5,fillColor:'#9a7b4c',fillOpacity:.34},-3000,-900);
+
+  // Première implantation urbaine : noyau irrégulier au pied du Rocher.
+  const ancientCore=[[43.9540,4.7998],[43.9570,4.8008],[43.9587,4.8044],[43.9580,4.8088],[43.9554,4.8118],[43.9518,4.8120],[43.9496,4.8084],[43.9503,4.8038],[43.9520,4.8010]];
+  add(ancientCore,{color:'#7b633d',weight:1.2,fillColor:'#b0925f',fillOpacity:.27},-200,300);
+
+  // Extension médiévale documentée autour du noyau antique.
+  const medievalCore=[[43.9590,4.7964],[43.9630,4.8000],[43.9647,4.8055],[43.9638,4.8125],[43.9608,4.8180],[43.9560,4.8210],[43.9510,4.8190],[43.9470,4.8145],[43.9455,4.8070],[43.9470,4.8000],[43.9510,4.7960],[43.9550,4.7945]];
+  add(medievalCore,{color:'#9b713e',weight:1.8,fillColor:'#c69a5a',fillOpacity:.20},1000,1200);
+
+  // Palais des Papes : construction par étapes 1335–1342.
+  const palais=[[43.95145,4.80735],[43.95230,4.80805],[43.95205,4.80930],[43.95095,4.80905],[43.95075,4.80785]];
+  add(palais,{color:'#8b4d2e',weight:2,fillColor:'#c56c3d',fillOpacity:.48},1335,1342);
+  const palaisExtension=[[43.95225,4.80645],[43.95335,4.80705],[43.95305,4.80855],[43.95225,4.80805],[43.95205,4.8070]];
+  add(palaisExtension,{color:'#8b4d2e',weight:2,fillColor:'#c56c3d',fillOpacity:.42},1342,1350);
+
+  // Pont Saint-Bénézet : chantier puis liaison sur le Rhône.
+  const pont=[[43.9531,4.8022],[43.9541,4.7955],[43.9548,4.7890],[43.9553,4.7828]];
+  add(pont,{color:'#9a6a3a',weight:5,opacity:.9},1177,1185,'line');
+
+  // Grande enceinte pontificale : tracé irrégulier, construit sur environ 20 ans.
+  const walls=[[43.9618,4.7936],[43.9680,4.8000],[43.9700,4.8085],[43.9690,4.8185],[43.9650,4.8270],[43.9580,4.8320],[43.9500,4.8335],[43.9425,4.8300],[43.9365,4.8210],[43.9335,4.8110],[43.9345,4.8000],[43.9400,4.7915],[43.9480,4.7865],[43.9560,4.7880],[43.9618,4.7936]];
+  add(walls,{color:'#8f6840',weight:4,opacity:.96},1355,1377,'line');
+
+  // Faubourgs et tissus bâtis qui se densifient avant / pendant la grande enceinte.
+  const blocks=[
+    [[43.9605,4.7980],[43.9624,4.8002],[43.9618,4.8030],[43.9598,4.8015]],
+    [[43.9628,4.8040],[43.9648,4.8060],[43.9640,4.8090],[43.9620,4.8072]],
+    [[43.9588,4.8130],[43.9610,4.8150],[43.9597,4.8180],[43.9577,4.8160]],
+    [[43.9538,4.8140],[43.9560,4.8160],[43.9547,4.8190],[43.9527,4.8170]],
+    [[43.9480,4.8110],[43.9500,4.8130],[43.9490,4.8160],[43.9468,4.8140]],
+    [[43.9440,4.8030],[43.9462,4.8050],[43.9452,4.8080],[43.9430,4.8060]],
+    [[43.9470,4.7970],[43.9490,4.7990],[43.9480,4.8020],[43.9460,4.8000]],
+    [[43.9530,4.7935],[43.9550,4.7950],[43.9540,4.7980],[43.9520,4.7960]]
   ];
+  blocks.forEach((b,i)=>add(b,{color:'#8a6849',weight:1,fillColor:'#b68a59',fillOpacity:.34},1100+i*25,1450+i*35));
 
-  // Emprise de travail centrée sur Avignon. Les cartes historiques sont
-  // des documents réels : aucune géométrie de ville n'est dessinée par ChronoMap.
-  const bounds=[[43.905,4.735],[43.985,4.875]];
+  // XVIIIe : fossés remblayés, promenades et quais.
+  const oulle=[[43.9440,4.7930],[43.9455,4.7890],[43.9480,4.7865],[43.9510,4.7855],[43.9540,4.7860]];
+  add(oulle,{color:'#47734c',weight:2,fillColor:'#5d8a58',fillOpacity:.32},1675,1750,'line');
+  const quay=[[43.9490,4.7820],[43.9515,4.7830],[43.9540,4.7845],[43.9570,4.7870],[43.9600,4.7900]];
+  add(quay,{color:'#6d7075',weight:3,opacity:.85},1700,1800,'line');
 
-  // Google Maps reste la base de référence. Sa visibilité augmente à mesure
-  // que l'on approche de l'époque contemporaine.
-  const modernOpacity=y<1200?.10:y<1500?.14:y<1700?.20:y<1800?.28:y<1870?.40:y<1950?.58:y<2000?.78:1;
-  [streetLayer,reliefLayer,satelliteLayer].forEach(l=>l.setOpacity(modernOpacity));
+  // XIXe : chemin de fer et retournement de l'axe urbain vers le sud.
+  const rail=[[43.9390,4.7930],[43.9360,4.8000],[43.9330,4.8080],[43.9310,4.8170],[43.9300,4.8270]];
+  add(rail,{color:'#3f3f46',weight:5,opacity:.95,dashArray:'7 5'},1849,1854,'line');
+  const rep=[[43.9305,4.8070],[43.9340,4.8075],[43.9380,4.8070],[43.9420,4.8060],[43.9460,4.8065],[43.9500,4.8068],[43.9540,4.8072],[43.9580,4.8075]];
+  add(rep,{color:'#a34e32',weight:4,opacity:.95},1856,1867,'line');
+  const thiers=[[43.9340,4.8130],[43.9380,4.8120],[43.9420,4.8110],[43.9460,4.8100],[43.9500,4.8090],[43.9530,4.8085]];
+  add(thiers,{color:'#a34e32',weight:3,opacity:.9},1869,1877,'line');
 
-  const active=archiveMaps.find(a=>y>=a.from&&y<=a.to);
-  const candidates=archiveMaps.filter(a=>y>=a.from-25&&y<=a.to+25);
-  candidates.forEach(a=>{
-    const tin=phase(a.from-25,a.from+25);
-    const tout=phase(a.to-25,a.to+25);
-    const opacity=clamp(Math.min(tin,1-tout)*0.82,0,0.82);
-    if(opacity<=0.01)return;
-    L.imageOverlay(a.url,bounds,{opacity,pane:'historicalPane',interactive:false,crossOrigin:true}).addTo(historicalVectorLayer);
-  });
+  // XIXe–XXe : croissance extra-muros en nappes urbaines irrégulières.
+  const extra1=[[43.9300,4.8000],[43.9340,4.7960],[43.9380,4.7940],[43.9420,4.7930],[43.9450,4.7950],[43.9440,4.8010],[43.9390,4.8040],[43.9340,4.8070]];
+  const extra2=[[43.9250,4.8120],[43.9290,4.8080],[43.9340,4.8090],[43.9390,4.8130],[43.9430,4.8170],[43.9410,4.8240],[43.9350,4.8220],[43.9290,4.8190]];
+  add(extra1,{color:'#68765b',weight:1.2,fillColor:'#83956e',fillOpacity:.24},1880,1950);
+  add(extra2,{color:'#68765b',weight:1.2,fillColor:'#83956e',fillOpacity:.24},1950,2000);
+
+  // XXe–XXIe : densification contemporaine, sans masquer le fond satellite/relief.
+  const modern1=[[43.9220,4.7950],[43.9280,4.7900],[43.9350,4.7900],[43.9420,4.7880],[43.9480,4.7910],[43.9540,4.7850],[43.9600,4.7900],[43.9660,4.8000],[43.9700,4.8120],[43.9650,4.8240],[43.9550,4.8300],[43.9440,4.8270],[43.9340,4.8230],[43.9260,4.8180]];
+  add(modern1,{color:'#4f6f59',weight:1.3,fillColor:'#718b6d',fillOpacity:.18},1950,2026);
+
+  // Ouvrages anti-crues modernes : visibles comme transformation du paysage fluvial.
+  const floodDefense=[[43.9480,4.7805],[43.9510,4.7820],[43.9540,4.7840],[43.9580,4.7870],[43.9620,4.7900]];
+  add(floodDefense,{color:'#477b8a',weight:4,opacity:.8},1956,1970,'line');
+
+  // Petits bâtiments irréguliers contemporains : croissance progressive du tissu.
+  const contemporaryBlocks=[
+    [[43.928,4.801],[43.930,4.798],[43.932,4.800],[43.931,4.803],[43.929,4.804]],
+    [[43.936,4.817],[43.939,4.816],[43.940,4.819],[43.938,4.821],[43.935,4.820]],
+    [[43.943,4.823],[43.946,4.821],[43.948,4.824],[43.946,4.827],[43.943,4.826]],
+    [[43.952,4.823],[43.955,4.821],[43.958,4.824],[43.957,4.827],[43.954,4.827]],
+    [[43.962,4.818],[43.965,4.816],[43.968,4.819],[43.967,4.822],[43.964,4.822]]
+  ];
+  contemporaryBlocks.forEach((b,i)=>add(b,{color:'#53645a',weight:.8,fillColor:'#9aa28d',fillOpacity:.22},1970+i*8,2000+i*5));
+
+  // Le fond moderne reste stable : aucune variation de netteté artificielle.
+  [streetLayer,reliefLayer,satelliteLayer].forEach(l=>l.setOpacity(1));
+
+  const active=[];
+  if(y>=-3000)active.push('premiers peuplements');
+  if(y>=-200)active.push('cité antique');
+  if(y>=1000)active.push('extension médiévale');
+  if(y>=1177)active.push('Pont Saint-Bénézet');
+  if(y>=1335)active.push('Palais des Papes');
+  if(y>=1355)active.push('grande enceinte');
+  if(y>=1675)active.push('promenades et quais');
+  if(y>=1849)active.push('chemin de fer');
+  if(y>=1856)active.push('rue de la République');
+  if(y>=1869)active.push('rue Thiers');
+  if(y>=1880)active.push('extension extra-muros');
+  if(y>=1956)active.push('protections contre les crues');
+  if(y>=1970)active.push('densification contemporaine');
 
   const mapInfo=$('mapHistoryInfo');
   if(mapInfo){
-    mapInfo.innerHTML=active
-      ?'🗺️ <b>'+active.label+'</b><span>Document historique réel superposé à Google Maps.</span>'
-      :'🗺️ <b>Google Maps</b><span>Référence cartographique contemporaine.</span>';
+    mapInfo.innerHTML='<div class="history-map-kicker">Carte synchronisée avec la frise</div><strong>'+fmt(y)+'</strong><span>'+active.slice(-4).join(' · ')+'</span>';
+    mapInfo.classList.remove('new'); void mapInfo.offsetWidth; mapInfo.classList.add('new');
   }
   const badge=$('mapTimeBadge');
-  if(badge)badge.innerHTML=active?'🗺️ '+active.label+' · '+fmt(y):'🗺️ Google Maps · '+fmt(y);
+  if(badge)badge.innerHTML='🏙️ '+fmt(y)+' · '+active.slice(-2).join(' · ');
 }
 
 function escapeSvgText(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
@@ -657,7 +745,7 @@ try{
 }catch(e){}
 
 if('serviceWorker' in navigator){
-  navigator.serviceWorker.register('./sw.js?v=15-8').then(reg=>reg.update()).catch(()=>{});
+  navigator.serviceWorker.register('./sw.js?v=15-5-5').then(reg=>reg.update()).catch(()=>{});
 }
 
 Promise.all([
