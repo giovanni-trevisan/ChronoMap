@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#07101f">
 <link rel="manifest" href="manifest.webmanifest">
-<title>ChronoMap V15.7.1 — Paysage historique évolutif</title>
+<title>ChronoMap V15.8 — Cartes historiques réelles</title>
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
 <style>
 :root{--bg:#07101f;--p:#0d1c30;--line:#294563;--text:#f4f7fb;--muted:#9db0c8;--gold:#f5b83d;--blue:#4b8cff}
@@ -247,57 +247,51 @@ function renderHistoricalMap(p,y){
   historicalVectorLayer.clearLayers();
   if(!p)return;
 
-  /* V15.8 — VRAIES CARTES D'ARCHIVES, superposées à la carte Google.
-     Plus aucun polygone/carré/route synthétique n'est dessiné ici.
-     Les documents historiques d'Avignon proviennent de l'exposition
-     Cartes & Plans des Archives municipales d'Avignon. */
+  /* V15.8 — documents cartographiques historiques réels.
+     Aucun polygone, carré, cercle ou route synthétique n'est généré.
+     Les documents sont de véritables plans/cartes historiques d'Avignon,
+     affichés au-dessus de Google Maps et remplacés progressivement selon la date. */
   const clamp=(v,a=0,b=1)=>Math.max(a,Math.min(b,v));
   const ease=t=>t*t*(3-2*t);
   const phase=(from,to)=>to<=from?(y>=from?1:0):ease(clamp((y-from)/(to-from)));
+  const file=f=>'https://commons.wikimedia.org/wiki/Special:Redirect/file/'+encodeURIComponent(f).replace(/%2F/g,'/');
 
-  // Images de plans/cartes réellement publiées par les Archives d'Avignon.
-  // Elles sont utilisées comme documents historiques, et non comme dessin.
   const archiveMaps=[
-    {from:1200,to:1350,url:'https://static.wixstatic.com/media/777f51_41a294ef79274a649d4b612f292d2902~mv2.jpg/v1/fit/w_1600%2Ch_1100%2Cq_92%2Cenc_avif%2Cquality_auto/777f51_41a294ef79274a649d4b612f292d2902~mv2.jpg',label:'Plan historique — XIIIe siècle'},
-    {from:1350,to:1600,url:'https://static.wixstatic.com/media/777f51_e558efa989a5483b833b9fbd72169e12~mv2.jpg/v1/fit/w_1600%2Ch_1100%2Cq_92%2Cenc_avif%2Cquality_auto/777f51_e558efa989a5483b833b9fbd72169e12~mv2.jpg',label:'Plan historique — XVIe–XVIIIe siècles'},
-    {from:1600,to:1799,url:'https://static.wixstatic.com/media/777f51_e558efa989a5483b833b9fbd72169e12~mv2.jpg/v1/fit/w_1600%2Ch_1100%2Cq_92%2Cenc_avif%2Cquality_auto/777f51_e558efa989a5483b833b9fbd72169e12~mv2.jpg',label:'Plan historique — XVIIIe siècle'},
-    {from:1800,to:1850,url:'https://static.wixstatic.com/media/777f51_a57865aca4d24b8c87122f13b0d09cae~mv2.jpg/v1/fit/w_1600%2Ch_1100%2Cq_92%2Cenc_avif%2Cquality_auto/777f51_a57865aca4d24b8c87122f13b0d09cae~mv2.jpg',label:'Plan historique — 1800–1850'},
-    {from:1850,to:1900,url:'https://static.wixstatic.com/media/777f51_a57865aca4d24b8c87122f13b0d09cae~mv2.jpg/v1/fit/w_1600%2Ch_1100%2Cq_92%2Cenc_avif%2Cquality_auto/777f51_a57865aca4d24b8c87122f13b0d09cae~mv2.jpg',label:'Plan historique — 1850–1900'},
-    {from:1900,to:1950,url:'https://static.wixstatic.com/media/777f51_ff71a7af83794df498db8dc1b9d5f414~mv2.jpg/v1/fit/w_1600%2Ch_1100%2Cq_92%2Cenc_avif%2Cquality_auto/777f51_ff71a7af83794df498db8dc1b9d5f414~mv2.jpg',label:'Plan / vue historique — 1900–1950'},
-    {from:1950,to:2000,url:'https://static.wixstatic.com/media/777f51_adb16ead93364c76987f6ba245a22652~mv2.jpg/v1/fit/w_1600%2Ch_1100%2Cq_92%2Cenc_avif%2Cquality_auto/777f51_adb16ead93364c76987f6ba245a22652~mv2.jpg',label:'Vue aérienne / plan — 1950–2000'}
+    {from:1200,to:1500,url:file("Enceintes d'Avignon Viollet-le-Duc.jpg"),label:'Plan des enceintes médiévales — XIIIe–XIVe siècles'},
+    {from:1500,to:1600,url:file('Avignon - Plan aux personnages (1572).JPG'),label:'Plan aux Personnages — 1572'},
+    {from:1600,to:1700,url:file('Civitatis Avenionis omnimq 1618 map of Avignon.jpg'),label:'Plan d’Avignon — 1618'},
+    {from:1700,to:1800,url:file("Plan de la ville d'Avignon au milieu du XVIII° siècle.jpg"),label:'Plan géométrique d’Avignon — XVIIIe siècle'},
+    {from:1800,to:1870,url:file("Carte d'État-major de la France, Feuille Avignon N.E.jpg"),label:'Carte d’État-major — 1866'},
+    {from:1870,to:1950,url:file("Plan d'Avignon - btv1b53084943g.jpg"),label:'Plan d’Avignon — XIXe siècle'},
   ];
 
-  // Emprise volontairement large autour d'Avignon pour conserver l'image entière.
-  // L'utilisateur peut continuer à zoomer/panoramiquer avec la carte Google dessous.
-  const bounds=[[43.915,4.765],[43.980,4.850]];
+  // Emprise de travail centrée sur Avignon. Les cartes historiques sont
+  // des documents réels : aucune géométrie de ville n'est dessinée par ChronoMap.
+  const bounds=[[43.905,4.735],[43.985,4.875]];
 
-  // Avant les premiers plans conservés, on laisse la carte Google très discrète.
-  const modernOpacity=y<1200?.05:y<1800?.18:y<1900?.30:y<1950?.48:y<2000?.72:1;
+  // Google Maps reste la base de référence. Sa visibilité augmente à mesure
+  // que l'on approche de l'époque contemporaine.
+  const modernOpacity=y<1200?.10:y<1500?.14:y<1700?.20:y<1800?.28:y<1870?.40:y<1950?.58:y<2000?.78:1;
   [streetLayer,reliefLayer,satelliteLayer].forEach(l=>l.setOpacity(modernOpacity));
+
+  const active=archiveMaps.find(a=>y>=a.from&&y<=a.to);
+  const candidates=archiveMaps.filter(a=>y>=a.from-25&&y<=a.to+25);
+  candidates.forEach(a=>{
+    const tin=phase(a.from-25,a.from+25);
+    const tout=phase(a.to-25,a.to+25);
+    const opacity=clamp(Math.min(tin,1-tout)*0.82,0,0.82);
+    if(opacity<=0.01)return;
+    L.imageOverlay(a.url,bounds,{opacity,pane:'historicalPane',interactive:false,crossOrigin:true}).addTo(historicalVectorLayer);
+  });
 
   const mapInfo=$('mapHistoryInfo');
   if(mapInfo){
-    if(y<1200) mapInfo.innerHTML='🗺️ <b>Paysage ancien</b> — les plans urbains conservés apparaissent à partir du XIIIe siècle.';
-    else mapInfo.innerHTML='🗺️ <b>Carte d’archives</b> — '+(archiveMaps.find(a=>y>=a.from&&y<=a.to)?.label||'évolution historique')+' · superposée à Google Maps';
+    mapInfo.innerHTML=active
+      ?'🗺️ <b>'+active.label+'</b><span>Document historique réel superposé à Google Maps.</span>'
+      :'🗺️ <b>Google Maps</b><span>Référence cartographique contemporaine.</span>';
   }
-
-  // Un seul document historique à la fois, avec fondu à la transition.
-  const candidates=archiveMaps.filter(a=>y>=a.from-20&&y<=a.to+20);
-  candidates.forEach(a=>{
-    const tIn=phase(a.from-20,a.from+20);
-    const tOut=phase(a.to-20,a.to+20);
-    const opacity=clamp(Math.min(tIn,1-tOut)*0.90,0,0.90);
-    if(opacity<=0.01)return;
-    const overlay=L.imageOverlay(a.url,bounds,{opacity,pane:'historicalPane',interactive:false,crossOrigin:true});
-    overlay.addTo(historicalVectorLayer);
-  });
-
-  // Le document historique doit prendre le dessus visuellement, sans dessin artificiel.
   const badge=$('mapTimeBadge');
-  if(badge){
-    const active=archiveMaps.find(a=>y>=a.from&&y<=a.to);
-    badge.innerHTML=active?('🗺️ '+active.label+' · '+fmt(y)):'🗺️ Google Maps · '+fmt(y);
-  }
+  if(badge)badge.innerHTML=active?'🗺️ '+active.label+' · '+fmt(y):'🗺️ Google Maps · '+fmt(y);
 }
 
 function escapeSvgText(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
@@ -663,7 +657,7 @@ try{
 }catch(e){}
 
 if('serviceWorker' in navigator){
-  navigator.serviceWorker.register('./sw.js?v=15-5-5').then(reg=>reg.update()).catch(()=>{});
+  navigator.serviceWorker.register('./sw.js?v=15-8').then(reg=>reg.update()).catch(()=>{});
 }
 
 Promise.all([
