@@ -161,9 +161,9 @@ const map=L.map('map',{zoomControl:true,scrollWheelZoom:true,touchZoom:true,doub
 map.createPane('historicalPane');
 map.getPane('historicalPane').style.zIndex=650;
 map.getPane('historicalPane').style.pointerEvents='auto';
-const streetLayer=L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{attribution:'© OpenStreetMap contributors'});
-const reliefLayer=L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png',{maxZoom:17,attribution:'© OpenTopoMap contributors'});
-const satelliteLayer=L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',{maxZoom:19,attribution:'Tiles © Esri'});
+const streetLayer=L.tileLayer('https://mt1.google.com/vt/lyrs=m&x={x}&y={y}&z={z}',{maxZoom:20,attribution:'© Google'});
+const reliefLayer=L.tileLayer('https://mt1.google.com/vt/lyrs=p&x={x}&y={y}&z={z}',{maxZoom:20,attribution:'© Google'});
+const satelliteLayer=L.tileLayer('https://mt1.google.com/vt/lyrs=s&x={x}&y={y}&z={z}',{maxZoom:20,attribution:'© Google'});
 streetLayer.addTo(map);
 let currentMapMode='street';
 function setMapMode(mode){
@@ -247,171 +247,58 @@ function renderHistoricalMap(p,y){
   historicalVectorLayer.clearLayers();
   if(!p)return;
 
-  /* V15.7.1 — évolution paysagère réelle par états successifs.
-     On ne dessine plus de cercles ni de halos autour des dates.
-     La frise commande un paysage : Rhône, île, emprise urbaine, îlots,
-     rues, portes, remparts, pont, palais, rail et extensions.
-     Chaque élément reste visible après sa construction. */
+  /* V15.8 — VRAIES CARTES D'ARCHIVES, superposées à la carte Google.
+     Plus aucun polygone/carré/route synthétique n'est dessiné ici.
+     Les documents historiques d'Avignon proviennent de l'exposition
+     Cartes & Plans des Archives municipales d'Avignon. */
   const clamp=(v,a=0,b=1)=>Math.max(a,Math.min(b,v));
   const ease=t=>t*t*(3-2*t);
   const phase=(from,to)=>to<=from?(y>=from?1:0):ease(clamp((y-from)/(to-from)));
-  const add=(layer)=>historicalVectorLayer.addLayer(layer);
 
-  // Le fond moderne disparaît vraiment dans le passé : la couche historique
-  // devient la carte principale au lieu d'être une simple surcouche.
-  const baseOpacity = y < 1500 ? 0.0 : y < 1800 ? 0.04 : y < 1900 ? 0.10 + .20*((y-1800)/100) : y < 1950 ? .30 + .25*((y-1900)/50) : y < 2000 ? .55 + .20*((y-1950)/50) : .75 + .25*((y-2000)/26);
-  [streetLayer,reliefLayer,satelliteLayer].forEach(l=>l.setOpacity(clamp(baseOpacity,0,1)));
-
-  const rock=[
-    [43.9577,4.8017],[43.9592,4.8040],[43.9584,4.8070],[43.9560,4.8082],
-    [43.9543,4.8065],[43.9538,4.8032],[43.9550,4.8005]
-  ];
-  const river=[
-    [43.965,4.785],[43.962,4.792],[43.958,4.798],[43.954,4.803],
-    [43.950,4.807],[43.946,4.812],[43.940,4.820],[43.935,4.828],
-    [43.933,4.834],[43.938,4.826],[43.944,4.817],[43.949,4.810],
-    [43.954,4.806],[43.959,4.801],[43.963,4.795],[43.967,4.789]
-  ];
-  // Paysage physique permanent : le Rhône reste présent mais son rôle visuel
-  // varie avec la période.
-  add(L.polygon([river],{pane:'historicalPane',stroke:false,fillColor:'#6f9eae',fillOpacity:y<1800?.72:.38,interactive:false,className:'history-landscape-rhone'}));
-  add(L.polygon([rock],{pane:'historicalPane',color:'#665944',weight:1,fillColor:'#8f856c',fillOpacity:y<0?.82:.48,interactive:false,className:'history-landscape-rock'}));
-
-  // Île de la Barthelasse : forme de paysage, pas un marqueur.
-  const barthelasse=[[43.956,4.789],[43.953,4.796],[43.949,4.801],[43.944,4.808],[43.940,4.817],[43.943,4.821],[43.948,4.814],[43.953,4.807],[43.958,4.797]];
-  add(L.polygon([barthelasse],{pane:'historicalPane',color:'#70805f',weight:.7,fillColor:'#7f956e',fillOpacity:y<1300?.35:.18,interactive:false,className:'history-landscape-island'}));
-
-  // Noyaux urbains cumulés. Ces emprises sont volontairement différentes :
-  // la silhouette de la ville change avec le temps au lieu de grossir un cercle.
-  const cityStates=[
-    {from:-200,to:300,ring:[[43.9570,4.8025],[43.9572,4.8080],[43.9538,4.8125],[43.9488,4.8110],[43.9460,4.8060],[43.9490,4.8000],[43.9538,4.7988]],fill:'#a77a4f'},
-    {from:300,to:900,ring:[[43.9575,4.8015],[43.9580,4.8085],[43.9540,4.8140],[43.9478,4.8135],[43.9450,4.8070],[43.9475,4.7990],[43.9538,4.7975]],fill:'#9b7149'},
-    {from:900,to:1177,ring:[[43.9590,4.7995],[43.9590,4.8100],[43.9545,4.8155],[43.9460,4.8150],[43.9430,4.8080],[43.9450,4.7990],[43.9515,4.7955]],fill:'#956b46'},
-    {from:1177,to:1335,ring:[[43.9600,4.7985],[43.9600,4.8115],[43.9550,4.8170],[43.9450,4.8170],[43.9415,4.8080],[43.9440,4.7975],[43.9520,4.7940]],fill:'#8f6542'},
-    {from:1335,to:1377,ring:[[43.9610,4.7975],[43.9615,4.8125],[43.9560,4.8190],[43.9440,4.8190],[43.9400,4.8090],[43.9425,4.7960],[43.9525,4.7925]],fill:'#855d3e'},
-    {from:1377,to:1790,ring:[[43.9610,4.7970],[43.9620,4.8130],[43.9565,4.8200],[43.9430,4.8200],[43.9395,4.8090],[43.9420,4.7955],[43.9530,4.7920]],fill:'#806044'},
-    {from:1790,to:1856,ring:[[43.9620,4.7965],[43.9630,4.8140],[43.9565,4.8210],[43.9420,4.8210],[43.9385,4.8080],[43.9410,4.7945],[43.9530,4.7915]],fill:'#77604c'},
-    {from:1856,to:1900,ring:[[43.9630,4.7945],[43.9640,4.8160],[43.9580,4.8240],[43.9400,4.8240],[43.9360,4.8090],[43.9390,4.7920],[43.9520,4.7885]],fill:'#6f6257'},
-    {from:1900,to:1950,ring:[[43.9660,4.7920],[43.9670,4.8180],[43.9600,4.8280],[43.9360,4.8290],[43.9300,4.8100],[43.9340,4.7860],[43.9500,4.7830]],fill:'#66605b'},
-    {from:1950,to:1975,ring:[[43.9700,4.7890],[43.9710,4.8210],[43.9630,4.8340],[43.9300,4.8360],[43.9250,4.8110],[43.9300,4.7810],[43.9500,4.7780]],fill:'#5f5b58'},
-    {from:1975,to:2000,ring:[[43.9740,4.7860],[43.9760,4.8240],[43.9660,4.8420],[43.9250,4.8420],[43.9200,4.8120],[43.9260,4.7750],[43.9490,4.7710]],fill:'#595755'},
-    {from:2000,to:2026,ring:[[43.9780,4.7830],[43.9810,4.8280],[43.9700,4.8490],[43.9200,4.8490],[43.9140,4.8120],[43.9220,4.7680],[43.9480,4.7640]],fill:'#535252'}
+  // Images de plans/cartes réellement publiées par les Archives d'Avignon.
+  // Elles sont utilisées comme documents historiques, et non comme dessin.
+  const archiveMaps=[
+    {from:1200,to:1350,url:'https://static.wixstatic.com/media/777f51_41a294ef79274a649d4b612f292d2902~mv2.jpg/v1/fit/w_1600%2Ch_1100%2Cq_92%2Cenc_avif%2Cquality_auto/777f51_41a294ef79274a649d4b612f292d2902~mv2.jpg',label:'Plan historique — XIIIe siècle'},
+    {from:1350,to:1600,url:'https://static.wixstatic.com/media/777f51_e558efa989a5483b833b9fbd72169e12~mv2.jpg/v1/fit/w_1600%2Ch_1100%2Cq_92%2Cenc_avif%2Cquality_auto/777f51_e558efa989a5483b833b9fbd72169e12~mv2.jpg',label:'Plan historique — XVIe–XVIIIe siècles'},
+    {from:1600,to:1799,url:'https://static.wixstatic.com/media/777f51_e558efa989a5483b833b9fbd72169e12~mv2.jpg/v1/fit/w_1600%2Ch_1100%2Cq_92%2Cenc_avif%2Cquality_auto/777f51_e558efa989a5483b833b9fbd72169e12~mv2.jpg',label:'Plan historique — XVIIIe siècle'},
+    {from:1800,to:1850,url:'https://static.wixstatic.com/media/777f51_a57865aca4d24b8c87122f13b0d09cae~mv2.jpg/v1/fit/w_1600%2Ch_1100%2Cq_92%2Cenc_avif%2Cquality_auto/777f51_a57865aca4d24b8c87122f13b0d09cae~mv2.jpg',label:'Plan historique — 1800–1850'},
+    {from:1850,to:1900,url:'https://static.wixstatic.com/media/777f51_a57865aca4d24b8c87122f13b0d09cae~mv2.jpg/v1/fit/w_1600%2Ch_1100%2Cq_92%2Cenc_avif%2Cquality_auto/777f51_a57865aca4d24b8c87122f13b0d09cae~mv2.jpg',label:'Plan historique — 1850–1900'},
+    {from:1900,to:1950,url:'https://static.wixstatic.com/media/777f51_ff71a7af83794df498db8dc1b9d5f414~mv2.jpg/v1/fit/w_1600%2Ch_1100%2Cq_92%2Cenc_avif%2Cquality_auto/777f51_ff71a7af83794df498db8dc1b9d5f414~mv2.jpg',label:'Plan / vue historique — 1900–1950'},
+    {from:1950,to:2000,url:'https://static.wixstatic.com/media/777f51_adb16ead93364c76987f6ba245a22652~mv2.jpg/v1/fit/w_1600%2Ch_1100%2Cq_92%2Cenc_avif%2Cquality_auto/777f51_adb16ead93364c76987f6ba245a22652~mv2.jpg',label:'Vue aérienne / plan — 1950–2000'}
   ];
 
-  function centroid(r){return r.reduce((a,q)=>[a[0]+q[0]/r.length,a[1]+q[1]/r.length],[0,0]);}
-  function growRing(r,t){
-    const c=centroid(r),s=.72+.28*t;
-    return r.map(q=>[c[0]+(q[0]-c[0])*s,c[1]+(q[1]-c[1])*s]);
-  }
-  function inside(pt,r){
-    let z=false;
-    for(let i=0,j=r.length-1;i<r.length;j=i++){
-      const a=r[i],b=r[j];
-      if(((a[1]>pt[1])!==(b[1]>pt[1]))&&(pt[0]<(b[0]-a[0])*(pt[1]-a[1])/((b[1]-a[1])||1e-12)+a[0]))z=!z;
-    }
-    return z;
-  }
-  function drawBlocks(ring,t,index,fill){
-    if(t<.12)return;
-    const minLat=Math.min(...ring.map(q=>q[0])),maxLat=Math.max(...ring.map(q=>q[0]));
-    const minLon=Math.min(...ring.map(q=>q[1])),maxLon=Math.max(...ring.map(q=>q[1]));
-    const cols=Math.min(12,3+index*2),rows=Math.min(10,3+Math.floor(index*1.5));
-    const grow=.45+.55*t;
-    for(let rr=0;rr<rows;rr++)for(let cc=0;cc<cols;cc++){
-      const lat=minLat+(rr+.5)*(maxLat-minLat)/rows;
-      const lon=minLon+(cc+.5)*(maxLon-minLon)/cols;
-      if(!inside([lat,lon],ring))continue;
-      const h=(maxLat-minLat)/rows*.34*grow,w=(maxLon-minLon)/cols*.34*grow;
-      const b=[[lat-h,lon-w],[lat-h,lon+w],[lat+h,lon+w],[lat+h,lon-w]];
-      if(!b.every(q=>inside(q,ring)))continue;
-      add(L.polygon([b],{pane:'historicalPane',color:'#51483e',weight:.35,fillColor:fill,fillOpacity:.48+.18*t,interactive:false,className:'history-building-block'}));
-    }
+  // Emprise volontairement large autour d'Avignon pour conserver l'image entière.
+  // L'utilisateur peut continuer à zoomer/panoramiquer avec la carte Google dessous.
+  const bounds=[[43.915,4.765],[43.980,4.850]];
+
+  // Avant les premiers plans conservés, on laisse la carte Google très discrète.
+  const modernOpacity=y<1200?.05:y<1800?.18:y<1900?.30:y<1950?.48:y<2000?.72:1;
+  [streetLayer,reliefLayer,satelliteLayer].forEach(l=>l.setOpacity(modernOpacity));
+
+  const mapInfo=$('mapHistoryInfo');
+  if(mapInfo){
+    if(y<1200) mapInfo.innerHTML='🗺️ <b>Paysage ancien</b> — les plans urbains conservés apparaissent à partir du XIIIe siècle.';
+    else mapInfo.innerHTML='🗺️ <b>Carte d’archives</b> — '+(archiveMaps.find(a=>y>=a.from&&y<=a.to)?.label||'évolution historique')+' · superposée à Google Maps';
   }
 
-  cityStates.forEach((st,i)=>{
-    const t=phase(st.from,st.to);
-    if(t<=0)return;
-    const ring=growRing(st.ring,t);
-    add(L.polygon([ring],{pane:'historicalPane',color:'#5d5145',weight:1.0,fillColor:st.fill,fillOpacity:.48+.12*t,interactive:false,className:'history-city-fabric'}));
-    drawBlocks(ring,t,i,st.fill);
+  // Un seul document historique à la fois, avec fondu à la transition.
+  const candidates=archiveMaps.filter(a=>y>=a.from-20&&y<=a.to+20);
+  candidates.forEach(a=>{
+    const tIn=phase(a.from-20,a.from+20);
+    const tOut=phase(a.to-20,a.to+20);
+    const opacity=clamp(Math.min(tIn,1-tOut)*0.90,0,0.90);
+    if(opacity<=0.01)return;
+    const overlay=L.imageOverlay(a.url,bounds,{opacity,pane:'historicalPane',interactive:false,crossOrigin:true});
+    overlay.addTo(historicalVectorLayer);
   });
 
-  // Grille de rues : les axes apparaissent au fur et à mesure que la ville s'étend.
-  const roads=[
-    {from:300,to:900,pts:[[43.949,4.801],[43.952,4.805],[43.956,4.808]],w:.00022},
-    {from:900,to:1177,pts:[[43.945,4.801],[43.950,4.805],[43.956,4.810],[43.960,4.812]],w:.00025},
-    {from:1125,to:1335,pts:[[43.944,4.806],[43.950,4.808],[43.956,4.811]],w:.00025},
-    {from:1309,to:1377,pts:[[43.944,4.810],[43.950,4.811],[43.956,4.813],[43.961,4.814]],w:.00030},
-    {from:1856,to:2026,pts:[[43.940,4.806],[43.947,4.807],[43.953,4.808],[43.960,4.809]],w:.00034},
-    {from:1869,to:2026,pts:[[43.958,4.802],[43.953,4.806],[43.948,4.811],[43.942,4.817]],w:.00034},
-    {from:1900,to:2026,pts:[[43.938,4.794],[43.946,4.801],[43.955,4.817],[43.963,4.826]],w:.00030},
-    {from:1950,to:2026,pts:[[43.934,4.783],[43.944,4.795],[43.955,4.812],[43.968,4.832]],w:.00028}
-  ];
-  roads.forEach((r)=>{
-    const t=phase(r.from,r.to); if(t<=0)return;
-    const n=Math.max(2,Math.ceil((r.pts.length-1)*Math.max(.08,t))+1);
-    const pts=r.pts.slice(0,n);
-    const visible=pts.length===r.pts.length?pts:pts.concat([r.pts[Math.min(n,r.pts.length-1)]]);
-    add(L.polyline(visible,{pane:'historicalPane',color:'#d9c7a4',weight:4+4*t,opacity:.78,interactive:false,className:'history-road'}));
-    add(L.polyline(visible,{pane:'historicalPane',color:'#655b50',weight:1+1*t,opacity:.8,interactive:false,className:'history-road-center'}));
-  });
-
-  // Ouvrages historiques : pont, palais et enceinte deviennent des objets du paysage.
-  const bridgePts=[[43.9536,4.7990],[43.9528,4.7930],[43.9520,4.7870],[43.9511,4.7810],[43.9504,4.7760]];
-  const bt=phase(1177,1185);
-  if(bt>0){
-    const n=Math.max(2,Math.ceil((bridgePts.length-1)*bt)+1);
-    add(L.polyline(bridgePts.slice(0,n),{pane:'historicalPane',color:'#655649',weight:8,opacity:.95,interactive:false,className:'history-bridge'}));
-    add(L.polyline(bridgePts.slice(0,n),{pane:'historicalPane',color:'#c7aa7a',weight:4,opacity:.9,interactive:false,className:'history-bridge-top'}));
+  // Le document historique doit prendre le dessus visuellement, sans dessin artificiel.
+  const badge=$('mapTimeBadge');
+  if(badge){
+    const active=archiveMaps.find(a=>y>=a.from&&y<=a.to);
+    badge.innerHTML=active?('🗺️ '+active.label+' · '+fmt(y)):'🗺️ Google Maps · '+fmt(y);
   }
-
-  const palace=[[43.9539,4.8071],[43.9540,4.8094],[43.9528,4.8100],[43.9522,4.8081],[43.9527,4.8069]];
-  const pt=phase(1335,1342);
-  if(pt>0){
-    const r=growRing(palace,pt);
-    add(L.polygon([r],{pane:'historicalPane',color:'#554534',weight:1.4,fillColor:'#c9a15c',fillOpacity:.82,interactive:false,className:'history-palace'}));
-  }
-
-  const walls=[[43.9600,4.7975],[43.9620,4.8060],[43.9580,4.8145],[43.9510,4.8190],[43.9430,4.8150],[43.9395,4.8060],[43.9420,4.7970],[43.9490,4.7925],[43.9560,4.7940]];
-  const wt=phase(1355,1377);
-  if(wt>0){
-    const n=Math.max(2,Math.ceil((walls.length-1)*wt)+1);
-    const vis=walls.slice(0,n);
-    add(L.polyline(vis,{pane:'historicalPane',color:'#5b4435',weight:9,opacity:.92,interactive:false,className:'history-wall'}));
-    add(L.polyline(vis,{pane:'historicalPane',color:'#b58d5d',weight:4,opacity:.9,interactive:false,className:'history-wall-cap'}));
-  }
-
-  // Gare / rail : transformation nette du paysage à partir de 1849.
-  const rail=[[43.938,4.799],[43.943,4.803],[43.949,4.807],[43.956,4.810],[43.963,4.813]];
-  const rt=phase(1849,1854);
-  if(rt>0){
-    add(L.polyline(rail,{pane:'historicalPane',color:'#4b4640',weight:5,opacity:.95,interactive:false,className:'history-rail'}));
-    add(L.polyline(rail,{pane:'historicalPane',color:'#c7b38d',weight:1,opacity:.9,interactive:false,className:'history-rail-line'}));
-  }
-
-  // Eau / crues : ouvrages linéaires et non cercles.
-  const floodLine=[[43.940,4.801],[43.947,4.803],[43.954,4.806],[43.961,4.810]];
-  const ft=phase(1849,1860);
-  if(ft>0)add(L.polyline(floodLine,{pane:'historicalPane',color:'#5c8990',weight:6,opacity:.72,interactive:false,className:'history-flood-defense'}));
-
-  let info=$('mapHistoryInfo');
-  if(!info){info=document.createElement('div');info.id='mapHistoryInfo';info.className='history-map-info';$('map').appendChild(info)}
-  const events=infoScope==='city'?(p.events||[]):[];
-  const past=events.filter(e=>e[0]<=y);
-  const latest=past.length?past[past.length-1]:null;
-  info.innerHTML='<div class="history-map-kicker">🕰️ Paysage d’Avignon — '+escapeSvgText(fmt(y))+'</div><strong>'+(latest?escapeSvgText(latest[1]):'Le paysage avant la ville')+'</strong><span>La frise construit la ville étape par étape : relief → habitat → quartiers → remparts → pont → monuments → rues → rail → extensions.</span>';
-  const infoKey=latest?String(latest[0]):String(y);
-  if(info.dataset.historyKey!==infoKey){info.dataset.historyKey=infoKey;info.classList.remove('new');void info.offsetWidth;info.classList.add('new')}
-
-  let badge=$('mapTimeBadge');
-  if(!badge){badge=document.createElement('div');badge.id='mapTimeBadge';badge.className='history-map-badge';$('map').appendChild(badge)}
-  const state=y<300?'site naturel':y<900?'ville antique':y<1177?'ville médiévale':y<1335?'ville en expansion':y<1377?'ville pontificale':y<1850?'ville intra-muros':y<1900?'ville + rail':y<1950?'extensions modernes':y<1975?'urbanisation':y<2000?'ville contemporaine':'ville actuelle';
-  badge.innerHTML='<b>🗺️ '+escapeSvgText(state)+' · '+escapeSvgText(fmt(y))+'</b><br>Le paysage se transforme avec la frise';
 }
-
-map.on('moveend',()=>{
-  if(data){const y=+$('timeline').value,p=place();if(p)renderHistoricalMap(p,y)}
-});
 
 function escapeSvgText(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
 function lessonPhotoFor(title,year){
