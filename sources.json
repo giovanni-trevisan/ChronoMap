@@ -96,5 +96,32 @@
       "title": "Ville d’Avignon — Les remparts, jadis un lieu de vie foisonnant",
       "url": "https://www.avignon.fr/les-remparts-jadis-un-lieu-de-vie-foisonnant"
     }
+  ],
+  "map_evolution_sources": [
+    {
+      "name": "Archives municipales d’Avignon — Cartes & Plans",
+      "url": "https://www.expositions-archives.avignon.fr/cartes-et-plans",
+      "use": "Plans historiques du XVIe au XXIe siècle"
+    },
+    {
+      "name": "IGN Remonter le Temps",
+      "url": "https://remonterletemps.ign.fr/faq",
+      "use": "Cartes anciennes et photographies aériennes historiques"
+    },
+    {
+      "name": "IGN — SCAN Etat-Major 40k",
+      "url": "https://www.data.gouv.fr/datasets/scan-etat-major-r-40k-1",
+      "use": "Cartographie 1825–1889"
+    },
+    {
+      "name": "IGN — BD ORTHO Historique",
+      "url": "https://www.data.gouv.fr/datasets/bd-ortho-r-historique",
+      "use": "Orthophotographies historiques 1950–1995"
+    },
+    {
+      "name": "Copernicus GHSL",
+      "url": "https://human-settlement.emergency.copernicus.eu/ghs_buS2023.php",
+      "use": "Evolution du bâti 1975–2030"
+    }
   ]
 }

@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#07101f">
 <link rel="manifest" href="manifest.webmanifest">
-<title>ChronoMap V16 — Carte réellement évolutive</title>
+<title>ChronoMap V17 — Carte réellement évolutive</title>
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
 <style>
 :root{--bg:#07101f;--p:#0d1c30;--line:#294563;--text:#f4f7fb;--muted:#9db0c8;--gold:#f5b83d;--blue:#4b8cff}
@@ -90,7 +90,7 @@ input,button{font:inherit;border-radius:10px;border:1px solid var(--line);paddin
 
 /* V13.3 — interface tactile + fiche immersive */
 .panel{touch-action:none;user-select:none}.panel-head{cursor:grab}.panel.dragging .panel-head{cursor:grabbing}.panel .panel-tip,.panel .badges,.panel #desc{display:none!important}.date-link{justify-content:center;min-height:42px;margin:5px 0}.date-link b{min-width:0!important;font-size:15px!important}.date-link span{display:none!important}
-.history-sheet{background:linear-gradient(180deg,#081526,#0b1c31);padding:18px 12px 28px}.date-hero{font-size:42px;line-height:1;font-weight:950;color:#f5b83d;text-shadow:0 4px 18px #f5b83d33}.history-title-row h1{margin:4px 0 0}.playful-strip{display:flex;gap:6px;overflow:auto;margin:10px 0}.story-pill{background:#17304e;border:1px solid #315c91;border-radius:999px;padding:7px 10px;font-size:10px;white-space:nowrap}.summary-card{position:relative;overflow:hidden}.story-icon{font-size:24px;margin-bottom:3px}.summary-card h2{font-size:18px}.summary-card p{font-size:13px;line-height:1.65}.map-time-layer{pointer-events:none}.history-map-badge{position:absolute;z-index:900;left:10px;bottom:10px;background:#07101fe8;border:1px solid #38506e;border-radius:10px;padding:7px 9px;color:#fff;font-size:10px;backdrop-filter:blur(6px);max-width:min(360px,calc(100% - 20px));line-height:1.35}.history-map-info{position:absolute;z-index:900;right:10px;top:10px;width:min(300px,calc(100% - 20px));background:#07101fe8;border:1px solid #38506e;border-radius:14px;padding:9px 11px;color:#fff;backdrop-filter:blur(8px);box-shadow:0 8px 24px #0006;pointer-events:none}.history-map-info .history-map-kicker{font-size:9px;text-transform:uppercase;letter-spacing:.5px;color:#f5b83d;font-weight:950}.history-map-info strong{display:block;font-size:12px;margin-top:2px}.history-map-info span{display:block;font-size:10px;color:#dce8f5;margin-top:3px;line-height:1.35}.history-map-info.new{animation:historyPulse .65s ease-out}@keyframes historyPulse{0%{transform:scale(.94);opacity:.25}100%{transform:scale(1);opacity:1}}.history-map-feature{filter:drop-shadow(0 2px 3px rgba(0,0,0,.55))}.history-map-feature-new{stroke-dashoffset:0}.leaflet-pane.leaflet-historicalPane{z-index:650}.history-map-feature-new{animation:featurePulse 1.1s ease-out}@keyframes featurePulse{0%{opacity:.25}35%{opacity:1}100%{opacity:1}}
+.history-sheet{background:linear-gradient(180deg,#081526,#0b1c31);padding:18px 12px 28px}.date-hero{font-size:42px;line-height:1;font-weight:950;color:#f5b83d;text-shadow:0 4px 18px #f5b83d33}.history-title-row h1{margin:4px 0 0}.playful-strip{display:flex;gap:6px;overflow:auto;margin:10px 0}.story-pill{background:#17304e;border:1px solid #315c91;border-radius:999px;padding:7px 10px;font-size:10px;white-space:nowrap}.summary-card{position:relative;overflow:hidden}.story-icon{font-size:24px;margin-bottom:3px}.summary-card h2{font-size:18px}.summary-card p{font-size:13px;line-height:1.65}.map-time-layer{pointer-events:none}.history-map-badge{position:absolute;z-index:900;left:10px;bottom:10px;background:#07101fe8;border:1px solid #38506e;border-radius:10px;padding:7px 9px;color:#fff;font-size:10px;backdrop-filter:blur(6px);max-width:min(360px,calc(100% - 20px));line-height:1.35}.history-map-info{position:absolute;z-index:900;right:10px;top:10px;width:min(300px,calc(100% - 20px));background:#07101fe8;border:1px solid #38506e;border-radius:14px;padding:9px 11px;color:#fff;backdrop-filter:blur(8px);box-shadow:0 8px 24px #0006;pointer-events:none}.history-map-info .history-map-kicker{font-size:9px;text-transform:uppercase;letter-spacing:.5px;color:#f5b83d;font-weight:950}.history-map-info strong{display:block;font-size:12px;margin-top:2px}.history-map-info span{display:block;font-size:10px;color:#dce8f5;margin-top:3px;line-height:1.35}.history-map-info.new{animation:historyPulse .65s ease-out}@keyframes historyPulse{0%{transform:scale(.94);opacity:.25}100%{transform:scale(1);opacity:1}}.history-map-feature{filter:drop-shadow(0 2px 3px rgba(0,0,0,.55))}.history-map-feature-new{stroke-dashoffset:0}.leaflet-pane.leaflet-historicalPane{z-index:650}.leaflet-pane.leaflet-historicalBasePane{z-index:450}.historical-source-label{position:absolute;left:10px;top:10px;z-index:800;background:#07101fe8;color:#fff;border:1px solid #38506e;border-radius:12px;padding:7px 10px;font-size:10px;line-height:1.3;max-width:280px;pointer-events:none}.historical-source-label b{color:#f5b83d}.history-nature-veil{pointer-events:none}.history-map-feature-new{animation:featurePulse 1.1s ease-out}@keyframes featurePulse{0%{opacity:.25}35%{opacity:1}100%{opacity:1}}
 .lesson{margin-top:10px;border-radius:18px;overflow:hidden;background:#0b1a2d;border:1px solid #294563}.lesson-img{width:100%;height:190px;object-fit:cover;display:block;background:#142942}.lesson-placeholder{height:190px;display:flex;align-items:center;justify-content:center;font-size:58px;background:#142942}.lesson-body{padding:13px}.lesson-kicker{font-size:10px;color:#f5b83d;font-weight:900;text-transform:uppercase}.lesson h2{margin:4px 0 7px;font-size:20px}.lesson p{font-size:12px;line-height:1.55;color:#dbe6f1;margin:7px 0}.lesson-card{margin-top:9px;padding:10px;border-radius:13px;background:#10243a}.lesson-card b{display:block;color:#f5b83d;font-size:10px;margin-bottom:3px}.lesson-challenge{margin-top:10px;padding:10px;border-radius:13px;background:#17304e;font-size:11px}.lesson-credit{font-size:8px!important;color:#8498ae!important;margin-top:5px!important}
 
 @media(max-width:600px){.date-hero{font-size:36px}.history-sheet{padding:14px 9px 24px}}
@@ -134,7 +134,7 @@ input,button{font:inherit;border-radius:10px;border:1px solid var(--line);paddin
 </style>
 </head>
 <body>
-<header><div><div class="brand">🌍 Chrono<span>Map</span> <small>V15</small></div><small>La machine à remonter le temps géographique</small></div><button id="install" class="install">Installer</button></header>
+<header><div><div class="brand">🌍 Chrono<span>Map</span> <small>V17</small></div><small>La machine à remonter le temps géographique</small></div><button id="install" class="install">Installer</button></header>
 <section class="top-menus" aria-label="Navigation principale">
   <div class="top-menu"><label for="versionSelect">Version</label><select id="versionSelect"><option value="public">🌍 Public</option><option value="famille">👨‍👩‍👧‍👦 Famille</option><option value="ecole">🎓 École</option></select></div>
   <div class="top-menu"><label for="scopeSelect">Carte</label><select id="scopeSelect"><option value="city">📍 Ville</option><option value="region">🧭 Région</option><option value="country">🇫🇷 Pays</option><option value="europe">🇪🇺 Europe</option><option value="world">🌍 Monde</option></select></div>
@@ -202,6 +202,49 @@ setMapMode('street');
 let marker=L.marker([43.9493,4.8055]).addTo(map);
 let territoryLayer=L.geoJSON(null,{style:f=>({color:f.properties?.color||'#f5b83d',weight:2,fillOpacity:.12})}).addTo(map);
 let historicalVectorLayer=L.layerGroup([], {pane:'historicalPane'}).addTo(map);
+map.createPane('historicalBasePane');
+map.getPane('historicalBasePane').style.zIndex=450;
+map.getPane('historicalBasePane').style.pointerEvents='none';
+
+const ignTile=(layer,format='image/png',maxZoom=18)=>L.tileLayer('https://data.geopf.fr/wmts?layer='+layer+'&style=normal&tilematrixset=PM&Service=WMTS&Request=GetTile&Version=1.0.0&Format='+format+'&TileMatrix={z}&TileCol={x}&TileRow={y}',{maxZoom,opacity:0,attribution:'© IGN / Geoportail',pane:'historicalBasePane'});
+const historicalSources={
+  cassini:ignTile('BNF-IGNF_GEOGRAPHICALGRIDSYSTEMS.CASSINI','image/png',14),
+  etat:ignTile('GEOGRAPHICALGRIDSYSTEMS.ETATMAJOR40','image/jpeg',18),
+  ortho50:ignTile('ORTHOIMAGERY.ORTHOPHOTOS.1950-1965','image/png',18),
+  ortho65:ignTile('ORTHOIMAGERY.ORTHOPHOTOS.1965-1980','image/png',18),
+  ortho80:ignTile('ORTHOIMAGERY.ORTHOPHOTOS.1980-1995','image/png',18),
+  ortho00:ignTile('ORTHOIMAGERY.ORTHOPHOTOS2000-2005','image/jpeg',18)
+};
+Object.values(historicalSources).forEach(l=>l.addTo(map));
+const historySourceLabel=L.DomUtil.create('div','historical-source-label');
+historySourceLabel.innerHTML='<b>Source historique</b><br><span id="historySourceText">Données géographiques actuelles</span>';
+map.getContainer().appendChild(historySourceLabel);
+
+function setHistoricalSource(y){
+  Object.values(historicalSources).forEach(l=>l.setOpacity(0));
+  let source='Données géographiques actuelles';
+  let active=null;
+  if(y<1756){
+    source='Reconstruction historique avant 1756 · archives et géographie physique';
+  }else if(y<1825){active=historicalSources.cassini;source='Carte de Cassini · XVIIIe siècle';}
+  else if(y<1900){active=historicalSources.etat;source='Carte d’État-Major · 1825–1889';}
+  else if(y<1950){active=historicalSources.etat;source='État-Major · complétée jusqu’à 1889 · transition vers photographie aérienne';}
+  else if(y<1965){active=historicalSources.ortho50;source='Photographie aérienne IGN · 1950–1965';}
+  else if(y<1980){active=historicalSources.ortho65;source='Photographie aérienne IGN · 1965–1980';}
+  else if(y<1995){active=historicalSources.ortho80;source='Photographie aérienne IGN · 1980–1995';}
+  else if(y<2005){active=historicalSources.ortho00;source='Photographie aérienne IGN · 2000–2005';}
+  if(active){
+    let opacity=0.92;
+    if(y>=1950&&y<1965)opacity=.88;
+    if(y>=1965&&y<1980)opacity=.88;
+    if(y>=1980&&y<1995)opacity=.88;
+    if(y>=1995&&y<2005)opacity=.82;
+    active.setOpacity(opacity);
+  }
+  const st=$('historySourceText'); if(st)st.textContent=source;
+  return {source,active};
+}
+
 
 const fmt=y=>y<0?Math.abs(y)+' av. J.-C.':y;
 function place(){
@@ -246,140 +289,95 @@ function centerMapForScope(p,force=false){
 function renderHistoricalMap(p,y){
   historicalVectorLayer.clearLayers();
   if(!p)return;
-
-  /* V16 — RECONSTRUCTION URBAINE TEMPORELLE.
-     La frise pilote une vraie couche historique cumulative : chaque élément
-     apparaît à sa date de construction et les chantiers progressent pendant
-     leur intervalle. Aucune image floutée, aucun fondu de carte d'archive.
-     La couche est commune aux fonds Carte / Relief / Satellite. */
   const clamp=(v,a=0,b=1)=>Math.max(a,Math.min(b,v));
   const smooth=t=>{t=clamp(t);return t*t*(3-2*t)};
   const progress=(from,to)=>to===from?(y>=to?1:0):smooth((y-from)/(to-from));
-  const add=(layer,style,from,to,kind='polygon')=>{
-    const t=progress(from,to);
-    if(t<=0)return;
-    if(kind==='line'){
-      const pts=layer;
-      const n=Math.max(2,Math.floor(1+(pts.length-1)*t));
-      const cut=pts.slice(0,n);
-      if(n<pts.length){
-        const q=pts[n-1], r=pts[n], f=(pts.length-1)*t-(n-1);
-        cut.push([q[0]+(r[0]-q[0])*f,q[1]+(r[1]-q[1])*f]);
-      }
-      L.polyline(cut,{...style,opacity:Math.max(.15,t),pane:'historicalPane',className:'history-map-feature-new'}).addTo(historicalVectorLayer);
-    }else{
-      L.polygon(layer,{...style,fillOpacity:(style.fillOpacity||.25)*Math.max(.2,t),opacity:Math.max(.35,t),pane:'historicalPane',className:'history-map-feature-new'}).addTo(historicalVectorLayer);
-    }
+  const addLine=(pts,style,from,to)=>{
+    const t=progress(from,to); if(t<=0)return;
+    const total=pts.length-1; const pos=total*t; const n=Math.floor(pos);
+    const cut=pts.slice(0,Math.min(n+1,pts.length));
+    if(n<total){const f=pos-n,q=pts[n],r=pts[n+1];cut.push([q[0]+(r[0]-q[0])*f,q[1]+(r[1]-q[1])*f]);}
+    L.polyline(cut,{...style,opacity:Math.max(.2,t),pane:'historicalPane',className:'history-map-feature-new'}).addTo(historicalVectorLayer);
+  };
+  const addPoly=(pts,style,from,to)=>{
+    const t=progress(from,to); if(t<=0)return;
+    L.polygon(pts,{...style,fillOpacity:(style.fillOpacity||.2)*Math.max(.35,t),opacity:Math.max(.35,t),pane:'historicalPane',className:'history-map-feature-new'}).addTo(historicalVectorLayer);
   };
 
-  // Relief / fleuve : le paysage physique reste visible dès les premières dates.
-  const rhone=[[43.957,4.774],[43.953,4.779],[43.949,4.786],[43.945,4.795],[43.941,4.803],[43.937,4.810],[43.933,4.816],[43.929,4.823]];
-  const barthelasse=[[43.971,4.772],[43.960,4.779],[43.949,4.786],[43.938,4.796],[43.927,4.808],[43.916,4.821],[43.909,4.838],[43.913,4.850],[43.930,4.842],[43.948,4.832],[43.964,4.817]];
-  add([[43.971,4.772],[43.960,4.779],[43.949,4.786],[43.938,4.796],[43.927,4.808],[43.916,4.821],[43.909,4.838],[43.913,4.850],[43.930,4.842],[43.948,4.832],[43.964,4.817]],{color:'#315b75',weight:1,fillColor:'#315b75',fillOpacity:.16},-3000,2026);
-  L.polyline(rhone,{color:'#4b7894',weight:7,opacity:.34,pane:'historicalPane'}).addTo(historicalVectorLayer);
+  /*
+   * V17 — SOURCES HISTORIQUES + PROGRESSION TEMPORELLE.
+   * Les anciens polygones génériques sont supprimés. Les fonds historiques
+   * IGN/Cassini/Etat-Major/orthophotos prennent le relais selon la date.
+   * Les objets historiques ci-dessous servent uniquement à matérialiser les
+   * constructions explicitement datées dans les sources d'Avignon.
+   */
+  const src=setHistoricalSource(y);
 
-  // Rocher des Doms : premier espace habité, puis cœur de la cité.
+  // Avant les premières constructions : uniquement géographie physique.
+  const rhone=[[43.959,4.774],[43.953,4.781],[43.948,4.788],[43.943,4.797],[43.938,4.806],[43.933,4.816],[43.928,4.826]];
+  const barthelasse=[[43.971,4.772],[43.961,4.779],[43.950,4.787],[43.939,4.797],[43.928,4.809],[43.915,4.827],[43.911,4.843],[43.930,4.842],[43.949,4.832],[43.964,4.817]];
+  addPoly(barthelasse,{color:'#50755a',weight:1,fillColor:'#6e956d',fillOpacity:.16},-3000,2026);
+  addLine(rhone,{color:'#4b7894',weight:7,opacity:.55},-3000,2026);
+
+  // Site naturel / première occupation du Rocher des Doms.
   const rocher=[[43.9552,4.8002],[43.9585,4.8021],[43.9601,4.8064],[43.9589,4.8110],[43.9558,4.8134],[43.9525,4.8110],[43.9510,4.8062],[43.9520,4.8020]];
-  add(rocher,{color:'#6f5837',weight:1.5,fillColor:'#9a7b4c',fillOpacity:.34},-3000,-900);
+  addPoly(rocher,{color:'#697d55',weight:1.3,fillColor:'#87996a',fillOpacity:.22},-3000,-900);
 
-  // Première implantation urbaine : noyau irrégulier au pied du Rocher.
-  const ancientCore=[[43.9540,4.7998],[43.9570,4.8008],[43.9587,4.8044],[43.9580,4.8088],[43.9554,4.8118],[43.9518,4.8120],[43.9496,4.8084],[43.9503,4.8038],[43.9520,4.8010]];
-  add(ancientCore,{color:'#7b633d',weight:1.2,fillColor:'#b0925f',fillOpacity:.27},-200,300);
+  // Noyau antique : implantation réelle représentée comme emprise, pas comme grille.
+  const antique=[[43.9540,4.7998],[43.9570,4.8008],[43.9587,4.8044],[43.9580,4.8088],[43.9554,4.8118],[43.9518,4.8120],[43.9496,4.8084],[43.9503,4.8038],[43.9520,4.8010]];
+  addPoly(antique,{color:'#806746',weight:1.4,fillColor:'#b59a68',fillOpacity:.28},-200,300);
 
-  // Extension médiévale documentée autour du noyau antique.
-  const medievalCore=[[43.9590,4.7964],[43.9630,4.8000],[43.9647,4.8055],[43.9638,4.8125],[43.9608,4.8180],[43.9560,4.8210],[43.9510,4.8190],[43.9470,4.8145],[43.9455,4.8070],[43.9470,4.8000],[43.9510,4.7960],[43.9550,4.7945]];
-  add(medievalCore,{color:'#9b713e',weight:1.8,fillColor:'#c69a5a',fillOpacity:.20},1000,1200);
+  // Développement médiéval progressif du tissu urbain.
+  const medieval=[[43.9590,4.7964],[43.9630,4.8000],[43.9647,4.8055],[43.9638,4.8125],[43.9608,4.8180],[43.9560,4.8210],[43.9510,4.8190],[43.9470,4.8145],[43.9455,4.8070],[43.9470,4.8000],[43.9510,4.7960],[43.9550,4.7945]];
+  addPoly(medieval,{color:'#8b6b48',weight:1.5,fillColor:'#b79865',fillOpacity:.22},1000,1200);
 
-  // Palais des Papes : construction par étapes 1335–1342.
+  // Pont Saint-Bénézet : progression du chantier 1177-1185.
+  addLine([[43.9531,4.8022],[43.9541,4.7955],[43.9548,4.7890],[43.9553,4.7828]],{color:'#8e6439',weight:6,opacity:.9},1177,1185);
+
+  // Palais des Papes : construction par étapes 1335-1342.
   const palais=[[43.95145,4.80735],[43.95230,4.80805],[43.95205,4.80930],[43.95095,4.80905],[43.95075,4.80785]];
-  add(palais,{color:'#8b4d2e',weight:2,fillColor:'#c56c3d',fillOpacity:.48},1335,1342);
-  const palaisExtension=[[43.95225,4.80645],[43.95335,4.80705],[43.95305,4.80855],[43.95225,4.80805],[43.95205,4.8070]];
-  add(palaisExtension,{color:'#8b4d2e',weight:2,fillColor:'#c56c3d',fillOpacity:.42},1342,1350);
+  addPoly(palais,{color:'#8b4d2e',weight:2,fillColor:'#c56c3d',fillOpacity:.42},1335,1342);
+  const palais2=[[43.95225,4.80645],[43.95335,4.80705],[43.95305,4.80855],[43.95225,4.80805],[43.95205,4.8070]];
+  addPoly(palais2,{color:'#8b4d2e',weight:2,fillColor:'#c56c3d',fillOpacity:.38},1342,1350);
 
-  // Pont Saint-Bénézet : chantier puis liaison sur le Rhône.
-  const pont=[[43.9531,4.8022],[43.9541,4.7955],[43.9548,4.7890],[43.9553,4.7828]];
-  add(pont,{color:'#9a6a3a',weight:5,opacity:.9},1177,1185,'line');
-
-  // Grande enceinte pontificale : tracé irrégulier, construit sur environ 20 ans.
+  // Grande enceinte : chantier réellement progressif 1355-1377.
   const walls=[[43.9618,4.7936],[43.9680,4.8000],[43.9700,4.8085],[43.9690,4.8185],[43.9650,4.8270],[43.9580,4.8320],[43.9500,4.8335],[43.9425,4.8300],[43.9365,4.8210],[43.9335,4.8110],[43.9345,4.8000],[43.9400,4.7915],[43.9480,4.7865],[43.9560,4.7880],[43.9618,4.7936]];
-  add(walls,{color:'#8f6840',weight:4,opacity:.96},1355,1377,'line');
+  addLine(walls,{color:'#795a3b',weight:4.5,opacity:.95},1355,1377);
 
-  // Faubourgs et tissus bâtis qui se densifient avant / pendant la grande enceinte.
-  const blocks=[
-    [[43.9605,4.7980],[43.9624,4.8002],[43.9618,4.8030],[43.9598,4.8015]],
-    [[43.9628,4.8040],[43.9648,4.8060],[43.9640,4.8090],[43.9620,4.8072]],
-    [[43.9588,4.8130],[43.9610,4.8150],[43.9597,4.8180],[43.9577,4.8160]],
-    [[43.9538,4.8140],[43.9560,4.8160],[43.9547,4.8190],[43.9527,4.8170]],
-    [[43.9480,4.8110],[43.9500,4.8130],[43.9490,4.8160],[43.9468,4.8140]],
-    [[43.9440,4.8030],[43.9462,4.8050],[43.9452,4.8080],[43.9430,4.8060]],
-    [[43.9470,4.7970],[43.9490,4.7990],[43.9480,4.8020],[43.9460,4.8000]],
-    [[43.9530,4.7935],[43.9550,4.7950],[43.9540,4.7980],[43.9520,4.7960]]
-  ];
-  blocks.forEach((b,i)=>add(b,{color:'#8a6849',weight:1,fillColor:'#b68a59',fillOpacity:.34},1100+i*25,1450+i*35));
+  // Quelques grands aménagements explicitement datés, sans grille artificielle.
+  addLine([[43.944,4.793],[43.946,4.789],[43.949,4.786],[43.952,4.785],[43.955,4.786]],{color:'#557653',weight:3,opacity:.75},1675,1750);
+  addLine([[43.939,4.793],[43.936,4.800],[43.933,4.808],[43.931,4.817],[43.930,4.827]],{color:'#44444a',weight:5,dashArray:'8 5'},1849,1854);
+  addLine([[43.9305,4.807],[43.934,4.8075],[43.938,4.807],[43.942,4.806],[43.946,4.8065],[43.950,4.8068],[43.954,4.8072],[43.958,4.8075]],{color:'#a34e32',weight:4},1856,1867);
+  addLine([[43.934,4.813],[43.938,4.812],[43.942,4.811],[43.946,4.810],[43.950,4.809],[43.953,4.8085]],{color:'#a34e32',weight:3},1869,1877);
+  addLine([[43.948,4.7805],[43.951,4.782],[43.954,4.784],[43.958,4.787],[43.962,4.790]],{color:'#477b8a',weight:4,opacity:.8},1956,1970);
 
-  // XVIIIe : fossés remblayés, promenades et quais.
-  const oulle=[[43.9440,4.7930],[43.9455,4.7890],[43.9480,4.7865],[43.9510,4.7855],[43.9540,4.7860]];
-  add(oulle,{color:'#47734c',weight:2,fillColor:'#5d8a58',fillOpacity:.32},1675,1750,'line');
-  const quay=[[43.9490,4.7820],[43.9515,4.7830],[43.9540,4.7845],[43.9570,4.7870],[43.9600,4.7900]];
-  add(quay,{color:'#6d7075',weight:3,opacity:.85},1700,1800,'line');
-
-  // XIXe : chemin de fer et retournement de l'axe urbain vers le sud.
-  const rail=[[43.9390,4.7930],[43.9360,4.8000],[43.9330,4.8080],[43.9310,4.8170],[43.9300,4.8270]];
-  add(rail,{color:'#3f3f46',weight:5,opacity:.95,dashArray:'7 5'},1849,1854,'line');
-  const rep=[[43.9305,4.8070],[43.9340,4.8075],[43.9380,4.8070],[43.9420,4.8060],[43.9460,4.8065],[43.9500,4.8068],[43.9540,4.8072],[43.9580,4.8075]];
-  add(rep,{color:'#a34e32',weight:4,opacity:.95},1856,1867,'line');
-  const thiers=[[43.9340,4.8130],[43.9380,4.8120],[43.9420,4.8110],[43.9460,4.8100],[43.9500,4.8090],[43.9530,4.8085]];
-  add(thiers,{color:'#a34e32',weight:3,opacity:.9},1869,1877,'line');
-
-  // XIXe–XXe : croissance extra-muros en nappes urbaines irrégulières.
-  const extra1=[[43.9300,4.8000],[43.9340,4.7960],[43.9380,4.7940],[43.9420,4.7930],[43.9450,4.7950],[43.9440,4.8010],[43.9390,4.8040],[43.9340,4.8070]];
-  const extra2=[[43.9250,4.8120],[43.9290,4.8080],[43.9340,4.8090],[43.9390,4.8130],[43.9430,4.8170],[43.9410,4.8240],[43.9350,4.8220],[43.9290,4.8190]];
-  add(extra1,{color:'#68765b',weight:1.2,fillColor:'#83956e',fillOpacity:.24},1880,1950);
-  add(extra2,{color:'#68765b',weight:1.2,fillColor:'#83956e',fillOpacity:.24},1950,2000);
-
-  // XXe–XXIe : densification contemporaine, sans masquer le fond satellite/relief.
-  const modern1=[[43.9220,4.7950],[43.9280,4.7900],[43.9350,4.7900],[43.9420,4.7880],[43.9480,4.7910],[43.9540,4.7850],[43.9600,4.7900],[43.9660,4.8000],[43.9700,4.8120],[43.9650,4.8240],[43.9550,4.8300],[43.9440,4.8270],[43.9340,4.8230],[43.9260,4.8180]];
-  add(modern1,{color:'#4f6f59',weight:1.3,fillColor:'#718b6d',fillOpacity:.18},1950,2026);
-
-  // Ouvrages anti-crues modernes : visibles comme transformation du paysage fluvial.
-  const floodDefense=[[43.9480,4.7805],[43.9510,4.7820],[43.9540,4.7840],[43.9580,4.7870],[43.9620,4.7900]];
-  add(floodDefense,{color:'#477b8a',weight:4,opacity:.8},1956,1970,'line');
-
-  // Petits bâtiments irréguliers contemporains : croissance progressive du tissu.
-  const contemporaryBlocks=[
-    [[43.928,4.801],[43.930,4.798],[43.932,4.800],[43.931,4.803],[43.929,4.804]],
-    [[43.936,4.817],[43.939,4.816],[43.940,4.819],[43.938,4.821],[43.935,4.820]],
-    [[43.943,4.823],[43.946,4.821],[43.948,4.824],[43.946,4.827],[43.943,4.826]],
-    [[43.952,4.823],[43.955,4.821],[43.958,4.824],[43.957,4.827],[43.954,4.827]],
-    [[43.962,4.818],[43.965,4.816],[43.968,4.819],[43.967,4.822],[43.964,4.822]]
-  ];
-  contemporaryBlocks.forEach((b,i)=>add(b,{color:'#53645a',weight:.8,fillColor:'#9aa28d',fillOpacity:.22},1970+i*8,2000+i*5));
-
-  // Le fond moderne reste stable : aucune variation de netteté artificielle.
-  [streetLayer,reliefLayer,satelliteLayer].forEach(l=>l.setOpacity(1));
+  // Le tissu bâti contemporain n'est plus dessiné en faux rectangles :
+  // les orthophotos historiques IGN montrent directement sa progression.
+  // Entre deux millésimes, la transition se fait par fondu court, synchronisé
+  // à l'année de la frise. Pour les dates anciennes, la carte historique IGN
+  // reste la référence et la carte moderne n'est pas imposée par-dessus.
+  const modernOpacity=y<1756?.02:y<1825?.08:y<1900?.12:y<1950?.25:y<1965?.45:y<1980?.58:y<1995?.72:y<2005?.86:1;
+  streetLayer.setOpacity(currentMapMode==='street'?modernOpacity:0);
+  reliefLayer.setOpacity(currentMapMode==='relief'?modernOpacity:0);
+  satelliteLayer.setOpacity(currentMapMode==='satellite'?modernOpacity:0);
 
   const active=[];
-  if(y>=-3000)active.push('premiers peuplements');
-  if(y>=-200)active.push('cité antique');
+  if(y>=-200)active.push('occupation antique');
   if(y>=1000)active.push('extension médiévale');
   if(y>=1177)active.push('Pont Saint-Bénézet');
   if(y>=1335)active.push('Palais des Papes');
   if(y>=1355)active.push('grande enceinte');
-  if(y>=1675)active.push('promenades et quais');
+  if(y>=1675)active.push('promenades');
   if(y>=1849)active.push('chemin de fer');
   if(y>=1856)active.push('rue de la République');
   if(y>=1869)active.push('rue Thiers');
-  if(y>=1880)active.push('extension extra-muros');
   if(y>=1956)active.push('protections contre les crues');
-  if(y>=1970)active.push('densification contemporaine');
-
   const mapInfo=$('mapHistoryInfo');
   if(mapInfo){
-    mapInfo.innerHTML='<div class="history-map-kicker">Carte synchronisée avec la frise</div><strong>'+fmt(y)+'</strong><span>'+active.slice(-4).join(' · ')+'</span>';
-    mapInfo.classList.remove('new'); void mapInfo.offsetWidth; mapInfo.classList.add('new');
+    mapInfo.innerHTML='<div class="history-map-kicker">Évolution synchronisée</div><strong>'+fmt(y)+'</strong><span>'+((y<1000)?'Paysage et implantation humaine très limitée':active.slice(-4).join(' · '))+'</span>';
   }
   const badge=$('mapTimeBadge');
-  if(badge)badge.innerHTML='🏙️ '+fmt(y)+' · '+active.slice(-2).join(' · ');
+  if(badge)badge.innerHTML='🗺️ '+fmt(y)+' · '+src.source;
 }
 
 function escapeSvgText(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
