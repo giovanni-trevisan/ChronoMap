@@ -1,0 +1,1 @@
+V18 REAL : part d'une vraie base ChronoMap complète (commit c7106e5c) et utilise OpenHistoricalMap pour filtrer la carte historique selon l'année. La précédente V18 était récursive et rechargeait main/index.html sur lui-même.

@@ -1,67 +1,68 @@
-<!doctype html>
-<html lang="fr">
-<head>
+<!doctype html><html lang="fr"><head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>ChronoMap V18</title>
-<style>body{margin:0;background:#07101f;color:#fff;font-family:system-ui;text-align:center;padding:40px}button{padding:14px 20px;border:0;border-radius:10px;background:#4b8cff;color:white;font-weight:800;font-size:16px}p{color:#a9b9ca}</style>
-</head><body>
-<h2>ChronoMap V18</h2><p>Chargement de la version ChronoMap avec 3 modes séparés et évolution par la frise…</p>
+<title>ChronoMap V18 REAL</title>
+<style>body{margin:0;background:#07101f;color:#fff;font-family:system-ui;text-align:center;padding:32px}button{padding:14px 20px;border:0;border-radius:10px;background:#4b8cff;color:#fff;font-weight:800;font-size:16px}p{color:#a9b9ca;line-height:1.5}</style>
+</head><body><h2>🌍 ChronoMap V18 REAL</h2>
+<p>Cette version charge une vraie version complète de ChronoMap, puis remplace le faux rendu historique par OpenHistoricalMap, piloté par l'année de la frise.</p>
 <button id="retry">Charger ChronoMap</button>
 <script>
-const RAW='https://raw.githubusercontent.com/giovanni-trevisan/ChronoMap/main/';
+const RAW='https://raw.githubusercontent.com/giovanni-trevisan/ChronoMap/c7106e5c6580935453dbb87fb4dfc7a212f4d957/';
 async function load(){
-  try{
-    let s=await fetch(RAW+'index.html',{cache:'no-store'}).then(r=>r.text());
-    const oldMode=`function setMapMode(mode){
-  currentMapMode=mode;
-  [streetLayer,reliefLayer,satelliteLayer].forEach(l=>map.removeLayer(l));
-  (mode==='satellite'?satelliteLayer:mode==='relief'?reliefLayer:streetLayer).addTo(map);
-  if(typeof renderHistoricalMap==='function' && data){ const y=+$('timeline').value,p=place(); if(p)renderHistoricalMap(p,y); }
-  const labels={street:'🗺️ Carte',relief:'⛰️ Relief',satellite:'🛰️ Satellite'};
-  document.querySelectorAll('.chronomap-map-control [data-map-mode]').forEach(b=>b.classList.toggle('active',b.dataset.mapMode===mode));
+try{
+let s=await fetch(RAW+'index.html',{cache:'no-store'}).then(r=>r.text());
+
+const A=s.indexOf('function setMapMode(mode){'),B=s.indexOf('\nconst mapModeControl=',A);
+const newMode=`function setMapMode(mode){
+currentMapMode=mode;
+[streetLayer,reliefLayer,satelliteLayer].forEach(l=>map.removeLayer(l));
+(mode==='satellite'?satelliteLayer:mode==='relief'?reliefLayer:streetLayer).addTo(map);
+if(typeof renderHistoricalMap==='function'&&data){const y=+$('timeline').value,p=place();if(p)renderHistoricalMap(p,y);}
+document.querySelectorAll('.chronomap-map-control [data-map-mode]').forEach(b=>b.classList.toggle('active',b.dataset.mapMode===mode));
 }`;
-    const newMode=`function setMapMode(mode){
-  currentMapMode=mode;
-  [streetLayer,reliefLayer,satelliteLayer].forEach(l=>map.removeLayer(l));
-  (mode==='satellite'?satelliteLayer:mode==='relief'?reliefLayer:streetLayer).addTo(map);
-  // Les trois fonds restent strictement séparés. La progression historique
-  // est conservée en Carte et Relief, mais aucune couche historique raster
-  // n'est injectée dans Satellite.
-  if(typeof historicalSources!=='undefined'){
-    Object.values(historicalSources||{}).forEach(l=>map.removeLayer(l));
-  }
-  if(typeof setHistoricalSource==='function' && mode!=='satellite' && data){
-    setHistoricalSource(+$('timeline').value);
-  }
-  if(typeof renderHistoricalMap==='function' && data){
-    const y=+$('timeline').value,p=place();
-    if(p)renderHistoricalMap(p,y);
-  }
-  const labels={street:'🗺️ Carte',relief:'⛰️ Relief',satellite:'🛰️ Satellite'};
-  document.querySelectorAll('.chronomap-map-control [data-map-mode]').forEach(b=>b.classList.toggle('active',b.dataset.mapMode===mode));
+if(A<0||B<0)throw Error('setMapMode introuvable');
+s=s.slice(0,A)+newMode+s.slice(B);
+
+const C=s.indexOf('function renderHistoricalMap(p,y){'),D=s.indexOf('\nfunction ',C+25);
+const newRender=`function renderHistoricalMap(p,y){
+try{if(typeof historicalVectorLayer!=='undefined'&&historicalVectorLayer){historicalVectorLayer.clearLayers();if(map.hasLayer(historicalVectorLayer))map.removeLayer(historicalVectorLayer);}}catch(e){}
+try{if(typeof historicalSources!=='undefined'&&historicalSources)Object.values(historicalSources).forEach(l=>{try{l.setOpacity(0)}catch(e){}try{if(map.hasLayer(l))map.removeLayer(l)}catch(e){}})}catch(e){}
+if(window.__chronoRefreshHistorical)window.__chronoRefreshHistorical(y);
 }`;
-    if(s.includes(oldMode)) s=s.replace(oldMode,newMode);
-    const marker=`function renderHistoricalMap(p,y){
-  historicalVectorLayer.clearLayers();
-  if(!p)return;`;
-    const repl=`function renderHistoricalMap(p,y){
-  historicalVectorLayer.clearLayers();
-  if(!p)return;
-  // V18 : le moteur historique vectoriel est commun à Carte et Relief.
-  // Le fond de carte reste indépendant : seule l'histoire évolue avec la frise.`;
-    if(s.includes(marker)) s=s.replace(marker,repl);
-    // Force Satellite to remain a clean satellite basemap by suppressing
-    // raster historical sources when the selected mode is satellite.
-    const inject=`\n<script>\n(function(){\n  const originalSetMapMode=window.setMapMode;\n  // Keep a visible mode badge and prevent accidental cross-mode raster layers.\n  window.addEventListener('load',function(){\n    try{ if(window.currentMapMode==='satellite' && typeof window.historicalSources!=='undefined'){Object.values(window.historicalSources||{}).forEach(l=>window.map&&window.map.removeLayer(l));} }catch(e){}\n  });\n})();\n<\\/script>\n`;
-    s=s.replace('</body>',inject+'</body>');
-    // Ensure relative assets resolve against the repository when this launcher is opened locally.
-    s=s.replace('<head>','<head><base href="'+RAW+'">');
-    document.open();document.write(s);document.close();
-  }catch(e){
-    document.body.innerHTML='<h2>Chargement impossible</h2><p>Vérifie ta connexion Internet puis réessaie.</p><button onclick="location.reload()">Réessayer</button>';
-    console.error(e);
-  }
+if(C<0||D<0)throw Error('renderHistoricalMap introuvable');
+s=s.slice(0,C)+newRender+s.slice(D);
+
+s=s.replace('</head>',`<link rel="stylesheet" href="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.css">
+<script src="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.js"><\/script>
+<script src="https://unpkg.com/@openhistoricalmap/maplibre-gl-dates@1.4.0/index.js"><\/script>
+<script src="https://unpkg.com/@maplibre/maplibre-gl-leaflet@0.0.20/leaflet-maplibre-gl.js"><\/script></head>`);
+
+const patch=`<script>
+(function(){
+let layer=null,gl=null,last=null;
+function year(){let e=document.getElementById('timeline');return e?Number(e.value):2026}
+function legacy(){
+try{if(typeof historicalVectorLayer!=='undefined'&&historicalVectorLayer){historicalVectorLayer.clearLayers();if(map.hasLayer(historicalVectorLayer))map.removeLayer(historicalVectorLayer)}}catch(e){}
+try{if(typeof historicalSources!=='undefined'&&historicalSources)Object.values(historicalSources).forEach(l=>{try{l.setOpacity(0)}catch(e){}try{if(map.hasLayer(l))map.removeLayer(l)}catch(e){}})}catch(e){}
 }
-document.getElementById('retry').onclick=load;load();
-</script>
-</body></html>
+function filter(y){if(!gl||typeof gl.filterByDate!=='function')return;let d=String(Math.trunc(y));if(d===last)return;last=d;try{gl.filterByDate(d)}catch(e){}}
+function create(){if(layer||!window.L||!L.maplibreGL||!window.maplibregl)return;try{
+layer=L.maplibreGL({style:'https://www.openhistoricalmap.org/map-styles/main/main.json',interactive:false,attributionControl:false,pane:'tilePane'}).addTo(map);
+let el=layer.getContainer&&layer.getContainer();if(el){el.style.pointerEvents='none';el.style.zIndex='420'}
+gl=layer.getMaplibreMap();gl.once('styledata',()=>filter(year()));setTimeout(()=>filter(year()),2500);
+}catch(e){console.warn(e)}}
+function apply(mode){legacy();
+if(mode==='satellite'){try{if(layer&&map.hasLayer(layer))map.removeLayer(layer)}catch(e){}try{if(map.hasLayer(streetLayer))map.removeLayer(streetLayer)}catch(e){}try{if(map.hasLayer(reliefLayer))map.removeLayer(reliefLayer)}catch(e){}try{if(!map.hasLayer(satelliteLayer))satelliteLayer.addTo(map)}catch(e){}return}
+create();try{if(map.hasLayer(satelliteLayer))map.removeLayer(satelliteLayer)}catch(e){}
+if(mode==='relief'){try{if(map.hasLayer(streetLayer))map.removeLayer(streetLayer)}catch(e){}try{if(!map.hasLayer(reliefLayer))reliefLayer.addTo(map)}catch(e){}}else{try{if(map.hasLayer(reliefLayer))map.removeLayer(reliefLayer)}catch(e){}try{if(map.hasLayer(streetLayer))map.removeLayer(streetLayer)}catch(e){}}
+if(layer&&!map.hasLayer(layer))layer.addTo(map);let el=layer&&layer.getContainer&&layer.getContainer();if(el){el.style.opacity=mode==='relief'?'.72':'1';el.style.zIndex='420'}filter(year())}
+window.__chronoRefreshHistorical=function(y){let mode=typeof currentMapMode!=='undefined'?currentMapMode:'street';apply(mode);filter(y)}
+window.setMapMode=function(mode){currentMapMode=mode;apply(mode);document.querySelectorAll('.chronomap-map-control [data-map-mode]').forEach(b=>b.classList.toggle('active',b.dataset.mapMode===mode))}
+addEventListener('load',()=>setTimeout(()=>{if(typeof currentMapMode==='undefined')currentMapMode='street';apply(currentMapMode);filter(year())},1000));
+})();
+<\/script>`;
+s=s.replace('</body>',patch+'</body>');
+document.open();document.write(s);document.close();
+}catch(e){document.body.innerHTML='<h2>Erreur</h2><p>'+String(e.message||e)+'</p>'}
+}
+retry.onclick=load;load();
+</script></body></html>
