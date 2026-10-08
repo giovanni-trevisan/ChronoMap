@@ -1,68 +1,85 @@
-<!doctype html><html lang="fr"><head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>ChronoMap V18 REAL</title>
-<style>body{margin:0;background:#07101f;color:#fff;font-family:system-ui;text-align:center;padding:32px}button{padding:14px 20px;border:0;border-radius:10px;background:#4b8cff;color:#fff;font-weight:800;font-size:16px}p{color:#a9b9ca;line-height:1.5}</style>
-</head><body><h2>🌍 ChronoMap V18 REAL</h2>
-<p>Cette version charge une vraie version complète de ChronoMap, puis remplace le faux rendu historique par OpenHistoricalMap, piloté par l'année de la frise.</p>
-<button id="retry">Charger ChronoMap</button>
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ChronoMap V18</title>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+<link rel="stylesheet" href="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.css">
+<style>
+html,body,#map{height:100%;margin:0}body{font-family:Arial,sans-serif}
+#map{position:absolute;inset:0}.panel{background:#fffE;padding:8px;border-radius:10px;box-shadow:0 2px 12px #0003}
+#top{position:absolute;z-index:1000;top:12px;left:12px;right:12px;display:flex;gap:8px;flex-wrap:wrap}
+#bottom{position:absolute;z-index:1000;left:12px;right:12px;bottom:12px}
+button,input{font:inherit}button{padding:8px 10px;border:0;border-radius:7px}button.active{background:#222;color:#fff}
+#search{width:220px}#timeline{width:100%}
+</style>
+</head>
+<body>
+<div id="map"></div>
+<div id="top">
+ <div class="panel"><input id="search" placeholder="Rechercher une ville…"><button id="go">Rechercher</button></div>
+ <div class="panel">
+  <button class="mode active" data-mode="carte">🗺️ Carte</button>
+  <button class="mode" data-mode="relief">⛰️ Relief</button>
+  <button class="mode" data-mode="satellite">🛰️ Satellite</button>
+ </div>
+</div>
+<div id="bottom" class="panel">
+ <div><button id="prev">◀</button><button id="play">▶</button><button id="next">▶</button>
+ <b id="year">2026</b></div>
+ <input id="timeline" type="range" min="-3000" max="2026" value="2026" step="1">
+</div>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.js"></script>
+<script src="https://unpkg.com/@maplibre/maplibre-gl-leaflet@0.0.20/leaflet-maplibre-gl.js"></script>
+<script src="https://unpkg.com/@openhistoricalmap/maplibre-gl-dates@1.4.0/index.js"></script>
 <script>
-const RAW='https://raw.githubusercontent.com/giovanni-trevisan/ChronoMap/c7106e5c6580935453dbb87fb4dfc7a212f4d957/';
-async function load(){
-try{
-let s=await fetch(RAW+'index.html',{cache:'no-store'}).then(r=>r.text());
+const map=L.map('map').setView([43.949,4.805],13);
+const street=L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{attribution:'© OpenStreetMap contributors'});
+const relief=L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png',{attribution:'© OpenTopoMap'});
+const satellite=L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',{attribution:'© Esri'});
+let ohm=null,playing=false;
 
-const A=s.indexOf('function setMapMode(mode){'),B=s.indexOf('\nconst mapModeControl=',A);
-const newMode=`function setMapMode(mode){
-currentMapMode=mode;
-[streetLayer,reliefLayer,satelliteLayer].forEach(l=>map.removeLayer(l));
-(mode==='satellite'?satelliteLayer:mode==='relief'?reliefLayer:streetLayer).addTo(map);
-if(typeof renderHistoricalMap==='function'&&data){const y=+$('timeline').value,p=place();if(p)renderHistoricalMap(p,y);}
-document.querySelectorAll('.chronomap-map-control [data-map-mode]').forEach(b=>b.classList.toggle('active',b.dataset.mapMode===mode));
-}`;
-if(A<0||B<0)throw Error('setMapMode introuvable');
-s=s.slice(0,A)+newMode+s.slice(B);
-
-const C=s.indexOf('function renderHistoricalMap(p,y){'),D=s.indexOf('\nfunction ',C+25);
-const newRender=`function renderHistoricalMap(p,y){
-try{if(typeof historicalVectorLayer!=='undefined'&&historicalVectorLayer){historicalVectorLayer.clearLayers();if(map.hasLayer(historicalVectorLayer))map.removeLayer(historicalVectorLayer);}}catch(e){}
-try{if(typeof historicalSources!=='undefined'&&historicalSources)Object.values(historicalSources).forEach(l=>{try{l.setOpacity(0)}catch(e){}try{if(map.hasLayer(l))map.removeLayer(l)}catch(e){}})}catch(e){}
-if(window.__chronoRefreshHistorical)window.__chronoRefreshHistorical(y);
-}`;
-if(C<0||D<0)throw Error('renderHistoricalMap introuvable');
-s=s.slice(0,C)+newRender+s.slice(D);
-
-s=s.replace('</head>',`<link rel="stylesheet" href="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.css">
-<script src="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.js"><\/script>
-<script src="https://unpkg.com/@openhistoricalmap/maplibre-gl-dates@1.4.0/index.js"><\/script>
-<script src="https://unpkg.com/@maplibre/maplibre-gl-leaflet@0.0.20/leaflet-maplibre-gl.js"><\/script></head>`);
-
-const patch=`<script>
-(function(){
-let layer=null,gl=null,last=null;
-function year(){let e=document.getElementById('timeline');return e?Number(e.value):2026}
-function legacy(){
-try{if(typeof historicalVectorLayer!=='undefined'&&historicalVectorLayer){historicalVectorLayer.clearLayers();if(map.hasLayer(historicalVectorLayer))map.removeLayer(historicalVectorLayer)}}catch(e){}
-try{if(typeof historicalSources!=='undefined'&&historicalSources)Object.values(historicalSources).forEach(l=>{try{l.setOpacity(0)}catch(e){}try{if(map.hasLayer(l))map.removeLayer(l)}catch(e){}})}catch(e){}
+function removeOHM(){if(ohm){map.removeLayer(ohm);ohm=null}}
+function filterDate(){
+ if(!ohm)return;
+ const gl=ohm.getMaplibreMap(), y=+timeline.value;
+ if(gl&&typeof gl.filterByDate==='function'){
+  const d=y<0?Math.abs(y).toString().padStart(4,'0')+'-01-01':y+'-12-31';
+  try{gl.filterByDate(d)}catch(e){}
+ }
 }
-function filter(y){if(!gl||typeof gl.filterByDate!=='function')return;let d=String(Math.trunc(y));if(d===last)return;last=d;try{gl.filterByDate(d)}catch(e){}}
-function create(){if(layer||!window.L||!L.maplibreGL||!window.maplibregl)return;try{
-layer=L.maplibreGL({style:'https://www.openhistoricalmap.org/map-styles/main/main.json',interactive:false,attributionControl:false,pane:'tilePane'}).addTo(map);
-let el=layer.getContainer&&layer.getContainer();if(el){el.style.pointerEvents='none';el.style.zIndex='420'}
-gl=layer.getMaplibreMap();gl.once('styledata',()=>filter(year()));setTimeout(()=>filter(year()),2500);
-}catch(e){console.warn(e)}}
-function apply(mode){legacy();
-if(mode==='satellite'){try{if(layer&&map.hasLayer(layer))map.removeLayer(layer)}catch(e){}try{if(map.hasLayer(streetLayer))map.removeLayer(streetLayer)}catch(e){}try{if(map.hasLayer(reliefLayer))map.removeLayer(reliefLayer)}catch(e){}try{if(!map.hasLayer(satelliteLayer))satelliteLayer.addTo(map)}catch(e){}return}
-create();try{if(map.hasLayer(satelliteLayer))map.removeLayer(satelliteLayer)}catch(e){}
-if(mode==='relief'){try{if(map.hasLayer(streetLayer))map.removeLayer(streetLayer)}catch(e){}try{if(!map.hasLayer(reliefLayer))reliefLayer.addTo(map)}catch(e){}}else{try{if(map.hasLayer(reliefLayer))map.removeLayer(reliefLayer)}catch(e){}try{if(map.hasLayer(streetLayer))map.removeLayer(streetLayer)}catch(e){}}
-if(layer&&!map.hasLayer(layer))layer.addTo(map);let el=layer&&layer.getContainer&&layer.getContainer();if(el){el.style.opacity=mode==='relief'?'.72':'1';el.style.zIndex='420'}filter(year())}
-window.__chronoRefreshHistorical=function(y){let mode=typeof currentMapMode!=='undefined'?currentMapMode:'street';apply(mode);filter(y)}
-window.setMapMode=function(mode){currentMapMode=mode;apply(mode);document.querySelectorAll('.chronomap-map-control [data-map-mode]').forEach(b=>b.classList.toggle('active',b.dataset.mapMode===mode))}
-addEventListener('load',()=>setTimeout(()=>{if(typeof currentMapMode==='undefined')currentMapMode='street';apply(currentMapMode);filter(year())},1000));
-})();
-<\/script>`;
-s=s.replace('</body>',patch+'</body>');
-document.open();document.write(s);document.close();
-}catch(e){document.body.innerHTML='<h2>Erreur</h2><p>'+String(e.message||e)+'</p>'}
+function addOHM(opacity){
+ removeOHM();
+ ohm=L.maplibreGL({style:'https://www.openhistoricalmap.org/map-styles/main/main.json',opacity,interactive:false}).addTo(map);
+ ohm.on('load',filterDate); ohm.on('styledata',filterDate);
 }
-retry.onclick=load;load();
-</script></body></html>
+function setMode(m){
+ document.querySelectorAll('.mode').forEach(b=>b.classList.toggle('active',b.dataset.mode===m));
+ [street,relief,satellite].forEach(l=>{try{map.removeLayer(l)}catch(e){}});
+ removeOHM();
+ if(m==='carte')addOHM(1);
+ if(m==='relief'){relief.addTo(map);addOHM(.72)}
+ if(m==='satellite')satellite.addTo(map);
+}
+document.querySelectorAll('.mode').forEach(b=>b.onclick=()=>setMode(b.dataset.mode));
+function setYear(y){
+ y=Math.max(-3000,Math.min(2026,Math.round(y)));timeline.value=y;
+ year.textContent=y<0?Math.abs(y)+' av. J.-C.':y;filterDate();
+}
+timeline.oninput=e=>setYear(e.target.value);
+prev.onclick=()=>setYear(+timeline.value-10);next.onclick=()=>setYear(+timeline.value+10);
+play.onclick=()=>{
+ playing=!playing;play.textContent=playing?'⏸':'▶';
+ if(playing)(function tick(){if(!playing)return;setYear(+timeline.value+5);if(+timeline.value>=2026){playing=false;play.textContent='▶';return}setTimeout(tick,500)})();
+};
+async function search(){
+ const q=search.value.trim();if(!q)return;
+ try{const r=await fetch('https://nominatim.openstreetmap.org/search?format=jsonv2&limit=1&q='+encodeURIComponent(q));
+ const a=await r.json();if(a[0])map.setView([+a[0].lat,+a[0].lon],14)}catch(e){}
+}
+go.onclick=search;search.onkeydown=e=>{if(e.key==='Enter')search()};
+setMode('carte');
+</script>
+</body></html>
