@@ -1,0 +1,9 @@
+ChronoMap V15.6.3 — correction des cercles artificiels
+
+1. Télécharge le dépôt ChronoMap depuis GitHub (Download ZIP).
+2. Décompresse-le.
+3. Copie corriger_chronomap.py dans le même dossier que index.html.
+4. Lance le script avec Python. Il crée index.html.backup puis corrige index.html.
+
+Le script retire les aplats urbains synthétiques, les marqueurs circulaires et le voile beige.
+Il conserve les fichiers de données existants et les 3 fonds cartographiques.
