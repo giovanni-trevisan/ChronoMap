@@ -96,10 +96,11 @@ input,button{font:inherit;border-radius:10px;border:1px solid var(--line);paddin
 @media(max-width:600px){.date-hero{font-size:36px}.history-sheet{padding:14px 9px 24px}}
 
 .timeline-eras{display:flex;justify-content:space-between;gap:2px;margin:0 8px 5px;color:#8fa4bb;font-size:8px;font-weight:800;letter-spacing:.2px}
-.timeline-eras span{flex:1;text-align:center;white-space:nowrap}
+.timeline-eras button{flex:1;text-align:center;white-space:normal;min-width:0;border:1px solid #294563;background:#10243c;color:#9db0c8;border-radius:7px;padding:5px 2px;font-size:8px;font-weight:800;line-height:1.15}.timeline-eras button.active{background:#315c91;color:#fff;border-color:#4b8cff}
 .date-panel-title{font-size:14px;font-weight:900;color:#f5f7fb;margin-bottom:6px;letter-spacing:.2px}
 
 /* Interface historique — lignes de dates + fiche jeunesse */
+.date-link.future{opacity:.72;border-style:dashed}
 .date-link{justify-content:flex-start!important;min-height:38px!important}
 .date-link b{flex:0 0 64px!important;color:#f5b83d!important;font-size:12px!important}
 .date-link span{display:block!important;flex:1!important;font-size:11px!important;font-weight:800!important;color:#e7eef7!important;overflow:hidden!important;text-overflow:ellipsis!important;white-space:nowrap!important}
@@ -144,10 +145,10 @@ input,button{font:inherit;border-radius:10px;border:1px solid var(--line);paddin
 <button id="openPanel" class="panel-toggle" aria-label="Afficher les explications">ℹ️</button>
 <div class="bottom">
  <div style="display:flex;justify-content:space-between"><span class="year" id="year">2026</span><span class="meta">année</span></div>
- <div id="timelineEras" class="timeline-eras">
-<span>Préhistoire</span><span>Antiquité</span><span>Moyen Âge</span><span>Époque moderne</span><span>Époque contemporaine</span>
+ <div id="timelineEras" class="timeline-eras" aria-label="Choisir une période historique">
+<button type="button" data-era="-10000">Préhistoire</button><button type="button" data-era="-200">Antiquité</button><button type="button" data-era="1000">Moyen Âge</button><button type="button" data-era="1700">Époque moderne</button><button type="button" data-era="2000">Époque contemporaine</button>
 </div>
-<input id="timeline" class="timeline" type="range" min="-3000" max="2026" value="2026" step="1">
+<input id="timeline" class="timeline" type="range" min="-10000" max="2026" value="2026" step="1">
  <div class="actions"><button id="back">◀ <select id="backStep" class="step-inline" aria-label="Pas de recul"><option value="5">5 ans</option><option value="10" selected>10 ans</option><option value="25">25 ans</option><option value="50">50 ans</option><option value="100">100 ans</option></select></button><button id="play" class="play">▶ Lecture</button><button id="next"><select id="nextStep" class="step-inline" aria-label="Pas d'avance"><option value="5">5 ans</option><option value="10" selected>10 ans</option><option value="25">25 ans</option><option value="50">50 ans</option><option value="100">100 ans</option></select> ▶</button></div>
  <div class="hint">Tape une ville puis déplace la frise. Les données connues avant ou à l’année choisie sont affichées.</div>
 </div>
@@ -255,7 +256,7 @@ function renderHistoricalMap(p,y){
   const progressOf=f=>{const r=buildRanges[f.label]||[f.from??-99999,f.to??(f.from??-99999)];if(r[1]<=r[0])return y>=r[0]?1:0;return Math.max(0,Math.min(1,(y-r[0])/(r[1]-r[0])))};
   const partialLine=(coords,t)=>{if(!coords||coords.length<2||t>=1)return coords;const total=coords.length-1,pos=Math.max(0,Math.min(total,t*total)),idx=Math.floor(pos),frac=pos-idx,out=coords.slice(0,idx+1);if(idx<coords.length-1){const a=coords[idx],b=coords[idx+1];out.push([lerp(a[0],b[0],frac),lerp(a[1],b[1],frac)])}return out};
   const scaleRing=(ring,t)=>{if(!ring||!ring.length)return ring;const c=ring.reduce((a,q)=>[a[0]+q[0]/ring.length,a[1]+q[1]/ring.length],[0,0]),sc=.12+.88*t;return ring.map(q=>[c[0]+(q[0]-c[0])*sc,c[1]+(q[1]-c[1])*sc])};
-  features.forEach(f=>{const t=progressOf(f);if(t<=0)return;let layer=null;if(f.type==='line'&&f.coords)layer=L.polyline(partialLine(f.coords,t),{weight:f.weight||4,opacity:.95,lineCap:'round',lineJoin:'round'});else if(f.type==='polygon'&&f.coords)layer=L.polygon(f.coords.map(r=>scaleRing(r,t)),{weight:f.weight||2,fillOpacity:.12+.10*t,opacity:.95});else if(f.type==='point'&&f.coords)layer=L.circleMarker(f.coords,{radius:(f.radius||6)*(.55+.45*t),weight:2,opacity:.95,fillOpacity:.35+.55*t});if(layer){layer.bindTooltip(f.label||'Transformation historique');historicalVectorLayer.addLayer(layer)}});
+  features.forEach(f=>{const t=progressOf(f);if(t<=0)return;let layer=null;if(f.type==='line'&&f.coords)layer=L.polyline(partialLine(f.coords,t),{weight:f.weight||4,opacity:.95,lineCap:'round',lineJoin:'round'});else if(f.type==='polygon'&&f.coords)layer=L.polygon(f.coords.map(r=>scaleRing(r,t)),{weight:f.weight||2,fillOpacity:.12+.10*t,opacity:.95});if(layer){layer.bindTooltip(f.label||'Transformation historique');historicalVectorLayer.addLayer(layer)}});
   let badge=$('mapTimeBadge');if(!badge){badge=document.createElement('div');badge.id='mapTimeBadge';badge.className='history-map-badge';$('map').appendChild(badge)}
   const active=(data?.mapHistory||[]).find(f=>{const r=buildRanges[f.label]||[f.from??-99999,f.to??(f.from??-99999)];return r&&y>=r[0]&&y<r[1]});
   badge.textContent=active?`🕰️ ${fmt(y)} · construction : ${active.label.replace(/^\S+\s*/,'')}`:`🕰️ Carte historique · ${fmt(y)}`;
@@ -330,21 +331,28 @@ function render(){
   centerMapForScope(p,false);
   $('title').textContent=p.name;
   $('year').textContent=fmt(y);
+  document.querySelectorAll('[data-era]').forEach(b=>b.classList.toggle('active',
+    (y< -800 && b.dataset.era==='-10000') ||
+    (y>=-800 && y<500 && b.dataset.era==='-200') ||
+    (y>=500 && y<1500 && b.dataset.era==='1000') ||
+    (y>=1500 && y<1800 && b.dataset.era==='1700') ||
+    (y>=1800 && b.dataset.era==='2000')
+  ));
 
   let events=[];
   if(infoScope==='city')
-    events=(p.events||[]).filter(e=>e[0]<=y).slice(-12).reverse().map(e=>({year:e[0],title:e[1],text:e[2],recap:e[3],source:e[5],confidence:e[4],buildings:e[6],roads:e[7],territory:e[8]}));
+    events=(p.events||[]).slice().reverse().map(e=>({year:e[0],title:e[1],text:e[2],recap:e[3],source:e[5],confidence:e[4],buildings:e[6],roads:e[7],territory:e[8]}));
   else if(infoScope==='region')
-    events=(data.regionEvents||[]).filter(e=>(e.region||p.region)===p.region&&e.year<=y).slice(-12).reverse();
+    events=(data.regionEvents||[]).filter(e=>(e.region||p.region)===p.region).slice().sort((a,b)=>b.year-a.year);
   else if(infoScope==='country')
-    events=(data.countryEvents||data.franceEvents||data.worldEvents||[]).filter(e=>e.year<=y).slice(-12).reverse();
+    events=(data.countryEvents||data.franceEvents||data.worldEvents||[]).slice().sort((a,b)=>b.year-a.year);
   else if(infoScope==='europe')
-    events=(data.europeEvents||[]).filter(e=>e.year<=y).slice(-12).reverse();
+    events=(data.europeEvents||[]).slice().sort((a,b)=>b.year-a.year);
   else
-    events=(data.worldEvents||[]).filter(e=>e.year<=y).slice(-12).reverse();
+    events=(data.worldEvents||[]).slice().sort((a,b)=>b.year-a.year);
 
   $('events').innerHTML=events.length
-    ?events.map((e,i)=>`<button class="date-link" data-event-index="${i}" aria-label="Ouvrir ${fmt(e.year)} — ${e.title||'événement historique'}"><b>${fmt(e.year)}</b><span>${e.title||'Événement historique'}</span></button>`).join('')
+    ?events.map((e,i)=>`<button class="date-link ${e.year>y?'future':''}" data-event-index="${i}" aria-label="Ouvrir ${fmt(e.year)} — ${e.title||'événement historique'}"><b>${fmt(e.year)}</b><span>${e.title||'Événement historique'}</span></button>`).join('')
     :'<div class="event">Aucune date disponible.</div>';
 
   document.querySelectorAll('[data-event-index]').forEach(b=>{
@@ -354,7 +362,7 @@ function render(){
       const index=Number(b.dataset.eventIndex);
       const chosen=events[index];
       if(!chosen)return;
-      if(timer){clearInterval(timer);timer=null;$('play').textContent='▶ Lecture';}
+      if(timer)stopPlayback();
       selectedEvent=chosen;
       $('timeline').value=chosen.year;
       // Affiche immédiatement la fiche, puis synchronise la carte sans la refermer.
@@ -377,24 +385,30 @@ $('closePanel').onclick=()=>{$('panel').classList.add('closed')};
 $('openPanel').onclick=()=>{$('panel').classList.remove('closed')};
 $('go').onclick=()=>{window._chronomapPlaceId=null;lastPlaceKey='';render()};
 $('search').addEventListener('keydown',e=>{if(e.key==='Enter'){lastPlaceKey='';render()}});
-$('timeline').oninput=()=>{selectedEvent=null;render()};
+$('timeline').oninput=()=>{stopPlayback();selectedEvent=null;render()};
+function stopPlayback(){if(timer){clearInterval(timer);timer=null;}const play=$('play');if(play)play.textContent='▶ Lecture';}
 function timelineStep(){return +$('backStep').value||5}
+document.querySelectorAll('[data-era]').forEach(button=>button.addEventListener('click',()=>{
+  stopPlayback();selectedEvent=null;$('timeline').value=Number(button.dataset.era);render();
+}));
 function syncStepSelectors(value){$('backStep').value=String(value);$('nextStep').value=String(value)}
 $('backStep').onchange=()=>syncStepSelectors($('backStep').value);
 $('nextStep').onchange=()=>syncStepSelectors($('nextStep').value);
-$('back').onclick=(e)=>{if(e.target.tagName==='SELECT')return;$('timeline').value=Math.max(-3000,+$('timeline').value-timelineStep());render()};
-$('next').onclick=(e)=>{if(e.target.tagName==='SELECT')return;$('timeline').value=Math.min(2026,+$('timeline').value+timelineStep());render()};
+$('back').onclick=(e)=>{if(e.target.tagName==='SELECT')return;stopPlayback();$('timeline').value=Math.max(-10000,+$('timeline').value-timelineStep());render()};
+$('next').onclick=(e)=>{if(e.target.tagName==='SELECT')return;stopPlayback();$('timeline').value=Math.min(2026,+$('timeline').value+timelineStep());render()};
 $('play').onclick=()=>{
-  if(timer){clearInterval(timer);timer=null;$('play').textContent='▶ Lecture';return}
+  if(timer){stopPlayback();return;}
   selectedEvent=null;
   $('historySheet').style.display='none';
+  if(+$('timeline').value>=2026){$('timeline').value=-10000;render();}
   $('play').textContent='⏸ Pause';
   timer=setInterval(()=>{
-    const y=+$('timeline').value+timelineStep();
-    if(y>2026){clearInterval(timer);timer=null;$('play').textContent='▶ Lecture';return}
-    $('timeline').value=y;
+    const current=+$('timeline').value;
+    if(current>=2026){stopPlayback();return;}
+    $('timeline').value=Math.min(2026,current+timelineStep());
     render();
-  },90);
+    if(+$('timeline').value>=2026)stopPlayback();
+  },180);
 };
 
 $('scopeSelect').onchange=()=>{infoScope=$('scopeSelect').value;lastPlaceKey='';render();};
@@ -508,7 +522,7 @@ try{
 }catch(e){}
 
 if('serviceWorker' in navigator){
-  navigator.serviceWorker.register('./sw.js?v=15-3').then(reg=>reg.update()).catch(()=>{});
+  navigator.serviceWorker.register('./sw.js?v=15-7-0').then(reg=>reg.update()).catch(()=>{});
 }
 
 Promise.all([

@@ -1,4 +1,4 @@
-const CACHE = 'chronomap-v15-6-3';
+const CACHE = 'chronomap-restauration-stable-v21';
 const ASSETS = ['./', './index.html', './data.json', './territories.geojson', './sources.json', './manifest.webmanifest'];
 self.addEventListener('install', event => {
   event.waitUntil(caches.open(CACHE).then(cache => cache.addAll(ASSETS)).then(() => self.skipWaiting()));
