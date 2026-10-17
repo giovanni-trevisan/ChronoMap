@@ -5,14 +5,14 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#07101f">
 <link rel="manifest" href="manifest.webmanifest">
-<title>ChronoMap V15.5.5 — Géolocalisation</title>
+<title>ChronoMap V15.5 — Avignon enrichi</title>
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
 <style>
 :root{--bg:#07101f;--p:#0d1c30;--line:#294563;--text:#f4f7fb;--muted:#9db0c8;--gold:#f5b83d;--blue:#4b8cff}
 *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,Segoe UI,sans-serif}
 header{height:58px;padding:7px 10px;display:flex;justify-content:space-between;align-items:center;background:#0c1b30;border-bottom:1px solid var(--line)}
 .brand{font-size:20px;font-weight:900}.brand span{color:var(--gold)}small,.meta{color:var(--muted)}
-.controls{padding:7px;display:grid;grid-template-columns:minmax(0,1fr) 100px 46px;gap:6px;background:#091528}
+.controls{padding:7px;display:grid;grid-template-columns:1fr 100px;gap:6px;background:#091528}
 input,button{font:inherit;border-radius:10px;border:1px solid var(--line);padding:9px;background:#0d1b2d;color:white}button{background:var(--blue);border:0;font-weight:800}
 #map{height:calc(100vh - 315px);min-height:400px}
 .panel{position:absolute;z-index:1000;right:12px;top:78px;width:min(390px,38vw);background:#07101ff5;border:1px solid #38506e;border-radius:14px;padding:11px;max-height:58vh;overflow:auto;box-shadow:0 12px 35px #0008;backdrop-filter:blur(10px);transition:.22s}
@@ -33,13 +33,13 @@ input,button{font:inherit;border-radius:10px;border:1px solid var(--line);paddin
 .navtabs{display:grid;grid-template-columns:repeat(5,1fr);gap:4px;margin-top:7px;position:sticky;bottom:0;z-index:1200}
 .navtab{background:#0d1b2d;border:1px solid #213a56;color:#9db0c8;padding:5px 2px;font-size:10px;display:flex;flex-direction:column;align-items:center;gap:2px}.navtab.active{background:#12365c;color:#fff}.navtab span{font-size:9px}
 .install{display:none}
-@media(min-width:800px){#map{height:calc(100vh - 270px)}.panel{top:76px;width:410px;max-height:64vh}.panel-toggle{top:76px}.controls{grid-template-columns:minmax(0,1fr) 150px 46px}}
+@media(min-width:800px){#map{height:calc(100vh - 270px)}.panel{top:76px;width:410px;max-height:64vh}.panel-toggle{top:76px}.controls{grid-template-columns:1fr 150px}}
 @media(max-width:420px){
  #map{height:calc(100vh - 315px);min-height:360px}
  .panel{top:auto;bottom:174px;left:8px;right:8px;width:auto;max-height:30vh;padding:8px;border-radius:13px} .panel.dragged{left:auto;right:auto;top:auto;bottom:auto;width:min(390px,calc(100vw - 16px))}
  .panel h2{font-size:15px}.panel .event{font-size:11px}
  .panel-toggle{top:auto;bottom:174px;right:9px}
- .top-menus{display:grid;grid-template-columns:1fr 1fr;gap:7px;padding:7px;background:#081526}.top-menu{display:flex;flex-direction:column;gap:3px}.top-menu label{font-size:9px;font-weight:900;color:#8fa4bb;text-transform:uppercase}.top-menu select,.timeline-step{width:100%;font-size:11px;font-weight:800;background:#10243c;color:#fff;border:1px solid #315c91;border-radius:10px;padding:9px}.controls{grid-template-columns:minmax(0,1fr) 92px 44px}.controls input,.controls button{font-size:13px;padding:8px}
+ .top-menus{display:grid;grid-template-columns:1fr 1fr;gap:7px;padding:7px;background:#081526}.top-menu{display:flex;flex-direction:column;gap:3px}.top-menu label{font-size:9px;font-weight:900;color:#8fa4bb;text-transform:uppercase}.top-menu select,.timeline-step{width:100%;font-size:11px;font-weight:800;background:#10243c;color:#fff;border:1px solid #315c91;border-radius:10px;padding:9px}.controls{grid-template-columns:1fr 92px}.controls input,.controls button{font-size:13px;padding:8px}
  .brand{font-size:18px}.bottom{padding-top:5px}.actions button{font-size:10px;padding:7px 4px}
  .navtabs{gap:3px}.navtab{font-size:9px;padding:5px 1px}
 }
@@ -81,16 +81,16 @@ input,button{font:inherit;border-radius:10px;border:1px solid var(--line);paddin
 .scope.active{background:#315c91;color:#fff}
 .plans{display:grid!important;grid-template-columns:repeat(3,1fr)!important;gap:5px!important;padding:7px!important}
 .plan{min-width:0!important;padding:6px!important}.plan b{font-size:11px}.plan p{font-size:8px;line-height:1.25}.plan span{font-size:8px}
-.controls{padding:7px;display:grid;grid-template-columns:minmax(0,1fr) 92px 44px;gap:6px;background:#091528}
+.controls{padding:7px;display:grid;grid-template-columns:1fr 92px;gap:6px;background:#091528}
 .navtabs{display:none!important}
 .history-sheet{display:none;margin:0;background:#081526;border-top:1px solid #294563;padding:16px 12px 24px;scroll-margin-top:10px}
 .date-link{display:flex;gap:7px;align-items:center;width:100%;text-align:left;background:#0d1f34;border:1px solid #213a56;margin:4px 0;padding:7px 9px;border-radius:9px;cursor:pointer}
 .date-link{position:relative;z-index:2005;pointer-events:auto!important;touch-action:manipulation;}
-@media(max-width:600px){.plans{grid-template-columns:repeat(3,1fr)!important}.plan p{display:none}.plan b{font-size:10px}.scope{font-size:9px;padding:6px 2px}.controls{grid-template-columns:minmax(0,1fr) 88px 44px}.history-sheet{padding:13px 9px 22px}}
+@media(max-width:600px){.plans{grid-template-columns:repeat(3,1fr)!important}.plan p{display:none}.plan b{font-size:10px}.scope{font-size:9px;padding:6px 2px}.controls{grid-template-columns:1fr 88px}.history-sheet{padding:13px 9px 22px}}
 
 /* V13.3 — interface tactile + fiche immersive */
 .panel{touch-action:none;user-select:none}.panel-head{cursor:grab}.panel.dragging .panel-head{cursor:grabbing}.panel .panel-tip,.panel .badges,.panel #desc{display:none!important}.date-link{justify-content:center;min-height:42px;margin:5px 0}.date-link b{min-width:0!important;font-size:15px!important}.date-link span{display:none!important}
-.history-sheet{background:linear-gradient(180deg,#081526,#0b1c31);padding:18px 12px 28px}.date-hero{font-size:42px;line-height:1;font-weight:950;color:#f5b83d;text-shadow:0 4px 18px #f5b83d33}.history-title-row h1{margin:4px 0 0}.playful-strip{display:flex;gap:6px;overflow:auto;margin:10px 0}.story-pill{background:#17304e;border:1px solid #315c91;border-radius:999px;padding:7px 10px;font-size:10px;white-space:nowrap}.summary-card{position:relative;overflow:hidden}.story-icon{font-size:24px;margin-bottom:3px}.summary-card h2{font-size:18px}.summary-card p{font-size:13px;line-height:1.65}.map-time-layer{pointer-events:none}.history-map-badge{position:absolute;z-index:900;left:10px;bottom:10px;background:#07101fe8;border:1px solid #38506e;border-radius:10px;padding:7px 9px;color:#fff;font-size:10px;backdrop-filter:blur(6px);max-width:min(360px,calc(100% - 20px));line-height:1.35}.history-map-info{position:absolute;z-index:900;right:10px;top:10px;width:min(300px,calc(100% - 20px));background:#07101fe8;border:1px solid #38506e;border-radius:14px;padding:9px 11px;color:#fff;backdrop-filter:blur(8px);box-shadow:0 8px 24px #0006;pointer-events:none}.history-map-info .history-map-kicker{font-size:9px;text-transform:uppercase;letter-spacing:.5px;color:#f5b83d;font-weight:950}.history-map-info strong{display:block;font-size:12px;margin-top:2px}.history-map-info span{display:block;font-size:10px;color:#dce8f5;margin-top:3px;line-height:1.35}.history-map-info.new{animation:historyPulse .65s ease-out}@keyframes historyPulse{0%{transform:scale(.94);opacity:.25}100%{transform:scale(1);opacity:1}}.history-map-feature{filter:drop-shadow(0 2px 3px rgba(0,0,0,.55))}.history-map-feature-new{stroke-dashoffset:0}.leaflet-pane.leaflet-historicalPane{z-index:650}.history-map-feature-new{animation:featurePulse 1.1s ease-out}@keyframes featurePulse{0%{opacity:.25}35%{opacity:1}100%{opacity:1}}
+.history-sheet{background:linear-gradient(180deg,#081526,#0b1c31);padding:18px 12px 28px}.date-hero{font-size:42px;line-height:1;font-weight:950;color:#f5b83d;text-shadow:0 4px 18px #f5b83d33}.history-title-row h1{margin:4px 0 0}.playful-strip{display:flex;gap:6px;overflow:auto;margin:10px 0}.story-pill{background:#17304e;border:1px solid #315c91;border-radius:999px;padding:7px 10px;font-size:10px;white-space:nowrap}.summary-card{position:relative;overflow:hidden}.story-icon{font-size:24px;margin-bottom:3px}.summary-card h2{font-size:18px}.summary-card p{font-size:13px;line-height:1.65}.map-time-layer{pointer-events:none}.history-map-badge{position:absolute;z-index:900;left:10px;bottom:10px;background:#07101fe8;border:1px solid #38506e;border-radius:10px;padding:7px 9px;color:#fff;font-size:10px;backdrop-filter:blur(6px)}
 .lesson{margin-top:10px;border-radius:18px;overflow:hidden;background:#0b1a2d;border:1px solid #294563}.lesson-img{width:100%;height:190px;object-fit:cover;display:block;background:#142942}.lesson-placeholder{height:190px;display:flex;align-items:center;justify-content:center;font-size:58px;background:#142942}.lesson-body{padding:13px}.lesson-kicker{font-size:10px;color:#f5b83d;font-weight:900;text-transform:uppercase}.lesson h2{margin:4px 0 7px;font-size:20px}.lesson p{font-size:12px;line-height:1.55;color:#dbe6f1;margin:7px 0}.lesson-card{margin-top:9px;padding:10px;border-radius:13px;background:#10243a}.lesson-card b{display:block;color:#f5b83d;font-size:10px;margin-bottom:3px}.lesson-challenge{margin-top:10px;padding:10px;border-radius:13px;background:#17304e;font-size:11px}.lesson-credit{font-size:8px!important;color:#8498ae!important;margin-top:5px!important}
 
 @media(max-width:600px){.date-hero{font-size:36px}.history-sheet{padding:14px 9px 24px}}
@@ -129,8 +129,6 @@ input,button{font:inherit;border-radius:10px;border:1px solid var(--line);paddin
 .lesson-photo figcaption{padding:9px 12px;font-size:.78rem;line-height:1.35;background:rgba(255,255,255,.96);color:#52606d}
 .lesson-photo .photo-credit{display:block;margin-top:3px;font-size:.68rem;opacity:.75}
 .lesson-map-build{margin:10px 0;padding:10px 12px;border-radius:14px;background:linear-gradient(135deg,#eef7ff,#f7f3ff);font-weight:700;font-size:.86rem}
-.step-action{display:flex;align-items:center;gap:4px}.step-action button{padding:9px 11px}.step-action .step-inline{height:40px}
-.locate-button{padding:8px 6px;font-size:18px;background:#17304e;border:1px solid #315c91;display:flex;align-items:center;justify-content:center}.locate-button.locating{opacity:.7;cursor:wait}.locate-button.success{background:#123b29;border-color:#2f8f61}
 </style>
 </head>
 <body>
@@ -140,7 +138,7 @@ input,button{font:inherit;border-radius:10px;border:1px solid var(--line);paddin
   <div class="top-menu"><label for="scopeSelect">Carte</label><select id="scopeSelect"><option value="city">📍 Ville</option><option value="region">🧭 Région</option><option value="country">🇫🇷 Pays</option><option value="europe">🇪🇺 Europe</option><option value="world">🌍 Monde</option></select></div>
 </section>
 <div id="paymentBox" class="payment-box hidden"><b>Passer à <span id="selectedPlan">Famille</span></b><div id="paymentGains"></div><div class="payments"><button data-pay="card">💳 Carte</button><button data-pay="paypal">🅿️ PayPal</button><button data-pay="wallet">📱 Apple / Google Pay</button></div><small>Paiement réel à connecter avant mise en production.</small></div>
-<div class="controls"><input id="search" value="Avignon" placeholder="Rechercher une ville…"><button id="go" type="button">Explorer</button><button id="locate" type="button" class="locate-button" aria-label="Me géolocaliser" title="Me géolocaliser">📍</button></div>
+<div class="controls"><input id="search" value="Avignon" placeholder="Rechercher une ville…"><button id="go">Explorer</button></div>
 <div id="map"></div>
 <section id="panel" class="panel" aria-label="Dates historiques"><div class="panel-head" id="dragHandle"><h2 id="title">Avignon</h2><span class="drag-hint">↕ Maintenir pour déplacer</span><button id="closePanel" class="panel-close">×</button></div><div id="events"></div></section>
 <button id="openPanel" class="panel-toggle" aria-label="Afficher les explications">ℹ️</button>
@@ -150,17 +148,13 @@ input,button{font:inherit;border-radius:10px;border:1px solid var(--line);paddin
 <span>Préhistoire</span><span>Antiquité</span><span>Moyen Âge</span><span>Époque moderne</span><span>Époque contemporaine</span>
 </div>
 <input id="timeline" class="timeline" type="range" min="-3000" max="2026" value="2026" step="1">
- <div class="actions"><div class="step-action"><select id="backStep" class="step-inline" aria-label="Pas de recul"><option value="5">5 ans</option><option value="10" selected>10 ans</option><option value="25">25 ans</option><option value="50">50 ans</option><option value="100">100 ans</option></select><button id="back" type="button" aria-label="Reculer">◀</button></div><button id="play" class="play" type="button">▶ Lecture</button><div class="step-action"><button id="next" type="button" aria-label="Avancer">▶</button><select id="nextStep" class="step-inline" aria-label="Pas d'avance"><option value="5">5 ans</option><option value="10" selected>10 ans</option><option value="25">25 ans</option><option value="50">50 ans</option><option value="100">100 ans</option></select></div></div>
+ <div class="actions"><button id="back">◀ <select id="backStep" class="step-inline" aria-label="Pas de recul"><option value="5">5 ans</option><option value="10" selected>10 ans</option><option value="25">25 ans</option><option value="50">50 ans</option><option value="100">100 ans</option></select></button><button id="play" class="play">▶ Lecture</button><button id="next"><select id="nextStep" class="step-inline" aria-label="Pas d'avance"><option value="5">5 ans</option><option value="10" selected>10 ans</option><option value="25">25 ans</option><option value="50">50 ans</option><option value="100">100 ans</option></select> ▶</button></div>
  <div class="hint">Tape une ville puis déplace la frise. Les données connues avant ou à l’année choisie sont affichées.</div>
 </div>
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script>
 const $=id=>document.getElementById(id);
 const map=L.map('map',{zoomControl:true,scrollWheelZoom:true,touchZoom:true,doubleClickZoom:true,dragging:true}).setView([43.9493,4.8055],5);
-// Couche historique dédiée : elle reste au-dessus des 3 fonds (carte, relief, satellite).
-map.createPane('historicalPane');
-map.getPane('historicalPane').style.zIndex=650;
-map.getPane('historicalPane').style.pointerEvents='auto';
 const streetLayer=L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{attribution:'© OpenStreetMap contributors'});
 const reliefLayer=L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png',{maxZoom:17,attribution:'© OpenTopoMap contributors'});
 const satelliteLayer=L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',{maxZoom:19,attribution:'Tiles © Esri'});
@@ -188,8 +182,6 @@ mapModeControl.onAdd=function(){
   });
   return box;
 };
-let data,timer=null,infoScope='city',selectedEvent=null,lastPlaceKey='',lastScope='';
-let geolocatedPlace=null;
 mapModeControl.addTo(map);
 // Force the control immediately below Leaflet's + / − control.
 const zoomControlEl=map.getContainer().querySelector('.leaflet-control-zoom');
@@ -201,18 +193,17 @@ setMapMode('street');
 
 let marker=L.marker([43.9493,4.8055]).addTo(map);
 let territoryLayer=L.geoJSON(null,{style:f=>({color:f.properties?.color||'#f5b83d',weight:2,fillOpacity:.12})}).addTo(map);
-let historicalVectorLayer=L.layerGroup([], {pane:'historicalPane'}).addTo(map);
+let historicalVectorLayer=L.layerGroup().addTo(map);
+let data,timer=null,infoScope='city',selectedEvent=null,lastPlaceKey='',lastScope='';
 
 const fmt=y=>y<0?Math.abs(y)+' av. J.-C.':y;
 function place(){
   if(!data)return null;
   const q=$('search').value.trim().toLowerCase();
-  const found=data.places.find(p=>p.name.toLowerCase()===q)
+  return data.places.find(p=>p.name.toLowerCase()===q)
     ||data.places.find(p=>p.aliases?.some(a=>a.toLowerCase()===q))
-    ||data.places.find(p=>p.name.toLowerCase().includes(q));
-  if(found)return found;
-  if(geolocatedPlace && q===geolocatedPlace.name.toLowerCase())return geolocatedPlace;
-  return data.places[0];
+    ||data.places.find(p=>p.name.toLowerCase().includes(q))
+    ||data.places[0];
 }
 
 /* IMPORTANT: the map is recentered only when the selected place/scope changes.
@@ -244,254 +235,72 @@ function centerMapForScope(p,force=false){
 }
 
 function renderHistoricalMap(p,y){
+  // 5 périodes historiques × 3 fonds distincts. Aucun cercle ni tracé linéaire.
   historicalVectorLayer.clearLayers();
-  if(!p)return;
-
-  const allFeatures=(data?.mapHistory||[]).filter(f=>f.scope==='city'||!f.scope);
-
-  // Reconstruction progressive du tissu urbain : la carte moderne n'est pas
-  // simplement recouverte de quelques traits. On fait évoluer une véritable
-  // emprise bâtie par grandes étapes, pilotées exclusivement par la frise.
-  const urbanBase=(allFeatures.find(f=>(f.label||'').includes('Extension urbaine moderne'))||{}).coords?.[0]||[];
-  const medievalBase=(allFeatures.find(f=>(f.label||'').includes('Extension urbaine médiévale'))||{}).coords?.[0]||[];
-  const ancientBase=(allFeatures.find(f=>(f.label||'').includes('Noyau urbain antique'))||{}).coords?.[0]||[];
-  const footprintPhases=[];
-  const makeFootprint=(source,from,to,label,fill,scale)=>{
-    if(!source?.length)return;
-    const c=source.reduce((a,q)=>[a[0]+q[0]/source.length,a[1]+q[1]/source.length],[0,0]);
-    const ring=source.map(q=>[c[0]+(q[0]-c[0])*scale,c[1]+(q[1]-c[1])*scale]);
-    footprintPhases.push({type:'polygon',coords:[ring],from,to,label,fill});
-  };
-  makeFootprint(ancientBase,-200,900,'🏛️ Empreinte bâtie antique','#9d7448',1);
-  makeFootprint(medievalBase,900,1177,'🏘️ Développement urbain médiéval','#a96f43',.72);
-  makeFootprint(medievalBase,1177,1335,'🏘️ Extension de la cité au XIIIe siècle','#aa7042',.88);
-  makeFootprint(medievalBase,1335,1377,'🏙️ Expansion pontificale du XIVe siècle','#9e633d',1.08);
-  makeFootprint(medievalBase,1377,1700,'🏙️ Ville intra-muros stabilisée','#94613f',1.08);
-  makeFootprint(medievalBase,1700,1850,'🏘️ Transformations des XVIIe-XVIIIe siècles','#9a6945',1.12);
-  makeFootprint(urbanBase,1850,1900,'🏘️ Premières extensions extra-muros','#8e6b52',.62);
-  makeFootprint(urbanBase,1900,1950,'🏙️ Extension urbaine du XXe siècle','#7e6959',.78);
-  makeFootprint(urbanBase,1950,1975,'🏙️ Urbanisation accélérée','#71665e',.90);
-  makeFootprint(urbanBase,1975,2000,'🏙️ Extension contemporaine','#65615d',.96);
-  makeFootprint(urbanBase,2000,2026,'🏙️ Empreinte urbaine actuelle','#5b5b59',1);
-
-  const buildRanges={
-    '🪨 Rocher des Doms — cœur des premières occupations':[-3000,-200],
-    '🏛️ Noyau urbain antique — schématique':[-200,450],
-    '🛡️ Enceinte du Bas-Empire — tracé schématique':[300,450],
-    '🧱 Extension urbaine médiévale — schématique':[900,1230],
-    '🌉 Pont Saint-Bénézet — tracé schématique':[1177,1205],
-    '🏰 Palais des Papes — emprise simplifiée':[1335,1364],
-    '🏰 Grande enceinte du XIVe siècle — schématique':[1355,1377],
-    '💧 Réseau de canaux — schématique':[1320,1400],
-    '🚂 Axe ferroviaire — schématique':[1849,1854],
-    '🛣️ Rue de la République — axe schématique':[1856,1865],
-    '🛣️ Rue Thiers — axe schématique':[1869,1875],
-    '🏙️ Extension urbaine moderne — schématique':[1900,2026],
-    '🌊 Ouvrages de protection contre les crues — schématique':[1849,1860],
-    '💧 Réseau moderne de protection hydraulique — schématique':[1956,1973],
-    '🚶 Promenade des remparts — emprise schématique':[1943,2026]
-  };
-  const clamp=(v,a=0,b=1)=>Math.max(a,Math.min(b,v));
-  const progressOf=f=>{
-    const r=buildRanges[f.label]||[f.from??-99999,f.to??(f.from??-99999)];
-    if(y<r[0])return 0;
-    if(r[1]<=r[0])return 1;
-    return clamp((y-r[0])/(r[1]-r[0]));
-  };
-  const scaleRing=(ring,t)=>{
-    const clean=(ring||[]).filter(q=>Array.isArray(q)&&q.length>=2);
-    if(!clean.length)return clean;
-    const c=clean.reduce((a,q)=>[a[0]+q[0]/clean.length,a[1]+q[1]/clean.length],[0,0]);
-    const sc=.12+.88*t;
-    return clean.map(q=>[c[0]+(q[0]-c[0])*sc,c[1]+(q[1]-c[1])*sc]);
-  };
-  const corridor=(coords,width=.00045)=>{
-    if(!coords||coords.length<2)return null;
-    const out=[];
-    for(let i=0;i<coords.length-1;i++){
-      const a=coords[i],b=coords[i+1],dx=b[1]-a[1],dy=b[0]-a[0],len=Math.hypot(dx,dy)||1;
-      const ox=width*dy/len,oy=width*dx/len;
-      if(i===0)out.push([a[0]-oy,a[1]+ox],[a[0]+oy,a[1]-ox]);
-      out.push([b[0]+oy,b[1]-ox],[b[0]-oy,b[1]+ox]);
-    }
-    return out;
-  };
-
-  // Avant les grandes constructions, le fond moderne est volontairement atténué.
-  // À mesure que la frise avance vers 2026, le fond réel reprend progressivement toute sa visibilité.
-  const presentProgress=clamp((y+3000)/(2026+3000));
-  // Avant l'urbanisation moderne, le fond contemporain est fortement atténué.
-  // La visibilité du fond actuel revient progressivement à mesure que la frise
-  // atteint les XIXe-XXIe siècles.
-  const baseOpacity=y<1850 ? .08 : y<1950 ? .08+.22*((y-1850)/100) : .30+.70*((y-1950)/76);
-  [streetLayer,reliefLayer,satelliteLayer].forEach(l=>l.setOpacity(clamp(baseOpacity,0.08,1)));
-
-  // Une surface historique couvre le territoire ancien au début du voyage :
-  // on ne montre donc plus simplement la ville moderne avec quelques traits par-dessus.
-  const bounds=map.getBounds();
-  const eraWash=L.rectangle(bounds,{pane:'historicalPane',stroke:false,fillColor:'#efe5cc',fillOpacity:.30*(1-presentProgress),interactive:false});
-  historicalVectorLayer.addLayer(eraWash);
-
-  // Les grandes emprises urbaines sont des SURFACES, pas des tracés.
-  // Elles s'agrandissent avec la frise et restent visibles une fois construites.
-  const visibleFeatures=allFeatures.concat(footprintPhases);
-  visibleFeatures.forEach(f=>{
-    const t=progressOf(f);
-    if(t<=0)return;
-    const label=(f.label||'').toLowerCase();
-    const style={pane:'historicalPane',stroke:false,fillOpacity:.58,interactive:false};
-
-    if(f.type==='polygon'&&f.coords){
-      const rings=f.coords.map(r=>scaleRing(r,t)).filter(r=>r.length>=3);
-      if(rings.length){
-        let fill='#b87945';
-        if(label.includes('antique'))fill='#c89d63';
-        if(label.includes('extension urbaine'))fill='#ad7747';
-        if(label.includes('grande enceinte'))fill='#8f5b3d';
-        if(label.includes('palais'))fill='#d5ad55';
-        historicalVectorLayer.addLayer(L.polygon(rings,{...style,fillColor:fill,fillOpacity:.18+.42*t}));
-      }
-      return;
-    }
-
-    if(f.type==='point'&&f.coords){
-      historicalVectorLayer.addLayer(L.circleMarker(f.coords,{pane:'historicalPane',radius:8+7*t,stroke:false,fillColor:'#9a663d',fillOpacity:.72,interactive:false}));
-      return;
-    }
-
-    // Les routes, canaux et le pont deviennent de vraies bandes cartographiques
-    // remplies, sans les anciens traits colorés/dashés qui donnaient l'impression de courses.
-    if(f.type==='line'&&f.coords){
-      const visible=f.coords.slice(0,Math.max(2,Math.ceil((f.coords.length-1)*t)+1));
-      const width=label.includes('pont')?.0008:label.includes('ferroviaire')?.00055:label.includes('canal')?.00038:.00048;
-      const poly=corridor(visible,width);
-      if(poly&&poly.length>=4){
-        const fill=label.includes('pont')?'#6e6254':label.includes('canal')?'#5c91a3':label.includes('ferroviaire')?'#6b625c':'#777066';
-        historicalVectorLayer.addLayer(L.polygon(poly,{pane:'historicalPane',stroke:false,fillColor:fill,fillOpacity:.62*t,interactive:false}));
-      }
-    }
-  });
-
-  const events=infoScope==='city'?(p.events||[]):[];
-  const past=events.filter(e=>e[0]<=y);
-  const latest=past.length?past[past.length-1]:null;
-  let info=$('mapHistoryInfo');
-  if(!info){info=document.createElement('div');info.id='mapHistoryInfo';info.className='history-map-info';$('map').appendChild(info)}
-  if(latest){
-    const detail=latest[6]||latest[7]||latest[8]||latest[2]||'La carte évolue avec cette étape historique.';
-    info.innerHTML='<div class="history-map-kicker">🕰️ Carte en '+escapeSvgText(fmt(y))+'</div><strong>'+escapeSvgText(latest[1])+'</strong><span>'+escapeSvgText(detail)+'</span>';
-  }else{
-    info.innerHTML='<div class="history-map-kicker">🕰️ Carte en '+escapeSvgText(fmt(y))+'</div><strong>Le territoire se construit progressivement</strong><span>Déplace la frise : les surfaces urbaines et les constructions apparaissent au moment où elles existent.</span>';
+  const eras=[
+    {name:'Préhistoire',from:-3000,to:-200,desc:'Paysage naturel et premières occupations humaines.'},
+    {name:'Antiquité',from:-200,to:476,desc:'Le noyau urbain antique se développe.'},
+    {name:'Moyen Âge',from:476,to:1492,desc:'Développement de la ville médiévale et des grands monuments.'},
+    {name:'Époque moderne',from:1492,to:1789,desc:'La ville historique se transforme progressivement.'},
+    {name:'Époque contemporaine',from:1789,to:2026,desc:'Extensions urbaines et territoire actuel.'}
+  ];
+  const era=eras.find((e,i)=>y>=e.from&&(y<e.to||i===eras.length-1))||eras[0];
+  const all=(data?.mapHistory||[]).filter(f=>(f.scope==='city'||!f.scope)&&f.type==='polygon'&&Array.isArray(f.coords));
+  let count=0;
+  for(const f of all){
+    const from=Number.isFinite(+f.from)?+f.from:-3000;
+    const to=Number.isFinite(+f.to)?+f.to:2026;
+    if(y<from||y>to)continue;
+    const rings=Array.isArray(f.coords[0]?.[0])?f.coords:[f.coords];
+    if(!rings[0]||rings[0].length<3)continue;
+    const label=String(f.label||'').toLowerCase();
+    let fill='#9c7046';
+    if(label.includes('antique'))fill='#c89d63';
+    else if(label.includes('extension urbaine')||label.includes('enceinte'))fill='#ad7747';
+    else if(label.includes('palais'))fill='#d5ad55';
+    else if(label.includes('moderne'))fill='#829397';
+    historicalVectorLayer.addLayer(L.polygon(rings,{pane:'historicalPane',color:fill,fillColor:fill,weight:1.3,fillOpacity:.23,opacity:.7,interactive:false}));
+    count++;
   }
-  const infoKey=latest?String(latest[0])+'|'+String(latest[1]):'none|'+String(y);
-  if(info.dataset.historyKey!==infoKey){info.dataset.historyKey=infoKey;info.classList.remove('new');void info.offsetWidth;info.classList.add('new')}
-
+  const modeNames={street:'🗺️ Carte',relief:'⛰️ Relief',satellite:'🛰️ Satellite'};
   let badge=$('mapTimeBadge');
   if(!badge){badge=document.createElement('div');badge.id='mapTimeBadge';badge.className='history-map-badge';$('map').appendChild(badge)}
-  const visible=visibleFeatures.filter(f=>progressOf(f)>0);
-  const inBuild=visible.filter(f=>progressOf(f)<1);
-  const currentMode=currentMapMode==='satellite'?'🛰️ Satellite':currentMapMode==='relief'?'⛰️ Relief':'🗺️ Carte';
-  badge.innerHTML='<b>'+currentMode+' · '+escapeSvgText(fmt(y))+'</b><br>🏙️ '+visible.length+' transformations historiques visibles'+(inBuild.length?' · ⚒️ '+inBuild.length+' en construction':'');
-
-  if(window._historyEventMarker)window._historyEventMarker.remove();
-  window._historyEventMarker=null;
+  badge.innerHTML='<b>'+modeNames[currentMapMode]+' · '+era.name+'</b><br>'+fmt(y)+' · '+era.desc;
+  let info=$('mapHistoryInfo');
+  if(!info){info=document.createElement('div');info.id='mapHistoryInfo';info.className='history-map-info';$('map').appendChild(info)}
+  info.innerHTML='<div class="history-map-kicker">'+modeNames[currentMapMode]+' · '+era.name+'</div><strong>'+fmt(y)+'</strong><span>'+era.desc+'</span>';
+  if(window._historyEventMarker){window._historyEventMarker.remove();window._historyEventMarker=null;}
 }
-
-map.on('moveend',()=>{
-  if(data){const y=+$('timeline').value,p=place();if(p)renderHistoricalMap(p,y)}
-});
 
 function escapeSvgText(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
 function lessonPhotoFor(title,year){
   const base='https://commons.wikimedia.org/wiki/Special:Redirect/file/';
   const enc=f=>base+encodeURIComponent(f).replace(/%2F/g,'/');
-  const commons=(file,caption)=>({url:enc(file),credit:'Wikimedia Commons — '+file,caption});
-  const exactFlood2003='https://cdn-s-www.ledauphine.com/images/92772EEF-75F7-435F-97D2-D9AE086B42BE/NW_detail/le-3-decembre-la-crue-du-rhone-est-montee-jusqu-a-7-62-m-a-avignon-photo-archives-le-dl-pierre-deleuil-1542214452.jpg';
   const photos={
-    '-3000':commons('Avignon - rocher des Doms.jpg','Le Rocher des Doms : le relief qui domine le Rhône et le site des premières occupations.'),
-    '-200':commons('Album Laincel 18 Rocher des Doms et St Martin.jpg','Vue historique du Rocher des Doms, utile pour comprendre le site d’Avenio.'),
-    '50':commons('Avignon (3221152899).jpg','Vue du site d’Avignon et du Rhône, pour situer la cité dans le couloir rhodanien.'),
-    '300':commons('.00 3165 Stadtmauer von Avignon (Rundturm) - Frankreich.jpg','Tour des remparts : photographie actuelle d’un élément défensif du site urbain.'),
-    '1000':commons('.00 3171 Stadtmauer von Avignon, Frankreich.jpg','Vue d’un tronçon des fortifications, en lien avec l’extension et la défense de la ville.'),
-    '1150':commons('1020 Cathédrale Notre-Dame-des-Doms d’Avignon golden statue Photo by Giles Laurent.jpg','Notre-Dame des Doms : la cathédrale romane qui domine le Rocher des Doms.'),
-    '1177':commons('Le pont Saint-Bénézet dit Pont d\'Avignon, la chapelle Saint-Bénézet et la chapelle Saint-Nicolas - A7834.jpg','Photographie historique du Pont Saint-Bénézet et de ses chapelles.'),
-    '1200':commons('Avignon - Remparts XIIeme Siècle.JPG','Les remparts du XIIe siècle permettent de visualiser l’organisation défensive médiévale.'),
-    '1226':commons('ETH-BIB-Avignon, Porte St. Rock von aussen-Dia 247-10471.tif','Une porte des fortifications : image liée au système défensif frappé par le siège de 1226.'),
-    '1231':commons('Les remparts Anonyme Archives municipales Avignon 1847.jpg','Vue ancienne des remparts d’Avignon, en lien avec leur reconstruction et leur évolution.'),
-    '1309':commons('Avignon - Palais des Papes - btv1b106645816.jpg','Vue historique du Palais des Papes, cœur du pouvoir pontifical à Avignon.'),
-    '1316':commons('Avignon, le château des Papes - btv1b6929402d.jpg','Le Palais des Papes, résidence pontificale à partir du XIVe siècle.'),
-    '1320':commons('Avignon - Boulevard de l\'Oulle - View NNE along the 14th century Ramparts built by the popes, restored by Eugène Viollet-le-Duc.jpg','Les remparts du XIVe siècle au bord du Rhône, en lien avec les ouvrages défensifs et hydrauliques.'),
-    '1335':commons('Avignon - Jardin de Benoit XII - Panorama View on Consistoire & Chapelle Saint-Jean du Palais des Papes 01.jpg','Vue du Palais de Benoît XII, lancé en 1335.'),
-    '1342':commons('Avignon - palais des papes - Grande Audience 1.jpg','La Grande Audience du Palais des Papes, liée à l’agrandissement du complexe pontifical.'),
-    '1348':commons('Avignon palais serrur clement VI.JPG','Portrait de Clément VI au Palais des Papes, en lien avec l’achat d’Avignon en 1348.'),
-    '1352':commons('Avignon - Boulevard de l\'Oulle - View NNE - 14th century City Walls built by the popes, restored by Eugène Viollet-le-Duc.jpg','Les grandes murailles pontificales, renforcées au XIVe siècle.'),
-    '1355':commons('Avignon - Boulevard de l\'Oulle - View NNE along the 14th century City Walls built by the popes, restored by Eugène Viollet-le-Duc.jpg','Vue des remparts du XIVe siècle, en lien avec l’extension de l’enceinte.'),
-    '1377a':commons('Avignon - Boulevard de l\'Oulle - View SSW along the 14th century City Walls built by the popes, restored by Eugène Viollet-le-Duc.jpg','Les remparts du XIVe siècle, achevés autour de 1377.'),
-    '1377b':commons('Avignon - Boulevard de l\'Oulle - View SSW along the medieval ramparts of Avignon.jpg','Vue des remparts médiévaux achevés à la fin du XIVe siècle.'),
-    '1378':commons('Avignon - palais des papes - Grande Audience 2.jpg','Intérieur du Palais des Papes : un lieu directement associé au rôle politique d’Avignon au temps du Grand Schisme.'),
-    '1414':commons('Pont d\'Avignon chapelle Saint Bénézet.jpg','Le Pont Saint-Bénézet et sa chapelle, en lien avec le Châtelet et les ouvrages du pont.'),
-    '1610':commons("Archives municipales d'Avignon - ancienne salle publique du mont-de-piété.jpg",'L’ancienne salle publique du Mont-de-Piété, directement liée à l’institution créée à Avignon.'),
-    '1675':commons('Avignon tour allées del\'Oulle.jpg','Les allées de l’Oulle : paysage des promenades aménagées près des remparts.'),
-    '1750':commons('Avignon - Boulevard de l\'Oulle - Pont Edouard Daladier - Panorama View on Rhône river bank in front of the ramparts of Avignon - Pont Saint-Bénézet (Pont d\'Avignon) 01.jpg','Les abords de l’Oulle et du Rhône, directement liés aux promenades historiques.'),
-    '1791':commons('Avignon Entrée de la ville.jpg','Entrée historique d’Avignon : image du franchissement des remparts et de la ville devenue française.'),
-    '1840a':commons('Avignon Zeiller 15793.jpg','Vue historique des remparts, utile pour replacer les monuments dans le paysage urbain du XIXe siècle.'),
-    '1840b':commons('Les remparts d\'Avignon Antoine-Alphonse Montfort (1808-1884).jpg','Vue artistique et historique des remparts, au moment où leur protection patrimoniale commence à se renforcer.'),
-    '1849a':commons('Avignon - Boulevard de l\'Oulle - View NE on the medieval ramparts of Avignon - Bords du Rhône (Avignon).jpg','Le Rhône et les remparts : paysage directement lié aux ouvrages de protection contre les crues.'),
-    '1849b':commons('Vue prise de la gare du chemine de fer - Avignon - Médiathèque de l\'architecture et du patrimoine - APMH00007631.jpg','Vue historique depuis la gare, liée à l’arrivée du chemin de fer à Avignon.'),
-    '1854':commons('Avignon tramway Gare.jpg','La gare et les transports : image liée au développement des liaisons ferroviaires.'),
-    '1856a':commons('Avignon Cours et rue de la République.jpg','Vue historique de la rue de la République, nouvel axe ouvert au XIXe siècle.'),
-    '1856b':commons('Remparts d\'Avignon Inondation 1856 par Édouard Baldus.jpg','Photographie originale des remparts lors de la crue de 1856.'),
-    '1860':commons('Avignon - restoration remparts.JPG','Les remparts restaurés : photographie directement liée aux travaux de restauration.'),
-    '1862':commons('Remparts - Vue intra-muros - Avignon - Médiathèque de l\'architecture et du patrimoine - APMH00007638.jpg','Vue intra-muros des remparts, document photographique du patrimoine.'),
-    '1869':commons('Avignon - Rue de la Republique - View East - Neo-Baroque architecture.jpg','L’axe urbain moderne et ses façades, dans le contexte des grands travaux du XIXe siècle.'),
-    '1892':commons('Avignon Monument du Centenaire.jpg','Le Monument du Centenaire, érigé pour commémorer le rattachement d’Avignon à la France.'),
-    '1896':commons('Porte Limbert Avignon AMA.jpg','La Porte Limbert photographiée avant sa démolition en 1896.'),
-    '1906':commons('Avignon.Remparts.Vers 1890.jpg','Vue historique des remparts, avant leur classement de 1906.'),
-    '1922':commons('Avignon passage du Paris-Nice 1922 aux remparts.jpg','Photographie du Critérium Paris-Nice 1922 passant devant les remparts.'),
-    '1935':commons('Avignon - Place Crillon - View WSW on Porte de l\'Oulle - Medieval 14th century city walls built by the popes, restored by Eugène Viollet-le-Duc.jpg','Les remparts servant de décor au paysage urbain, en lien avec le Circuit des Remparts.'),
-    '1943':commons('Les batardeaux au début du XXème siècle Archives municipales d\'Avignon,.jpg','Les dispositifs de fermeture et de protection des remparts, dans le contexte de leur transformation en promenade.'),
-    '1956':commons('Avignon - Boulevard de l\'Oulle - View NNE on Eugene Viollet-le-Duc\'s \'restoration\' (re-invention) of the 14th century Ramparts of Avignon.jpg','Les remparts et leurs protections : image liée à l’évolution du système de défense contre les crues.'),
-    '1974':commons('Avignon - Montée des Moulins - View NW on Côtes du Rhône vineyard, ramparts, Pont St-Bénézet, Île de la Barthelasse, Villeneuve-lès-Avignon & Fort Saint-André.jpg','Le secteur du Rocher des Doms et des remparts, dans le paysage urbain contemporain.'),
-    '1975':commons('Avignon - Boulevard de l\'Oulle - Pont Edouard Daladier - Panorama View on Rhône river bank in front of the ramparts of Avignon - Pont Saint-Bénézet (Pont d\'Avignon) 04.jpg','Les allées de l’Oulle et le paysage du Rhône, en lien avec le déplacement du monument.'),
-    '1995':commons('Avignon - Place de l\'Amírande - View West on Palais des Papes d\'Avignon (Tour Saint Laurent, Grande Audience & Tour de la Garde-Robe).jpg','Le Palais des Papes et le centre historique, éléments majeurs du site inscrit au patrimoine mondial.'),
-    '2003':{url:exactFlood2003,credit:'Archives Le Dauphiné Libéré — Pierre Deleuil, décembre 2003',caption:'La crue de décembre 2003 : le Rhône monte à Avignon et submerge les abords de la ville. Photographie d’archive prise pendant l’événement.'},
-    '2007':commons('Avignon (vue depuis le Palais des Papes).jpg','Vue d’Avignon depuis le Palais des Papes, pour situer le centre historique concerné par le plan de sauvegarde.'),
-    '2026':commons('Avignon - Pont Édouard Daladier - View NE towards Pont Saint-Bénézet (Pont d\'Avignon), Jardin des doms, Avignon cathedral & Palais des Papes.jpg','Vue contemporaine du patrimoine d’Avignon, support de la médiation numérique actuelle.'),
-    '-900':{url:'https://upload.wikimedia.org/wikipedia/commons/1/1a/Album_Laincel_20_Rocher_des_Doms_et_St_Martin.jpg',credit:'Wikimedia Commons — Album Laincel 20 Rocher des Doms et St Martin.jpg',caption:'Vue historique du Rocher des Doms et de Saint-Martin, pour situer le paysage avant les grandes extensions urbaines.'},
-    '737':{url:'https://upload.wikimedia.org/wikipedia/commons/5/59/Album_Laincel_19_Rocher_des_Doms_et_St_Martin.jpg',credit:'Wikimedia Commons — Album Laincel 19 Rocher des Doms et St Martin.jpg',caption:'Vue ancienne du Rocher des Doms et de Saint-Martin, support visuel pour raconter les bouleversements du haut Moyen Âge.'},
-    '898':{url:'https://upload.wikimedia.org/wikipedia/commons/1/1c/Avignon%2C_Saint_Pierre%2C_autel.JPG',credit:'Wikimedia Commons — Avignon, Saint Pierre, autel.JPG',caption:'L’église Saint-Pierre, témoin du patrimoine religieux ancien d’Avignon et support visuel de la présence de l’Église dans la cité.'},
-    '1017':{url:'https://upload.wikimedia.org/wikipedia/commons/4/44/Avignon_-_Place_Saint-Pierre_-_%C3%89glise_Saint-Pierre_1358_-_Avignon_St_Pierre_church_%28inside%29_03.jpg',credit:'Wikimedia Commons — Avignon - Place Saint-Pierre - Église Saint-Pierre 1358 - Avignon St Pierre church (inside) 03.jpg',caption:'L’église Saint-Pierre permet de visualiser un lieu religieux majeur du centre historique.'},
-    '1125':{url:'https://upload.wikimedia.org/wikipedia/commons/6/61/Avignon%2C_%C3%89glise_Saint_Pierre.JPG',credit:'Wikimedia Commons — Avignon, Église Saint Pierre.JPG',caption:'L’église Saint-Pierre, au cœur du tissu urbain médiéval, illustre les lieux de pouvoir et de vie de la commune.'},
-    '1129':{url:'https://upload.wikimedia.org/wikipedia/commons/a/ad/Avignon_-_Place_Saint-Pierre_-_%C3%89glise_Saint-Pierre_1358_-_Avignon_St_Pierre_church_%28inside%29_06.jpg',credit:'Wikimedia Commons — Avignon - Place Saint-Pierre - Église Saint-Pierre 1358 - Avignon St Pierre church (inside) 06.jpg',caption:'Un autre regard sur Saint-Pierre, pour accompagner l’apparition du Consulat et l’organisation autonome de la cité.'},
-    '1154':{url:'https://upload.wikimedia.org/wikipedia/commons/2/25/Avignon_-_%C3%89glise_Saint-Pierre_-_Tapisserie_repr%C3%A9sentant_l%E2%80%99%C3%A9glise.jpg',credit:'Wikimedia Commons — Avignon - Église Saint-Pierre - Tapisserie représentant l’église.jpg',caption:'Une représentation de l’église Saint-Pierre, support visuel pour la période où les libertés communales sont renforcées.'},
-    '1185':{url:'https://upload.wikimedia.org/wikipedia/commons/0/03/Hubert_de_Saint-Didier_-_Pont_St._B%C3%A9nezet%2C_Avignon.jpg',credit:'Wikimedia Commons — Hubert de Saint-Didier - Pont St. Bénezet, Avignon.jpg',caption:'Vue artistique du Pont Saint-Bénézet, directement liée à l’achèvement traditionnel du pont au XIIe siècle.'},
-    '1243':{url:'https://upload.wikimedia.org/wikipedia/commons/4/48/Album_Laincel_13_Petit_Palais_et_Pont_St_Benezet.jpg',credit:'Wikimedia Commons — Album Laincel 13 Petit Palais et Pont St Benezet.jpg',caption:'Vue historique du Petit Palais et du Pont Saint-Bénézet, dans le paysage urbain médiéval d’Avignon.'},
-    '1251':{url:'https://upload.wikimedia.org/wikipedia/commons/a/a8/Avignon_et_son_pont_vers_1885_Gravure_extraite_de_Histoire_de_France_de_V._Canet_Descl%C3%A9e_de_Brouwer_1889.jpg',credit:'Wikimedia Commons — Avignon et son pont vers 1885 Gravure extraite de Histoire de France de V. Canet Desclée de Brouwer 1889.jpg',caption:'Gravure historique d’Avignon et de son pont, utilisée ici pour représenter la ville médiévale après la fin de son autonomie communale.'},
-    '1274':{url:'https://upload.wikimedia.org/wikipedia/commons/4/43/Album_Laincel_43_Tour_Philippe_le_Bel.jpg',credit:'Wikimedia Commons — Album Laincel 43 Tour Philippe le Bel.jpg',caption:'La tour Philippe-le-Bel, sur l’autre rive, rappelle le contexte politique et territorial du Rhône face à Avignon.'},
-    '1308':{url:'https://upload.wikimedia.org/wikipedia/commons/d/d1/Avignon._1897._Palais_des_papes._29.jpg',credit:'Wikimedia Commons — Avignon. 1897. Palais des papes. 29.jpg',caption:'Vue ancienne du Palais des Papes, monument emblématique de la période où Avignon devient le centre du pouvoir pontifical.'},
-    '1362':{url:'https://upload.wikimedia.org/wikipedia/commons/f/f2/Avignon._Ch%C3%A2teau_des_papes._1897.jpg',credit:'Wikimedia Commons — Avignon. Château des papes. 1897.jpg',caption:'Vue ancienne du Palais des Papes, dans la période où la grande enceinte est en construction autour d’une ville en forte croissance.'},
-    '1370':{url:'https://upload.wikimedia.org/wikipedia/commons/7/74/Avignon_1883.jpg',credit:'Wikimedia Commons — Avignon 1883.jpg',caption:'Vue historique d’Avignon permettant de visualiser la silhouette urbaine protégée par la grande enceinte achevée à la fin du XIVe siècle.'},
-    '1790':{url:'https://upload.wikimedia.org/wikipedia/commons/b/b1/Provinces_of_France_%28numered%29.svg',credit:'Wikimedia Commons — Provinces of France (numered).svg',caption:'Carte historique illustrant le contexte territorial de la Révolution et le rattachement ultérieur du Comtat Venaissin à la France.'},
-    '1857':{url:'https://upload.wikimedia.org/wikipedia/commons/2/23/Rue_de_la_Republique%2C_Avignon_-_road_sign_%285822068276%29.jpg',credit:'Wikimedia Commons — Rue de la Republique, Avignon - road sign (5822068276).jpg',caption:'La rue de la République : le nouvel axe urbain ouvert entre la gare et le centre historique à partir de 1856-1857.'},
-    '1863':{url:'https://upload.wikimedia.org/wikipedia/commons/0/0c/Rue_de_la_Republique%2C_Avignon_-_Musee_Lapidaire_%285822076440%29.jpg',credit:'Wikimedia Commons — Rue de la Republique, Avignon - Musee Lapidaire (5822076440).jpg',caption:'Le secteur de la rue de la République et de l’ancien collège des Jésuites, atteint par la deuxième tranche de la grande percée.'},
-    '1867':{url:'https://upload.wikimedia.org/wikipedia/commons/d/da/Rue_Frederic_Mistral%2C_Avignon_-_road_sign_%285821515791%29.jpg',credit:'Wikimedia Commons — Rue Frederic Mistral, Avignon - road sign (5821515791).jpg',caption:'La rue de la République atteint la place de l’Horloge : le nouvel axe transforme profondément les circulations du centre.'}
+    panorama:[enc("Pont d'Avignon, rocher des Doms, palais des papes.jpg"),'Chimigi — Wikimedia Commons — CC BY-SA 2.0 FR'],
+    bridge:[enc('Avignon le pont St-Bénezet depuis le Rocher des Doms.JPG'),'Provence13 — Wikimedia Commons — Creative Commons'],
+    cathedral:[enc('Notre Dame des doms.jpg'),'Lofty — Wikimedia Commons — CC BY 2.0'],
+    palace:[enc('Palais des Papes et place du Palais.jpg'),'Poiesia — Wikimedia Commons — CC BY-SA 3.0'],
+    walls:[enc('Avignon - Remparts.jpg'),'Véronique PAGNIER — Wikimedia Commons — domaine public'],
+    railway:[enc("Gare d'Avignon-Centre.JPG"),'Florian Pépellin — Wikimedia Commons — domaine public'],
+    republic:[enc('Avignon Cours et rue de la République.jpg'),'Wikimedia Commons — domaine public']
   };
-  const keyByYear={1840:['1840a','1840b'],1849:['1849a','1849b'],1856:['1856a','1856b'],1377:['1377a','1377b']};
-  const sameYearIndex=keyByYear[year];
-  if(sameYearIndex){
-    const matching=(title||'').toLowerCase();
-    if(year===1377) return matching.includes('grands remparts')?photos['1377b']:photos['1377a'];
-    if(year===1840) return matching.includes('monuments')?photos['1840b']:photos['1840a'];
-    if(year===1849) return matching.includes('chemin de fer')?photos['1849b']:photos['1849a'];
-    if(year===1856) return matching.includes('crue')?photos['1856b']:photos['1856a'];
-  }
-  return photos[String(year)]||null;
+  let p=photos.panorama,caption='Vue d’Avignon — ce que l’on peut encore observer aujourd’hui.';
+  if(year===-3000){caption='Le Rocher des Doms domine le Rhône : le site des premières occupations.'}
+  else if(year===-200||year===50){caption='Le site d’Avignon vu depuis le Rhône permet de comprendre sa position stratégique.'}
+  else if([300,1231,1355,1377,1860,1935,1974].includes(year)){p=photos.walls;caption='Les remparts actuels permettent de visualiser l’emprise défensive de la ville.'}
+  else if(year===1150){p=photos.cathedral;caption='Notre-Dame des Doms : la cathédrale domine le Rocher des Doms.'}
+  else if(year===1177||year===1226){p=photos.bridge;caption='Le Pont Saint-Bénézet rappelle le franchissement historique du Rhône.'}
+  else if([1309,1316,1335,1342,1348,1378,1610,1791,1892,1995,2026].includes(year)){p=photos.palace;caption='Le Palais des Papes et le centre historique permettent de visualiser le cœur monumental d’Avignon.'}
+  else if(year===1849||year===1854){p=photos.railway;caption='La gare d’Avignon-Centre rappelle le rôle du chemin de fer dans la transformation de la ville.'}
+  else if(year===1856||year===1869){p=photos.republic;caption='Les grands axes modernes ouvrent progressivement la ville au-delà de son organisation médiévale.'}
+  else if([1922,1975,2003].includes(year)){caption='Le paysage urbain et le Rhône permettent de replacer cet événement dans la ville actuelle.'}
+  return {url:p[0],credit:p[1],caption};
 }
 
 function showLessonImage(title,year){
   const box=$('lessonMedia');if(!box)return;
   const media=lessonPhotoFor(title,year);
-  if(!media){ box.innerHTML='<div class="lesson-photo lesson-photo-placeholder"><div style="padding:22px;text-align:center">🗺️</div><figcaption>Nouvelle donnée historique ajoutée à ChronoMap. Illustration photographique à documenter dans la prochaine couche de sources.</figcaption></div>'; return; }
   box.innerHTML='<figure class="lesson-photo"><img loading="lazy" src="'+media.url+'" alt="'+escapeSvgText(title)+'" referrerpolicy="no-referrer"><figcaption>'+escapeSvgText(media.caption)+'<span class="photo-credit">'+escapeSvgText(media.credit)+'</span></figcaption></figure>';
 }
 function showSummary(p,e,scroll){
@@ -560,7 +369,8 @@ function render(){
       if(timer){clearInterval(timer);timer=null;$('play').textContent='▶ Lecture';}
       selectedEvent=chosen;
       $('timeline').value=chosen.year;
-      // Synchronise la carte puis affiche une seule fois la fiche et le défilement.
+      // Affiche immédiatement la fiche, puis synchronise la carte sans la refermer.
+      showSummary(p,chosen,true);
       render();
       showSummary(p,chosen,true);
     };
@@ -571,60 +381,15 @@ function render(){
     const active=y>=(pr.from??-99999)&&y<=(pr.to??99999);
     l.setStyle({opacity:active?1:0,fillOpacity:active?.16:0});
   });
-  // La fiche est gérée explicitement par les actions utilisateur.
-  // Ne jamais la masquer ici : render() est aussi appelé après un clic sur une date.
+  if(!selectedEvent || selectedEvent.year!==y) $('historySheet').style.display='none';
   renderHistoricalMap(p,y);
 }
 
 $('closePanel').onclick=()=>{$('panel').classList.add('closed')};
 $('openPanel').onclick=()=>{$('panel').classList.remove('closed')};
-function closeLesson(){selectedEvent=null;$('historySheet').style.display='none';}
-function runExplorer(){window._chronomapPlaceId=null;lastPlaceKey='';closeLesson();render()}
-$('go').onclick=()=>{geolocatedPlace=null;runExplorer()};
-$('search').addEventListener('keydown',e=>{if(e.key==='Enter'){geolocatedPlace=null;runExplorer()}});
-
-$('locate').onclick=()=>{
-  const button=$('locate');
-  if(!navigator.geolocation){alert('La géolocalisation n’est pas disponible sur cet appareil.');return}
-  button.classList.add('locating');
-  button.textContent='⏳';
-  button.disabled=true;
-  navigator.geolocation.getCurrentPosition(async position=>{
-    const lat=position.coords.latitude,lon=position.coords.longitude;
-    let placeName='Ma position';
-    try{
-      const url='https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat='+encodeURIComponent(lat)+'&lon='+encodeURIComponent(lon)+'&zoom=10&addressdetails=1';
-      const response=await fetch(url,{headers:{'Accept':'application/json'}});
-      if(response.ok){
-        const result=await response.json();
-        const a=result.address||{};
-        placeName=a.city||a.town||a.village||a.municipality||a.locality||a.county||result.name||placeName;
-      }
-    }catch(err){console.warn('Reverse geocoding indisponible',err)}
-    const match=data?.places?.find(p=>p.name.toLowerCase()===placeName.toLowerCase())
-      ||data?.places?.find(p=>p.aliases?.some(a=>a.toLowerCase()===placeName.toLowerCase()));
-    geolocatedPlace=match||{name:placeName,lat,lon,zoom:13,events:[]};
-    $('search').value=placeName;
-    lastPlaceKey='';
-    closeLesson();
-    runExplorer();
-    if(!match){
-      $('events').innerHTML='<div class="event">📍 '+placeName+' est bien géolocalisé, mais ce lieu n’est pas encore présent dans la base historique ChronoMap.</div>';
-    }
-    button.classList.remove('locating');
-    button.classList.add('success');
-    button.textContent='📍';
-    button.disabled=false;
-    setTimeout(()=>button.classList.remove('success'),1400);
-  },error=>{
-    button.classList.remove('locating');
-    button.textContent='📍';
-    button.disabled=false;
-    const messages={1:'Autorisation de localisation refusée. Active la localisation pour ChronoMap.',2:'Position indisponible. Vérifie le GPS ou la localisation de ton appareil.',3:'La localisation a pris trop de temps. Réessaie.'};
-    alert(messages[error.code]||'Impossible de récupérer ta position.');
-  },{enableHighAccuracy:true,timeout:12000,maximumAge:300000});
-};
-$('timeline').oninput=()=>{closeLesson();render()};
+$('go').onclick=()=>{window._chronomapPlaceId=null;lastPlaceKey='';render()};
+$('search').addEventListener('keydown',e=>{if(e.key==='Enter'){lastPlaceKey='';render()}});
+$('timeline').oninput=()=>{selectedEvent=null;render()};
 function timelineStep(){return +$('backStep').value||5}
 function syncStepSelectors(value){$('backStep').value=String(value);$('nextStep').value=String(value)}
 $('backStep').onchange=()=>syncStepSelectors($('backStep').value);
@@ -635,6 +400,7 @@ $('play').onclick=()=>{
   if(timer){clearInterval(timer);timer=null;$('play').textContent='▶ Lecture';return}
   selectedEvent=null;
   $('historySheet').style.display='none';
+  if(+$('timeline').value>=2026)$('timeline').value=-3000;
   $('play').textContent='⏸ Pause';
   timer=setInterval(()=>{
     const y=+$('timeline').value+timelineStep();
@@ -644,16 +410,7 @@ $('play').onclick=()=>{
   },90);
 };
 
-$('scopeSelect').onchange=()=>{infoScope=$('scopeSelect').value;lastPlaceKey='';closeLesson();render();};
-$('versionSelect').onchange=()=>{
-  const p=$('versionSelect').value;
-  if(p==='public') $('paymentBox').classList.add('hidden');
-  else {
-    $('paymentBox').classList.remove('hidden');
-    $('selectedPlan').textContent=p==='famille'?'Famille':'École';
-    $('paymentGains').textContent=planInfo[p]||'';
-  }
-};
+$('scopeSelect').onchange=()=>{infoScope=$('scopeSelect').value;lastPlaceKey='';render();};
 
 const planInfo={
   famille:'Chronologies enrichies, fiches locales plus détaillées et exploration familiale.',
@@ -764,7 +521,7 @@ try{
 }catch(e){}
 
 if('serviceWorker' in navigator){
-  navigator.serviceWorker.register('./sw.js?v=15-6-2').then(reg=>reg.update()).catch(()=>{});
+  navigator.serviceWorker.register('./sw.js?v=15-3').then(reg=>reg.update()).catch(()=>{});
 }
 
 Promise.all([
